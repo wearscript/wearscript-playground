@@ -16,13 +16,23 @@
   </head>
   <body ng-app="wearscriptPlaygroundApp">
     <!-- Add your site or application content here -->
+    <nav>
+      <ul>
+        <li><a href="/">Editor</a></li>
+        <li><a href="#/setup">Setup</a></li>
+        <li><a href="#/sensors">Sensors</a></li>
+        <li><a href="#/data">Data</a></li>
+        <li><a href="#/profile">Profile</a></li>
+      </ul>
+    </nav>
     <div data-ui-ace ></div>
     <div class="container" ng-view=""></div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-A   <script src="bower_components/ace-builds/src-noconflict/ace.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
@@ -32,6 +42,10 @@ A   <script src="bower_components/ace-builds/src-noconflict/ace.js"></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/setup.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/sensors.js"></script>
+        <script src="scripts/controllers/data.js"></script>
         <!-- endbuild -->
 </body>
 </html>
