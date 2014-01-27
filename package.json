@@ -1,7 +1,10 @@
 {
   "name": "wearscript-playground",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-targethtml": "~0.2.6",
+    "grunt-contrib-less": "~0.9.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
