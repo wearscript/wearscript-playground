@@ -2,7 +2,8 @@
 
 angular.module('wearscriptPlaygroundApp', [
   'ngResource',
-  'ngRoute'
+  'ngRoute',
+  'ui.ace'
 ])
   .config(function ($routeProvider) {
     $routeProvider
