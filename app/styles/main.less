@@ -31,13 +31,17 @@ body {
       }
     }
   }
-
-  .ace_editor {
+  .container {
+    position:absolute;
     position:absolute;
     left:0px;
     right:0px;
     bottom:0px;
     top:@nav_height;
+    .ace_editor {
+      height:100%;
+      width:100%;
+    }
   }
 
 }

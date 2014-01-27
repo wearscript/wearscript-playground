@@ -24,24 +24,36 @@
     <!(endif)-->
   </head>
   <body ng-app="wearscriptPlaygroundApp">
-    <!-- Add your site or application content here -->
     <nav>
       <ul>
-        <li><a href="/">Editor</a></li>
-        <li><a href="#/setup">Setup</a></li>
-        <li><a href="#/sensors">Sensors</a></li>
-        <li><a href="#/data">Data</a></li>
-        <li><a href="#/profile">Profile</a></li>
+        <li>
+          <a data-ng-click='active=editor'
+             ng-class="{'active': $active==editor}"
+             href="/">Editor</a>
+        </li>
+
+        <li>
+          <a data-ng-click='active=setup'
+             data-ng-class="{'active': active==setup}"
+             href="#/setup">Setup</a>
+        </li>
+        <li>
+          <a data-ng-click='active=sensors'
+             data-ng-class="{'active': active==sensors}"
+             href="#/sensors">Sensors</a>
+        </li>
+        <li>
+          <a data-ng-click='active=data'
+             data-ng-class="{'active': active==data}"
+             href="#/data">Data</a>
+        </li>
+        <li>
+          <a data-ng-click='active=profile'
+             data-ng-class="{'active': active==profile}"
+             href="#/profile">Profile</a>
+        </li>
       </ul>
     </nav>
-    <div data-ui-ace="{
-      useWrapMode : true,
-      showGutter: true,
-      theme:'tomorrow',
-      mode: 'javascript',
-      onLoad: aceLoaded,
-      onChange: aceChanged
-    }"></div>
     <div class="container" ng-view=""></div>
 
     <!-- build:js scripts/vendor.js -->
