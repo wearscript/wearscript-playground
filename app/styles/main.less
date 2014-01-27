@@ -1,5 +1,43 @@
-body {
-  background:#FFF;
-}
+@nav_height: 40px;
 
-.ace_editor { height: 200px; }
+body {
+  nav {
+    position:absolute;
+    top:0px;
+    right:0px;
+    left:0px;
+    height:@nav_height;
+    background:#333;
+    ul {
+      list-style-type:none;
+      padding:0px;
+      margin:0px;
+      height:@nav_height;
+      display:block;
+      li {
+        display:inline-block;
+        a {
+          display:block;
+          height:@nav_height;
+          line-height:@nav_height;
+          text-decoration:none;
+          padding:0px 20px;
+          border-right:1px #999 solid;
+          color:#FFF;
+        }
+        a:visited{
+          color:#FFF;
+        }
+      }
+    }
+  }
+
+  .ace_editor {
+    position:absolute;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    top:@nav_height;
+  }
+
+}
