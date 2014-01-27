@@ -47,10 +47,15 @@
              data-ng-class="{'active': active==data}"
              href="#/data">Data</a>
         </li>
-        <li>
+        <li ng-show="authenticated">
           <a data-ng-click='active=profile'
              data-ng-class="{'active': active==profile}"
              href="#/profile">Profile</a>
+        </li>
+        <li ng-hide="authenticated">
+          <a data-ng-click='active=login'
+             data-ng-class="{'active': active==login}"
+             href="#/login">Login</a>
         </li>
       </ul>
     </nav>
