@@ -5,14 +5,23 @@
     <title>Wearscript Playground</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+    <!--(if target dev)><!-->
+    <link rel="stylesheet/less" type="text/css" href="/styles/main.less">
+    <script>
+      var less = {
+        env:'development'
+        async:true,
+        fileAsync:false,
+        poll:1000,
+        dumpLineNumbers:"mediaQuery"
+      }
+    </script>
+    <script type="text/javascript" src="bower_components/less.js/dist/less-1.4.2.min.js"></script>
+    <script type="text/javascript">less.watch()</script>
+    <!--<!(endif)-->
+    <!--(if target dist)>
+    <link rel="stylesheet" href="/styles/main.css">
+    <!(endif)-->
   </head>
   <body ng-app="wearscriptPlaygroundApp">
     <!-- Add your site or application content here -->

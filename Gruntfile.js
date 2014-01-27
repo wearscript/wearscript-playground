@@ -26,10 +26,6 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
-      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -39,7 +35,6 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.less',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -189,6 +184,16 @@ module.exports = function (grunt) {
         }]
       }
     },
+    cssmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/styles',
+          src: '{,*/}*.svg',
+          dest: '<%= yeoman.dist %>/images'
+        }]
+      }
+    },
     htmlmin: {
       dist: {
         options: {
@@ -203,6 +208,15 @@ module.exports = function (grunt) {
           src: ['*.html', 'views/{,*/}*.html'],
           dest: '<%= yeoman.dist %>'
         }]
+      }
+    },
+
+    // Swap (dev) blocks for (dist) blocks
+    targethtml: {
+      dist: {
+        files: {
+          'dist/index.html': 'dist/index.html',
+        }
       }
     },
 
@@ -223,6 +237,19 @@ module.exports = function (grunt) {
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/*.html']
+      }
+    },
+
+    // Compile less stylesheets
+    less: {
+      dist: {
+        options: {
+          paths: ['<%= yeoman.app %>/styles'],
+          ieCompat: false
+        },
+        files: {
+          "<%= yeoman.dist %>/styles/main.css": "<%= yeoman.app %>/styles/main.less"
+        }
       }
     },
 
@@ -308,10 +335,12 @@ module.exports = function (grunt) {
     'ngmin',
     'copy:dist',
     'cdnify',
+    'less',
     'cssmin',
     'uglify',
     'rev',
     'usemin',
+    'targethtml',
     'htmlmin'
   ]);
 
