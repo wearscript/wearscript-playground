@@ -6,12 +6,6 @@ angular.module('wearscriptPlaygroundApp')
 
     var connect = function(url){
 
-      // Get reference to port.
-      var port = (location.port != 80) ? ':' + location.port : '';
-
-      // Temporarily until configuration is implemented
-      //socket = new WebSocket('ws://' + document.domain + '' + port + '/api');
-      //var socket = new WebSocket('ws://wearscript.udderweb.com/ws/client');
       var socket = new WebSocket(url);
 
       socket.onopen = function(){
