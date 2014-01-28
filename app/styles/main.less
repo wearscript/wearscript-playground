@@ -1,45 +1,84 @@
-@nav_height: 40px;
+@nav_height: 35px;
+@sidebar_width: 100px;
 
 body {
-  nav {
+  font: 0.9em Verdana, Arial, Helvetica, sans-serif;
+  * {
+    margin:0px;
+    padding:0px;
+  }
+  a {
+    text-decoration:none;
+    color:#AAA;
+  }
+  a:visited{
+    color:#AAA;
+  }
+  header {
     position:absolute;
     top:0px;
     right:0px;
     left:0px;
     height:@nav_height;
     background:#333;
-    ul {
-      list-style-type:none;
-      padding:0px;
-      margin:0px;
-      height:@nav_height;
+    a {
       display:block;
-      li {
-        display:inline-block;
-        a {
-          display:block;
-          height:@nav_height;
-          line-height:@nav_height;
-          text-decoration:none;
-          padding:0px 20px;
-          border-right:1px #999 solid;
-          color:#FFF;
-        }
-        a:visited{
-          color:#FFF;
-        }
-        &:last-child {
-          position:absolute;
-          right:0px;
-          top:0px;
-          border-right:0px #999 solid;
-          border-left:1px #999 solid;
+      height:@nav_height;
+      line-height:@nav_height;
+      text-align:center;
+      min-width:60px;
+      position:absolute;
+      top:0px;
+      z-index:9999;
+      &:first-child {
+        left:0px;
+      }
+      &:last-child {
+        right:0px;
+      }
+    }
+    h1 {
+      color:#AAA;
+      font-size:15px;
+      position:absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      text-align:center;
+      height:@nav_height;
+      line-height:@nav_height;
+    }
+  }
+  aside {
+    display:block;
+    position:absolute;
+    top:@nav_height;
+    left:0px;
+    bottom:0px;
+    width:@sidebar_width;
+    background:#444;
+    nav {
+      ul {
+        list-style-type:none;
+        li {
+          a {
+            display:block;
+            width:@sidebar_width;
+            text-indent:15px;
+            border-bottom:1px #333 solid;
+            height:@nav_height;
+            line-height:@nav_height;
+            border-right:1px #999 solid;
+            color:#FFF;
+          }
+          a:visited{
+            color:#FFF;
+          }
         }
       }
     }
   }
   .container {
-    position:absolute;
     position:absolute;
     left:0px;
     right:0px;
@@ -49,6 +88,9 @@ body {
       height:100%;
       width:100%;
     }
+  }
+  &.menu-open .container {
+    left:@sidebar_width;
   }
 
 }
