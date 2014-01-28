@@ -9,46 +9,41 @@ angular.module('wearscriptPlaygroundApp')
       var socket = new WebSocket(url);
 
       socket.onopen = function(){
-          var args = arguments;
-          service.open = true;
-          $log.log('Socket ** Connected')
-          if( service.handlers.onopen ){
-              $rootScope.$apply(function(){
-                service.handlers.onopen.apply( socket, args )
-              })
-          }
+        $log.log('Socket ** Connected')
+        var args = arguments;
+        service.open = true;
+        if( service.handlers.onopen ){
+          $rootScope.$apply(function(){
+            service.handlers.onopen.apply( socket, args )
+          })
+        }
       }
 
       socket.onmessage = function( data ){
-          var args = arguments;
-
-          var reader = new FileReader();
-          reader.addEventListener("loadend",function(){
-            args[0] = msgpack.unpack(reader.result)
-            $log.log('Socket >>',args[0])
-
-            if( service.handlers.onmessage ){
-              $rootScope.$apply(function(){
-                service.handlers.onmessage.apply(socket, args);
-              })
-            }
-          })
-          reader.readAsBinaryString(event.data)
+        var args = arguments;
+        var reader = new FileReader();
+        reader.addEventListener("loadend",function(){
+          args[0] = msgpack.unpack(reader.result)
+          $log.log('Socket >>',args[0])
+          if( service.handlers.onmessage ){
+            $rootScope.$apply(function(){
+              service.handlers.onmessage.apply(socket, args);
+            })
+          }
+        })
+        reader.readAsBinaryString(event.data)
       }
 
       socket.onclose = function(){
-          service.open = false;
-          setTimeout( function(){ socket = connect(url); } , 3000 );
-          var args = arguments;
-          $log.log('Socket !! Disconnected')
-
-          if( service.handlers.onclose ){
-              $rootScope.$apply(
-                  function(){
-                      service.handlers.onclose.apply(socket,args);
-                  }
-              )
-          }
+        $log.log('Socket !! Disconnected')
+        service.open = false;
+        setTimeout( function(){ socket = connect(url); } , 3000 );
+        var args = arguments;
+        if( service.handlers.onclose ){
+          $rootScope.$apply(function(){
+            service.handlers.onclose.apply(socket,args);
+          })
+        }
       }
 
       return socket;
