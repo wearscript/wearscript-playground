@@ -30,4 +30,14 @@ angular.module('wearscriptPlaygroundApp', [
       .otherwise({
         redirectTo: '/'
       });
+  })
+
+  .run(function($log,Socket){
+
+    // Temporary for dev until configurable
+    Socket.connect('ws://wearscript.udderweb.com/ws/client');
+
+    Socket.onmessage(function(message){
+    })
+
   });

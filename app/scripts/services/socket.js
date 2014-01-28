@@ -4,19 +4,20 @@ angular.module('wearscriptPlaygroundApp')
 
   .factory( 'Socket', function($rootScope,$log){
 
-    var createSocket = function(){
+    var connect = function(url){
 
       // Get reference to port.
       var port = (location.port != 80) ? ':' + location.port : '';
 
-      socket = new WebSocket('//' + document.domain + '' + port + '/api');
+      // Temporarily until configuration is implemented
+      //socket = new WebSocket('ws://' + document.domain + '' + port + '/api');
+      //var socket = new WebSocket('ws://wearscript.udderweb.com/ws/client');
+      var socket = new WebSocket(url);
 
       socket.onopen = function(){
           var args = arguments;
           service.open = true;
-
-          $rootScope.$broadcast( 'SOCKET_CLOSED' );
-
+          $log.log('Socket ** Connected')
           if( service.handlers.onopen ){
               $rootScope.$apply(function(){
                 service.handlers.onopen.apply( socket, args )
@@ -26,26 +27,26 @@ angular.module('wearscriptPlaygroundApp')
 
       socket.onmessage = function( data ){
           var args = arguments;
-          try {
-            args[0].data = JSON.parse(args[0].data);
-          } catch(e){
-            // there should be a better way to do this,,, but it is fast
-          }
 
-          if( service.handlers.onmessage ){
-              $rootScope.$apply(
-                  function(){
-                      service.handlers.onmessage.apply(socket, args);
-                  }
-              )
-          }
+          var reader = new FileReader();
+          reader.addEventListener("loadend",function(){
+            args[0] = msgpack.unpack(reader.result)
+            $log.log('Socket >>',args[0])
+
+            if( service.handlers.onmessage ){
+              $rootScope.$apply(function(){
+                service.handlers.onmessage.apply(socket, args);
+              })
+            }
+          })
+          reader.readAsBinaryString(event.data)
       }
 
       socket.onclose = function(){
           service.open = false;
-          setTimeout( function(){ socket = createSocket(service); } , 3000 );
+          setTimeout( function(){ socket = connect(url); } , 3000 );
           var args = arguments;
-          $rootScope.$broadcast( 'SOCKET_OPEN' );
+          $log.log('Socket !! Disconnected')
 
           if( service.handlers.onclose ){
               $rootScope.$apply(
@@ -61,6 +62,15 @@ angular.module('wearscriptPlaygroundApp')
 
     var service = {
       handlers : {},
+      encode: function( data ){
+        var data_enc = msgpack.pack(data);
+        var data_out = new Uint8Array(data_enc.length);
+        var i;
+        for (i = 0; i < data_enc.length; i++) {
+            data_out[i] = data_enc[i];
+        }
+        return data_out;
+      },
       onopen: function( callback ){
         this.handlers.onopen = callback;
       },
@@ -71,13 +81,12 @@ angular.module('wearscriptPlaygroundApp')
         this.handlers.onclose = callback;
       },
       send: function( data ){
-        var msg = typeof(data) == "object" ? JSON.stringify(data) : data;
-        var status = socket.send(msg);
+        $log.log('Socket <<',data)
+        var status = socket.send(service.encode(data));
       },
+      connect: connect,
       open: false
     };
-
-    var socket = createSocket();
 
     return service;
 
