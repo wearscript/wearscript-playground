@@ -1,12 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope,Profile) {
 
     $scope.aceLoaded = function(_editor) {
       // Options
@@ -20,4 +15,8 @@ angular.module('wearscriptPlaygroundApp')
       e_el.style.height = 16 * doc.getLength() + 'px';
       e.resize();
     };
+
+    if (!Profile.authenticated){
+      $location.path('/profile') 
+    }
   });
