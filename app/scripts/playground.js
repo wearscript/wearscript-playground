@@ -37,3 +37,7 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
 function runScriptOnGlass(ws, script) {
     ws.publish('glass', 'script', {'glass.html': script});
 }
+
+function HACK_runEditorScriptOnGlass() {
+    runScriptOnGlass(HACK_WS, HACK_EDITOR.getSession().getValue());
+}
