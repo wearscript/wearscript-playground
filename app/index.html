@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!--(if target dev)><!-->
-    <link rel="stylesheet/less" type="text/css" href="/styles/main.less">
+    <link rel="stylesheet/less" type="text/css" href="styles/main.less">
     <script>
       var less = {
         env:'development',
@@ -21,7 +21,7 @@
     <script type="text/javascript">less.watch()</script>
     <!--<!(endif)-->
     <!--(if target dist)>
-    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="styles/main.css">
     <!(endif)-->
   </head>
   <body
@@ -90,6 +90,8 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/wearscript-client.js"></script>
+        <script src="scripts/playground.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/setup.js"></script>
