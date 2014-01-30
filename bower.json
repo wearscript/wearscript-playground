@@ -7,6 +7,6 @@
     "angular-route": "1.2.6",
     "angular-ui-ace": "bower",
     "less": "~1.6.1",
-    "msgpack-javascript": "*"
+    "msgpack-javascript": "https://github.com/lrvick/msgpack-javascript.git"
   }
 }
