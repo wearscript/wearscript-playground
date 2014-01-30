@@ -6,12 +6,15 @@ angular.module('wearscriptPlaygroundApp')
 
     var connect = function(url){
 
+      var url = url;
+
       var socket = new WebSocket(url);
 
       socket.onopen = function(){
         $log.log('Socket ** Connected')
         var args = arguments;
         service.open = true;
+        service.socket = socket;
         if( service.handlers.onopen ){
           $rootScope.$apply(function(){
             service.handlers.onopen.apply( socket, args )

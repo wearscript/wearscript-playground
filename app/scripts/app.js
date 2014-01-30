@@ -32,12 +32,17 @@ angular.module('wearscriptPlaygroundApp', [
       });
   })
 
-  .run(function($log,Socket){
-    /*
-    // Temporary for dev until configurable
-    Socket.connect('ws://wearscript.udderweb.com/ws/client');
+  .run(function($log,Socket,Profile){
+    Socket.connect('ws://wearscript.udderweb.com/ws');
 
     Socket.onmessage(function(message){
-    })*/
+    })
+
+    Socket.onopen(function () {
+      ws = new WearScriptConnection(Socket.socket, "playground", Math.floor(Math.random() * 100000));
+      ws.subscribe('subscriptions', function(){
+        Profile.glass_id = ws.exists('glass')
+      });
+    })
 
   });
