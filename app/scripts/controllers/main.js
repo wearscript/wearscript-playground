@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,Profile) {
+  .controller('MainCtrl', function ($scope,$location,Profile) {
 
     $scope.aceLoaded = function(_editor) {
       // Options
@@ -17,6 +17,6 @@ angular.module('wearscriptPlaygroundApp')
     };
 
     if (!Profile.authenticated){
-      $location.path('/profile') 
+      $location.path('/profile')
     }
   });
