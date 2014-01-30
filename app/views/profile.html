@@ -18,27 +18,27 @@
     <h3>To connect with the wearscript server...<h3>
     <a href="/" ng-click="authGoogle()"> Login with Google</a>
   </div>
-  
+
   <div ng-show="!profile.github_user">
     <h3>To save and restore scripts...<h3>
     <a href="/" ng-click="authGithub()"> Login with Github</a>
   </div>
-  
+
   <div ng-show="!profile.glass_id">
     <h3>You will also need to pair with glass<h3>
 
-    <h4>Via QR Code<h4>
-    <p>QR code here></p>
+    <h4>Via QR Code</h4>
+    <p>QR code here</p>
 
-    <h4>Or via QR CLI<h4>
-    <p>adb setup command here></p>
+    <h4>Or via QR CLI</h4>
+    <p>adb setup command here</p>
   </div>
 
 </div>
 
 <div ng-show="profile.complete">
   <p>Your profile is complete and you are ready to wear some scripts<p>
-  
+
   <a href="/"> Launch Editor</a>
 
   <h4>Your Profle:</h4>
