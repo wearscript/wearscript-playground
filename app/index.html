@@ -87,8 +87,9 @@
     <!-- endbower -->
     <script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="bower_components/msgpack-javascript/msgpack.js"></script>
+    <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
     <!-- endbuild -->
-
+        <script>WSURL = "{{.WSUrl}}";</script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/wearscript-client.js"></script>
         <script src="scripts/playground.js"></script>

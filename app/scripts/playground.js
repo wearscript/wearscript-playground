@@ -21,16 +21,19 @@ function createQR(WSUrl, success, error) {
     createKey("ws", function (secret) {success("https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" + WSUrl + "/ws/" + secret + "&chld=H|4&choe=UTF-8")}, error);
 }
 
-function connectWebsocket(WSUrl, glassConnectedCallback) {
-    var url = WSUrl + "/ws";
-    var websocket = new ReconnectingWebSocket(url);
+function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
     var ws = new WearScriptConnection(websocket, "playground", Math.floor(Math.random() * 100000));
     function subscription_cb() {
 	glassConnectedCallback(ws.exists('glass'));
     }
     websocket.onopen = function () {
+        console.log('In open')
 	subscription_cb();
 	ws.subscribe('subscriptions', subscription_cb);
     }
     return ws;
+}
+
+function runScriptOnGlass(ws, script) {
+    ws.publish('glass', 'script', {'glass.html': script});
 }

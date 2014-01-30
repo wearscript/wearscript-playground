@@ -33,11 +33,7 @@ angular.module('wearscriptPlaygroundApp', [
   })
 
   .run(function($log,Socket){
-    /*
-    // Temporary for dev until configurable
-    Socket.connect('ws://wearscript.udderweb.com/ws/client');
-
-    Socket.onmessage(function(message){
-    })*/
-
+      Socket = new ReconnectingWebSocket(WSURL + '/ws');
+      //Socket.connect(WSURL + "/ws");
+      WS = wearScriptConnectionFactory(Socket, function (connected) {console.log('Connected: ' + connected)});
   });
