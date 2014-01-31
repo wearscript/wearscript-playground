@@ -8,7 +8,7 @@ function WearScriptConnection(ws, group, device) {
     this._externalChannels = {};
 
     this.exists = function (channel) {
-	return channel == 'subscriptions' || this._exists(channel, this._externalChannels).length;
+	return channel == 'subscriptions' || this._exists(channel, this._externalChannels);
     }
 
     this.channelsInternal = function() {
@@ -25,23 +25,21 @@ function WearScriptConnection(ws, group, device) {
         var reader = new FileReader();
         reader.addEventListener("loadend", function () {
             var data = msgpack.unpack(reader.result);
-	    console.log('loaded: ' + data)
 	    if (data[0] == 'subscriptions') {
 		this.deviceToChannels[data[1]] = data[2];
 		var externalChannels = [];
 		for (var key in this.deviceToChannels) {
-		    console.log(key)
 		    var value = this.deviceToChannels[key];
 		    for (var i = 0; i < value.length; i++) {
-			console.log(value[i])
 			externalChannels[value[i]] = true;
 		    }
 		}
 		this._externalChannels = externalChannels;
 	    }
-	    var matches = this._exists(data[0], this._channelsInternal);
-	    for (var i = 0; i < matches.length; i++)
-		matches[i].apply(null, data);
+	    var match = this._exists(data[0], this._channelsInternal);
+            if (match) {
+		match.apply(null, data);
+            }
 	}.bind(this));
         reader.readAsBinaryString(event.data);
     }
@@ -50,10 +48,10 @@ function WearScriptConnection(ws, group, device) {
     this._exists = function (channel, container) {
 	var channelCur = '';
 	var parts = channel.split(':');
-	var matches = [];
+	var match;
 	for (var i = 0; i < parts.length; i++) {
 	    if (container.hasOwnProperty(channelCur))
-		matches.push(channelCur);
+		match = container[channelCur];
 	    if (!i) {
 		channelCur += parts[i];
 	    } else {
@@ -61,15 +59,15 @@ function WearScriptConnection(ws, group, device) {
 	    }
 	}
 	if (container.hasOwnProperty(channelCur))
-	    matches.push(container[channelCur]);
-	return matches;
+	    match = container[channelCur];
+	return match;
     }
     this.channel = function () {
-	return arguments.join(':');
+	return Array.prototype.slice.call(arguments).join(':');
     }
 
     this.subchannel = function () {
-	return self.groupDevice + ':' + arguments.join(':')
+	return self.groupDevice + ':' + Array.prototype.slice.call(arguments).join(':')
     }
 
     this.ackchannel = function (channel) {
