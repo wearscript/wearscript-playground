@@ -41,12 +41,12 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
         // TODO(brandyn): Have a notification that an image is coming in message was sent
     }
     function gist_list_cb(channel, gists) {
-        HACK_GISTS = gists;
+        window.HACK_GISTS = gists;
         //angular.element($('.container').children[0]).scope();
         console.log(channel + ': ' + gists);
     }
     function gist_get_cb(channel, gist) {
-        HACK_GIST = gist;
+        window.HACK_GIST = gist;
         console.log(channel + ': ' + gist);
     }
     function urlopen_cb(channel, url) {
@@ -73,12 +73,12 @@ function runLambdaOnGlass(ws, script) {
     ws.publish('glass', 'lambda', script);
 }
 
-function HACK_runEditorScriptOnGlass() {
-    runScriptOnGlass(HACK_WS, HACK_EDITOR.getSession().getValue());
+window.HACK_runEditorScriptOnGlass = function() {
+    runScriptOnGlass(HACK_WS, window.HACK_EDITOR.getSession().getValue());
 }
 
 
-function HACK_runLambdaOnGlass(line) {
+window.HACK_runLambdaOnGlass = function(line) {
     runLambdaOnGlass(HACK_WS, line);
 }
 

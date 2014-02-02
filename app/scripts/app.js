@@ -29,8 +29,22 @@ angular.module('wearscriptPlaygroundApp', [
       });
   })
 
-  .run(function($log,Socket){
-      Socket = new ReconnectingWebSocket(WSURL + '/ws');
+  .run(function($log,$http,$window,Socket){
+      var server
+      if ($window.WSURL == "{{.WSUrl}}" ){
+        var port = (location.port != 80) ? ':' + location.port : '';
+        server = 'ws://' + document.domain + port + '/ws'
+      } else {
+        server = window.WSURL
+      }
+      Socket = new ReconnectingWebSocket(server);
       //Socket.connect(WSURL + "/ws");
-      HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {console.log('Connected: ' + connected)});
+      $window.HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {console.log('Connected: ' + connected)});
+
+      if ($window.GLASS_BODY == "{{.GlassBody}}" ){
+        $http.get('/example')
+          .then(function(res){
+            $window.GLASS_BODY = res.data;
+          });
+      }
   });

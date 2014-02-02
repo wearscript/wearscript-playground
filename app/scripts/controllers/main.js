@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,$location,Profile) {
+  .controller('MainCtrl', function ($scope,$window,$location,Profile) {
 
     $scope.aceLoaded = function(_editor) {
       // Options
@@ -13,7 +13,7 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
                 console.log('run');
-                HACK_runEditorScriptOnGlass();
+                $window.HACK_runEditorScriptOnGlass();
             }
         });
         _editor.commands.addCommand({
@@ -24,11 +24,11 @@ angular.module('wearscriptPlaygroundApp')
                 if (!line.length) {
                     line = _editor.session.getLine(_editor.selection.getCursor().row);
                 }
-                HACK_runLambdaOnGlass(line);
+                $window.HACK_runLambdaOnGlass(line);
             }
         });
 
-        HACK_EDITOR = _editor;
+        $window.HACK_EDITOR = _editor;
     };
 
     $scope.aceChanged = function(e) {
