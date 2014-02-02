@@ -1,1 +1,18 @@
-<p>This is the channels view.</p>
+<!DOCTYPE html>
+<html>
+<body ng-app="main">
+    <div ng-controller="ChannelsCtrl">
+<table at-table list="nameList">
+  <!-- the header will automatically be created according to the body definition. -->
+  <thead></thead>
+  <tbody>
+    <tr>
+      <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
+      <td at-implicit attribute="device"></td>      <td at-implicit attribute="channels"></td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+</body>
+</html>

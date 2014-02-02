@@ -7,4 +7,6 @@ angular.module('wearscriptPlaygroundApp')
       'AngularJS',
       'Karma'
     ];
+    $scope.nameList = window['HACK_GISTS'] || [];
+
   });

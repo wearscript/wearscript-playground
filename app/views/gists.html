@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js"></script>
-    <script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
-    
-    <link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
-    <link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-</head>
 <body ng-app="main">
-    <div ng-controller="DemoCtrl">
-        <p><strong>Page:</strong> {{tableParams.page()}}</p>
-        <p><strong>Count per page:</strong> {{tableParams.count()}}</p>
-        
-        <table ng-table="tableParams" class="table">
-        <tr ng-repeat="user in $data">
-            <td data-title="'Name'">{{user.name}}</td>
-            <td data-title="'Age'">{{user.age}}</td>
-        </tr>
-        </table>
+    <div ng-controller="GistsCtrl">
+<table at-table list="nameList">
+  <!-- the header will automatically be created according to the body definition. -->
+  <thead></thead>
+  <tbody>
+    <tr>
+      <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
+      <td at-implicit attribute="id"></td>      <td at-implicit attribute="description"></td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
 </body>
 </html>
