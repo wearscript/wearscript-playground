@@ -34,10 +34,6 @@
          data-ng-click="menu=!menu"
          data-ng-init="menu=true">Menu</a>
       <h1>Wearscript Playground</h1>
-      <a ng-show="authenticated"
-         href="#/profile">Profile</a>
-      <a ng-hide="authenticated"
-         href="#/login">Login</a>
     </header>
     <aside ng-show="menu">
       <nav>
@@ -48,29 +44,19 @@
                href="#/">Editor</a>
           </li>
           <li>
-            <a data-ng-click='active=setup'
-               data-ng-class="{'active': active==setup}"
-               href="#/setup">Setup</a>
-          </li>
-          <li>
-            <a data-ng-click='active=sensors'
-               data-ng-class="{'active': active==sensors}"
-               href="#/sensors">Sensors</a>
+            <a data-ng-click='active=gists'
+               data-ng-class="{'active': active==gists}"
+               href="#/gists">Gists</a>
           </li>
           <li>
             <a data-ng-click='active=data'
                data-ng-class="{'active': active==data}"
                href="#/data">Data</a>
           </li>
-          <li ng-show="authenticated">
-            <a data-ng-click='active=profile'
-               data-ng-class="{'active': active==profile}"
-               href="#/profile">Profile</a>
-          </li>
-          <li ng-hide="authenticated">
-            <a data-ng-click='active=login'
-               data-ng-class="{'active': active==login}"
-               href="#/login">Login</a>
+          <li>
+            <a data-ng-click='active=channels'
+               data-ng-class="{'active': active==channels}"
+               href="#/channels">Channels</a>
           </li>
         </ul>
       </nav>
@@ -84,6 +70,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/less/dist/less-1.5.0.js"></script>
+    <script src="bower_components/ng-table/ng-table.js"></script>
     <!-- endbower -->
     <script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="bower_components/msgpack-javascript/msgpack.js"></script>
@@ -97,11 +84,11 @@
         <script src="scripts/wearscript-client.js"></script>
         <script src="scripts/playground.js"></script>
         <script src="scripts/app.js"></script>
+        <!--<script src="scripts/controllers/demo.js"></script>-->
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/setup.js"></script>
-        <script src="scripts/controllers/profile.js"></script>
-        <script src="scripts/controllers/sensors.js"></script>
+        <script src="scripts/controllers/gists.js"></script>
         <script src="scripts/controllers/data.js"></script>
+        <script src="scripts/controllers/channels.js"></script>
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/profile.js"></script>
         <!-- endbuild -->

@@ -44,10 +44,12 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
         HACK_GISTS = gists;
         console.log(channel + ': ' + gists);
     }
-
     function gist_get_cb(channel, gist) {
         HACK_GIST = gist;
         console.log(channel + ': ' + gist);
+    }
+    function urlopen_cb(channel, url) {
+        window.open(url);
     }
     websocket.onopen = function () {
 	subscription_cb();
@@ -55,6 +57,7 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
         ws.subscribe('sensors', sensors_cb);
         ws.subscribe('image', image_cb);
         ws.subscribe('log', log_cb);
+        ws.subscribe('urlopen', urlopen_cb);
         ws.subscribe(ws.channel(ws.groupDevice, 'gistList'), gist_list_cb);
         ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), gist_get_cb);
     }
