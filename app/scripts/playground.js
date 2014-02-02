@@ -42,6 +42,7 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
     }
     function gist_list_cb(channel, gists) {
         HACK_GISTS = gists;
+        //angular.element($('.container').children[0]).scope();
         console.log(channel + ': ' + gists);
     }
     function gist_get_cb(channel, gist) {
