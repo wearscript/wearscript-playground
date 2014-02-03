@@ -33,9 +33,9 @@ angular.module('wearscriptPlaygroundApp', [
       var server
       if ($window.WSURL == "{{.WSUrl}}" ){
         var port = (location.port != 80) ? ':' + location.port : '';
-        server = 'ws://' + document.domain + port + '/ws'
+        server = 'ws://' + document.domain + port + '/ws';
       } else {
-        server = window.WSURL
+        server = window.WSURL + '/ws';
       }
       Socket = new ReconnectingWebSocket(server);
       //Socket.connect(WSURL + "/ws");
