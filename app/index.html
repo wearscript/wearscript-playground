@@ -58,6 +58,11 @@
                data-ng-class="{'active': active==channels}"
                href="#/channels">Channels</a>
           </li>
+          <li>
+            <a data-ng-click='active=setup'
+               data-ng-class="{'active': active==setup}"
+               href="#/setup">Setup</a>
+          </li>
         </ul>
       </nav>
     </aside>
@@ -81,7 +86,7 @@
           GLASS_BODY = '{{.GlassBody}}';
         </script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/wearscript-client.js"></script>
+        <script src="bower_components/wearscript-js/wearscript-client.js"></script>
         <script src="scripts/playground.js"></script>
         <script src="scripts/app.js"></script>
         <!--<script src="scripts/controllers/demo.js"></script>-->
@@ -89,6 +94,7 @@
         <script src="scripts/controllers/gists.js"></script>
         <script src="scripts/controllers/data.js"></script>
         <script src="scripts/controllers/channels.js"></script>
+        <script src="scripts/controllers/setup.js"></script>
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/profile.js"></script>
         <!-- endbuild -->

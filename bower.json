@@ -7,6 +7,7 @@
     "angular-route": "1.2.6",
     "angular-ui-ace": "bower",
     "less": "~1.6.1",
+    "wearscript-js": "https://github.com/OpenShades/wearscript-js.git",
     "angular-table": "https://github.com/samu/angular-table.git",
     "msgpack-javascript": "https://github.com/OpenShades/msgpack-javascript.git",
     "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git"

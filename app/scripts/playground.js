@@ -22,7 +22,18 @@ function createQR(WSUrl, success, error) {
 }
 
 function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
-    var ws = new WearScriptConnection(websocket, "playground", Math.floor(Math.random() * 100000));
+    function onopen(event) {
+        console.log('opened');
+	subscription_cb();
+	ws.subscribe('subscriptions', subscription_cb);
+        ws.subscribe('sensors', sensors_cb);
+        ws.subscribe('image', image_cb);
+        ws.subscribe('log', log_cb);
+        ws.subscribe('urlopen', urlopen_cb);
+        ws.subscribe(ws.channel(ws.groupDevice, 'gistList'), gist_list_cb);
+        ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), gist_get_cb);
+    }
+    var ws = new WearScriptConnection(websocket, "playground", Math.floor(Math.random() * 100000), onopen);
     function subscription_cb() {
 	glassConnectedCallback(ws.exists('glass'));
         // TODO(brandyn): Only do this once, then provide a button to refresh
@@ -51,16 +62,6 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
     }
     function urlopen_cb(channel, url) {
         window.open(url);
-    }
-    websocket.onopen = function () {
-	subscription_cb();
-	ws.subscribe('subscriptions', subscription_cb);
-        ws.subscribe('sensors', sensors_cb);
-        ws.subscribe('image', image_cb);
-        ws.subscribe('log', log_cb);
-        ws.subscribe('urlopen', urlopen_cb);
-        ws.subscribe(ws.channel(ws.groupDevice, 'gistList'), gist_list_cb);
-        ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), gist_get_cb);
     }
     return ws;
 }

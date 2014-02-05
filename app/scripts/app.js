@@ -24,6 +24,10 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/channels.html',
         controller: 'ChannelsCtrl'
       })
+      .when('/setup', {
+        templateUrl: 'views/setup.html',
+        controller: 'SetupCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
