@@ -31,7 +31,6 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
         ws.subscribe('log', log_cb);
         ws.subscribe('urlopen', urlopen_cb);
         ws.subscribe(ws.channel(ws.groupDevice, 'gistList'), gist_list_cb);
-        ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), gist_get_cb);
     }
     var ws = new WearScriptConnection(websocket, "playground", Math.floor(Math.random() * 100000), onopen);
     function subscription_cb() {
@@ -87,6 +86,7 @@ function gistList(ws) {
     ws.publish('gist', 'list', ws.channel(ws.groupDevice, 'gistList'));
 }
 
-function gistGet(ws, gistid) {
+function gistGet(ws, gistid, callback) {
+    ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), callback);
     ws.publish('gist', 'get', ws.channel(ws.groupDevice, 'gistGet'), gistid);
 }

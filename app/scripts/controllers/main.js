@@ -1,13 +1,25 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,$window,$location,Profile) {
+  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams) {
 
     $scope.aceLoaded = function(_editor) {
       // Options
       //_editor.setReadOnly(false);
       //_editor.setKeyboardHandler("ace/keyboard/vim");
-        _editor.getSession().setValue(GLASS_BODY);
+        if ($routeParams.gistid) {
+            var file = $routeParams.file || 'glass.html';
+            console.log('GIST:' + $routeParams.gistid + ' File: ' + file);
+            function gistcb() {
+                if (!$window.HACK_WS.ws.readyState || !window.HACK_WS.exists('gist'))
+                    $window.setTimeout(gistcb, 50);
+                else
+                    gistGet($window.HACK_WS, $routeParams.gistid, function (channel, gist) {_editor.getSession().setValue(gist.files[file].content);});
+            }
+            gistcb();
+        } else {
+            _editor.getSession().setValue(GLASS_BODY);
+        }
         _editor.commands.addCommand({
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
