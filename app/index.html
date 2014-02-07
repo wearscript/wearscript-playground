@@ -49,9 +49,14 @@
                href="#/gists">Gists</a>
           </li>
           <li>
-            <a data-ng-click='active=data'
-               data-ng-class="{'active': active==data}"
-               href="#/data">Data</a>
+            <a data-ng-click='active=images'
+               data-ng-class="{'active': active==images}"
+               href="#/images">Images</a>
+          </li>
+          <li>
+            <a data-ng-click='active=sensors'
+               data-ng-class="{'active': active==sensors}"
+               href="#/sensors">Sensors</a>
           </li>
           <li>
             <a data-ng-click='active=channels'
@@ -92,7 +97,8 @@
         <!--<script src="scripts/controllers/demo.js"></script>-->
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/gists.js"></script>
-        <script src="scripts/controllers/data.js"></script>
+        <script src="scripts/controllers/images.js"></script>
+        <script src="scripts/controllers/sensors.js"></script>
         <script src="scripts/controllers/channels.js"></script>
         <script src="scripts/controllers/setup.js"></script>
         <script src="scripts/services/socket.js"></script>

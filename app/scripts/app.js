@@ -25,9 +25,13 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/gists.html',
         controller: 'GistsCtrl'
       })
-      .when('/data', {
-        templateUrl: 'views/data.html',
-        controller: 'DataCtrl'
+      .when('/images', {
+        templateUrl: 'views/images.html',
+        controller: 'ImagesCtrl'
+      })
+      .when('/sensors', {
+        templateUrl: 'views/sensors.html',
+        controller: 'SensorsCtrl'
       })
       .when('/channels', {
         templateUrl: 'views/channels.html',

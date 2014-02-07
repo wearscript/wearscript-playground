@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body ng-app="main">
+    <div ng-controller="ImagesCtrl">
+      <div ng-repeat="(key, value) in images">
+        <img ng-src="{{value.url}}" />
+      </div>
+    </div>
+</body>
+</html>
+
