@@ -29,6 +29,16 @@ angular.module('wearscriptPlaygroundApp')
             }
         });
         _editor.commands.addCommand({
+            name: "save-editor",
+            bindKey: {win: "Ctrl-S", mac: "Command-S"},
+            exec: function(editor) {
+                console.log('save: ' + $routeParams.gistid + ' ' + $routeParams.file);
+                if ($routeParams.gistid && $routeParams.file) {
+                    gistModify(HACK_WS, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y});
+                }
+            }
+        });
+        _editor.commands.addCommand({
             name: "evaluate-region",
             bindKey: {win: "Alt-Enter", mac: "Alt-Enter"},
             exec: function(editor) {

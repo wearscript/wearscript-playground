@@ -51,9 +51,14 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
         // TODO(brandyn): Have a notification that an image is coming in message was sent
     }
     function gist_list_cb(channel, gists) {
+        for (var i = 0; i < gists.length; i++)
+            gists[i].url_playground = '#/gist/' + gists[i].id;
         window.HACK_GISTS = gists;
-        //angular.element($('.container').children[0]).scope();
         console.log(channel + ': ' + gists);
+    }
+    function gist_modify_cb(channel, gists) {
+        HACK_GIST_MODIFIED = gists;
+        console.log('Gist modified');
     }
     function gist_get_cb(channel, gist) {
         window.HACK_GIST = gist;
@@ -89,4 +94,12 @@ function gistList(ws) {
 function gistGet(ws, gistid, callback) {
     ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), callback);
     ws.publish('gist', 'get', ws.channel(ws.groupDevice, 'gistGet'), gistid);
+}
+
+function gistModify(ws, gistid, fileName, content, callback) {
+    var c = ws.channel(ws.groupDevice, 'gistModify');
+    ws.subscribe(c, callback);
+    var files = {};
+    files[fileName] = {content: content};
+    ws.publish('gist', 'modify', c, gistid, undefined, files);
 }

@@ -13,8 +13,9 @@ angular.module('wearscriptPlaygroundApp', [
         controller: 'MainCtrl'
       })
       .when('/gist/:gistid', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        redirectTo: function(routeParams) {
+            return '/gist/' + routeParams.gistid + '/glass.html';
+        }
       })
       .when('/gist/:gistid/:file', {
         templateUrl: 'views/main.html',
@@ -52,14 +53,8 @@ angular.module('wearscriptPlaygroundApp', [
       }
       Socket = new ReconnectingWebSocket(server);
       //Socket.connect(WSURL + "/ws");
-      $window.HACK_ONCONNECTONCE = [];
       $window.HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {
           console.log('Connected: ' + connected);
-          for (var i = 0; i < $window.HACK_ONCONNECTONCE.length; i++) {
-              console.log('Running onconnnect')
-              $window.HACK_ONCONNECTONCE[i]();
-          }
-          $window.HACK_ONCONNECTONCE = [];
       });
 
       if ($window.GLASS_BODY == "{{.GlassBody}}" ){
