@@ -81,3 +81,11 @@ function gistModify(ws, gistid, fileName, content, callback) {
     files[fileName] = {content: content};
     ws.publish('gist', 'modify', c, gistid, undefined, files);
 }
+
+function gistCreate(ws, secret, description, fileName, content, callback) {
+    var c = ws.channel(ws.groupDevice, 'gistCreate');
+    ws.subscribe(c, callback);
+    var files = {};
+    files[fileName] = {content: content};
+    ws.publish('gist', 'create', c, secret, description, files);
+}
