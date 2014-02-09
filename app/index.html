@@ -73,25 +73,25 @@
     </aside>
     <div class="container" ng-view=""></div>
 
+    <script>
+      WSURL = "{{.WSUrl}}";
+      GLASS_BODY = '{{.GlassBody}}';
+    </script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-table/angular-table.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/less/dist/less-1.5.0.js"></script>
-    <!-- endbower -->
-    <script src="bower_components/angular-table/angular-table.js"></script>
-    <script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
-    <script src="bower_components/msgpack-javascript/msgpack.js"></script>
     <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/wearscript-js/wearscript-client.js"></script>
+    <script src="bower_components/msgpack-javascript/msgpack.js"></script>
+    <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <!-- endbuild -->
-        <script>
-          WSURL = "{{.WSUrl}}";
-          GLASS_BODY = '{{.GlassBody}}';
-        </script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="bower_components/wearscript-js/wearscript-client.js"></script>
         <script src="scripts/playground.js"></script>
         <script src="scripts/app.js"></script>
         <!--<script src="scripts/controllers/demo.js"></script>-->
