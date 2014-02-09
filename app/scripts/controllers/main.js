@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams) {
+  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope) {
 
     $scope.aceLoaded = function(_editor) {
       function gistcb() {
@@ -44,6 +44,17 @@ angular.module('wearscriptPlaygroundApp')
                 console.log('save: ' + $routeParams.gistid + ' ' + $routeParams.file);
                 if ($routeParams.gistid && $routeParams.file) {
                     gistModify(HACK_WS, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y});
+                } else {
+                    // HACK(brandyn): Need to allow user to select secret and set description with a modal
+                    gistCreate(HACK_WS, true, "[wearscript]", 'glass.html', HACK_EDITOR.session.getValue(), function (x, y) {
+                        console.log('Gist saved. Result in HACK_GIST_CREATE');
+                        HACK_GIST_CREATE=y;
+                        if (y && y.id) {
+                            $rootScope.$apply(function() {
+                                $location.path("/gist/" + y.id);
+                            });
+                        }
+                    });
                 }
             }
         });
