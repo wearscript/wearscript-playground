@@ -19,7 +19,9 @@ angular.module('wearscriptPlaygroundApp')
       }
       // Options
       //_editor.setReadOnly(false);
-      //_editor.setKeyboardHandler("ace/keyboard/vim");
+        if (Profile.vim_mode){
+          _editor.setKeyboardHandler("ace/keyboard/vim");
+        }
         if ($routeParams.gistid) {
             var file = $routeParams.file || 'glass.html';
             console.log('GIST:' + $routeParams.gistid + ' File: ' + file);

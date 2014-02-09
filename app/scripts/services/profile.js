@@ -10,7 +10,8 @@ angular.module('wearscriptPlaygroundApp')
       complete: false,
       github_user: false,
       google_user: false,
-      glass_id: false
+      glass_id: false,
+      vim_mode: false
     }
 
     return profile
