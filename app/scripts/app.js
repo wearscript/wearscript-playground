@@ -4,7 +4,9 @@ angular.module('wearscriptPlaygroundApp', [
   'ngResource',
   'ngRoute',
   'ui.ace',
-  'angular-table'
+  'angular-table',
+  'ui.bootstrap.modal',
+  'ui.bootstrap.transition'
 ])
   .config(function ($routeProvider) {
     $routeProvider

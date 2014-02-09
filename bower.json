@@ -10,6 +10,10 @@
     "less": "~1.6.1",
     "wearscript-js": "https://github.com/OpenShades/wearscript-js.git",
     "msgpack-javascript": "https://github.com/OpenShades/msgpack-javascript.git",
-    "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git"
+    "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git",
+    "angular-ui-bootstrap": "~0.10.0"
+  },
+  "devDependencies": {
+    "bootstrap": "~3.1.0"
   }
 }

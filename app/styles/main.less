@@ -1,12 +1,9 @@
+@import "bootstrap.less";
+
 @nav_height: 35px;
 @sidebar_width: 100px;
 
 body {
-  font: 0.9em Verdana, Arial, Helvetica, sans-serif;
-  * {
-    margin:0px;
-    padding:0px;
-  }
   a {
     text-decoration:none;
     color:#AAA;
@@ -38,6 +35,8 @@ body {
       }
     }
     h1 {
+      margin:0px;
+      padding:0px;
       color:#AAA;
       font-size:15px;
       position:absolute;
@@ -58,6 +57,10 @@ body {
     width:@sidebar_width;
     background:#444;
     nav {
+      * {
+        margin:0px;
+        padding:0px;
+      }
       ul {
         list-style-type:none;
         li {
@@ -68,8 +71,6 @@ body {
             border-bottom:1px #333 solid;
             height:@nav_height;
             line-height:@nav_height;
-            border-right:1px #999 solid;
-            color:#FFF;
           }
           a:visited{
             color:#FFF;
@@ -78,7 +79,9 @@ body {
       }
     }
   }
-  .container {
+  .container-fluid {
+    margin:0px;
+    padding:0px;
     position:absolute;
     left:0px;
     right:0px;
@@ -89,7 +92,7 @@ body {
       width:100%;
     }
   }
-  &.menu-open .container {
+  &.menu-open .container-fluid {
     left:@sidebar_width;
   }
 
