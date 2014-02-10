@@ -50,6 +50,7 @@ angular.module('wearscriptPlaygroundApp', [
 
   .run(function($log,$http,$window,Socket){
       ace.config.set("basePath", "bower_components/ace-builds/src-min-noconflict") ;
+
       var server
       if ($window.WSURL == "{{.WSUrl}}" ){
         var port = (location.port != 80) ? ':' + location.port : '';
@@ -57,11 +58,6 @@ angular.module('wearscriptPlaygroundApp', [
       } else {
         server = window.WSURL + '/ws';
       }
-      Socket = new ReconnectingWebSocket(server);
-      //Socket.connect(WSURL + "/ws");
-      $window.HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {
-          console.log('Connected: ' + connected);
-      });
 
       if ($window.GLASS_BODY == "{{.GlassBody}}" ){
         $http.get('/example')
@@ -69,4 +65,6 @@ angular.module('wearscriptPlaygroundApp', [
             $window.GLASS_BODY = res.data;
           });
       }
+
+      Socket.connect(server);
   });

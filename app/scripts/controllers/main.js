@@ -1,15 +1,16 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope) {
+  .controller('MainCtrl',
+      function ($scope,$window,$location,Profile,$routeParams,$rootScope,Socket,Playground) {
 
     $scope.aceLoaded = function(_editor) {
       function gistcb() {
-        if (!$window.HACK_WS.ws.readyState || !window.HACK_WS.exists('gist')) {
+        if (!Socket.ws.readyState || !Socket.exists('gist')) {
           $window.setTimeout(gistcb, 50);
         } else {
-          gistGet(
-            $window.HACK_WS,
+          Playground.gistGet(
+            Socket,
             $routeParams.gistid,
             function (channel, gist) {
               _editor.getSession().setValue(gist.files[file].content);
@@ -34,7 +35,7 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
                 console.log('run');
-                $window.HACK_runEditorScriptOnGlass();
+                Playground.runScriptOnGlass(Socket, $window.HACK_EDITOR.getSession().getValue());
             }
         });
         _editor.commands.addCommand({
@@ -43,10 +44,10 @@ angular.module('wearscriptPlaygroundApp')
             exec: function(editor) {
                 console.log('save: ' + $routeParams.gistid + ' ' + $routeParams.file);
                 if ($routeParams.gistid && $routeParams.file) {
-                    gistModify(HACK_WS, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y});
+                    Playground.gistModify(Socket, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y});
                 } else {
                     // HACK(brandyn): Need to allow user to select secret and set description with a modal
-                    gistCreate(HACK_WS, true, "[wearscript]", 'glass.html', HACK_EDITOR.session.getValue(), function (x, y) {
+                    Playground.gistCreate(Socket, true, "[wearscript]", 'glass.html', HACK_EDITOR.session.getValue(), function (x, y) {
                         console.log('Gist saved. Result in HACK_GIST_CREATE');
                         HACK_GIST_CREATE=y;
                         if (y && y.id) {
@@ -66,7 +67,7 @@ angular.module('wearscriptPlaygroundApp')
                 if (!line.length) {
                     line = _editor.session.getLine(_editor.selection.getCursor().row);
                 }
-                $window.HACK_runLambdaOnGlass(line);
+                Playground.runLambdaOnGlass(Socket, line);
             }
         });
 

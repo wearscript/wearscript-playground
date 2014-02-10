@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('GistsCtrl', function ($scope,$window) {
-      var ws = $window.HACK_WS;
+  .controller('GistsCtrl', function ($scope,$window,Socket) {
+      var ws = Socket;
       function gist_list_cb(channel, gists) {
           for (var i = 0; i < gists.length; i++)
               gists[i].url_playground = '#/gist/' + gists[i].id;

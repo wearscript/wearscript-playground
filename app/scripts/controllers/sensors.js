@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('SensorsCtrl', function ($scope,$window) {
-      var ws = $window.HACK_WS;
+  .controller('SensorsCtrl', function ($scope,$window,Socket) {
+      var ws = Socket;
       $scope.sensors = {};
       function sensors_cb(channel, sensorTypes, sensorValues) {
           if (!$scope.sensors.hasOwnProperty(channel))
