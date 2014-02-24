@@ -30,6 +30,7 @@ function wearScriptConnectionFactory(websocket, glassConnectedCallback) {
 	subscription_cb();
     }
     var ws = new WearScriptConnection(websocket, "playground", Math.floor(Math.random() * 100000), onopen);
+    ws.subscribeTestHandler();
     function subscription_cb() {
 	glassConnectedCallback(ws.exists('glass'));
         // TODO(brandyn): Only do this once, then provide a button to refresh
