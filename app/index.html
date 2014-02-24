@@ -68,6 +68,11 @@
                data-ng-class="{'active': active==setup}"
                href="#/setup">Setup</a>
           </li>
+          <li>
+            <a data-ng-click='active=help'
+               data-ng-class="{'active': active==help}"
+               href="#/help">Help</a>
+          </li>
         </ul>
       </nav>
     </aside>
@@ -103,6 +108,7 @@
         <script src="scripts/controllers/sensors.js"></script>
         <script src="scripts/controllers/channels.js"></script>
         <script src="scripts/controllers/setup.js"></script>
+        <script src="scripts/controllers/help.js"></script>
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/profile.js"></script>
         <!-- endbuild -->
