@@ -4,19 +4,7 @@ angular.module('wearscriptPlaygroundApp')
   .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope) {
 
     $scope.aceLoaded = function(_editor) {
-      function gistcb() {
-        if (!$window.HACK_WS.ws.readyState || !window.HACK_WS.exists('gist')) {
-          $window.setTimeout(gistcb, 50);
-        } else {
-          gistGet(
-            $window.HACK_WS,
-            $routeParams.gistid,
-            function (channel, gist) {
-              _editor.getSession().setValue(gist.files[file].content);
-            }
-          );
-        }
-      }
+      var ws = $window.HACK_WS;
       // Options
       //_editor.setReadOnly(false);
         if (Profile.vim_mode){
@@ -25,7 +13,11 @@ angular.module('wearscriptPlaygroundApp')
         if ($routeParams.gistid) {
             var file = $routeParams.file || 'glass.html';
             console.log('GIST:' + $routeParams.gistid + ' File: ' + file);
-            gistcb();
+            var channel = ws.channel(ws.groupDevice, 'gistGet');
+            function gist_cb(channel, gist) {
+                _editor.getSession().setValue(gist.files[file].content);
+            }
+            ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, $routeParams.gistid);
         } else {
             _editor.getSession().setValue(GLASS_BODY);
         }
