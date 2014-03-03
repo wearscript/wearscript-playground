@@ -10,17 +10,32 @@ angular.module('wearscriptPlaygroundApp')
         if (Profile.vim_mode){
           _editor.setKeyboardHandler("ace/keyboard/vim");
         }
-        if ($routeParams.gistid) {
-            var file = $routeParams.file || 'glass.html';
-            console.log('GIST:' + $routeParams.gistid + ' File: ' + file);
+        var gistid = $routeParams.gistid || $window.HACK_GISTID;
+        if (gistid) {
+            $window.HACK_GISTID = gistid;
+            var file = $routeParams.file || $window.HACK_FILE || 'glass.html';
+            $window.HACK_FILE = file;
+            console.log('GIST:' + gistid + ' File: ' + file);
             var channel = ws.channel(ws.groupDevice, 'gistGet');
             function gist_cb(channel, gist) {
                 _editor.getSession().setValue(gist.files[file].content);
             }
-            ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, $routeParams.gistid);
+            if ($window.HACK_CONTENT) {
+                _editor.getSession().setValue($window.HACK_CONTENT);
+            } else {
+                ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, gistid);
+            }
         } else {
-            _editor.getSession().setValue(GLASS_BODY);
+            if ($window.HACK_CONTENT) {
+                _editor.getSession().setValue($window.HACK_CONTENT);
+            } else {
+                _editor.getSession().setValue(GLASS_BODY);
+            }
         }
+        _editor.getSession().on('change', function(e) {
+            $window.HACK_CONTENT = _editor.session.getValue();
+            $window.HACK_DIRTY = true;
+        });
         _editor.commands.addCommand({
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
@@ -35,11 +50,12 @@ angular.module('wearscriptPlaygroundApp')
             exec: function(editor) {
                 console.log('save: ' + $routeParams.gistid + ' ' + $routeParams.file);
                 if ($routeParams.gistid && $routeParams.file) {
-                    gistModify(HACK_WS, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y});
+                    gistModify(HACK_WS, $routeParams.gistid, $routeParams.file, HACK_EDITOR.session.getValue(), function (x, y) {console.log('Gist saved. Result in HACK_GIST_MODIFY');HACK_GIST_MODIFY=y;$window.HACK_DIRTY = false;});
                 } else {
                     // HACK(brandyn): Need to allow user to select secret and set description with a modal
                     gistCreate(HACK_WS, true, "[wearscript]", 'glass.html', HACK_EDITOR.session.getValue(), function (x, y) {
                         console.log('Gist saved. Result in HACK_GIST_CREATE');
+                        $window.HACK_DIRTY = false;
                         HACK_GIST_CREATE=y;
                         if (y && y.id) {
                             $rootScope.$apply(function() {
