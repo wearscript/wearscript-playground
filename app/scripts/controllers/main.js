@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope) {
+  .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope,$timeout) {
 
     $scope.aceLoaded = function(_editor) {
       var ws = $window.HACK_WS;
@@ -10,24 +10,30 @@ angular.module('wearscriptPlaygroundApp')
         if (Profile.vim_mode){
           _editor.setKeyboardHandler("ace/keyboard/vim");
         }
-        var gistid = $routeParams.gistid || $window.HACK_GISTID;
-        if (gistid) {
-            $window.HACK_GISTID = gistid;
+        // TODO: This section needs to be reworked
+        if ($routeParams.gistid && ($routeParams.gistid != $window.HACK_GISTID || $routeParams.file != $window.HACK_FILE)) {
+            // Drops changes in this case
+            $window.HACK_GISTID = $routeParams.gistid;
             var file = $routeParams.file || $window.HACK_FILE || 'glass.html';
             $window.HACK_FILE = file;
-            console.log('GIST:' + gistid + ' File: ' + file);
+            console.log('GIST:' + $window.HACK_GISTID + ' File: ' + file);
             var channel = ws.channel(ws.groupDevice, 'gistGet');
             function gist_cb(channel, gist) {
+                $window.HACK_DIRTY = false;
                 _editor.getSession().setValue(gist.files[file].content);
             }
-            if ($window.HACK_CONTENT) {
-                _editor.getSession().setValue($window.HACK_CONTENT);
-            } else {
-                ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, gistid);
-            }
+            ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, $window.HACK_GISTID);
         } else {
             if ($window.HACK_CONTENT) {
+                // If it's a gist reset the route properly
                 _editor.getSession().setValue($window.HACK_CONTENT);
+                if ($window.HACK_GISTID && $window.HACK_FILE) {
+                    $timeout(function() {
+                        $rootScope.$apply(function() {
+                            $location.path("/gist/" + $window.HACK_GISTID + "/" + $window.HACK_FILE);
+                        });
+                    });
+                }
             } else {
                 _editor.getSession().setValue(GLASS_BODY);
             }
