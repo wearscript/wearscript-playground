@@ -7,6 +7,20 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  // Explicitly host on local ip unless --host defined
+  var os=require('os');
+  var ifaces=os.networkInterfaces();
+  var lookupIpAddress = null;
+  for (var dev in ifaces) {
+      ifaces[dev].forEach(function(details){
+        console.log(details)
+        if (details.family=='IPv4') {
+          lookupIpAddress = details.address;
+        }
+      });
+  }
+  var ipAddress = grunt.option('host') || lookupIpAddress;
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -45,7 +59,7 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: ipAddress,
         livereload: 35729
       },
       proxies: [
