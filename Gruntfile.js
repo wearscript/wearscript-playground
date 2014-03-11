@@ -54,6 +54,7 @@ module.exports = function (grunt) {
             , '/ws'
             , '/example'
             , '/oauth2callback'
+            , '/user'
             ]
         , host: 'localhost'
         , port: 4938
