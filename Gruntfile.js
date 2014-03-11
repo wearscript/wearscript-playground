@@ -51,6 +51,8 @@ module.exports = function (grunt) {
       proxies: [
         { context:
             [ '/auth'
+            , '/ws'
+            , '/example'
             , '/oauth2callback'
             ]
         , host: 'localhost'
@@ -58,6 +60,7 @@ module.exports = function (grunt) {
         , https: false
         , changeOrigin: false
         , xforward: false
+        , ws: true
         }
       ],
       livereload: {
