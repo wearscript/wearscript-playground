@@ -21,7 +21,7 @@
     <script type="text/javascript">//less.watch()</script>
     <script>
       var port = (location.port != 80) ? ':' + location.port : '';
-      WSURL = 'ws://' + location.origin;
+      WSURL = 'ws://' + location.host;
       GLASS_BODY = '{{.GlassBody}}';
     </script>
     <!--<!(endif)-->
