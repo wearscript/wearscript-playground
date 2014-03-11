@@ -4,6 +4,10 @@ angular.module('wearscriptPlaygroundApp')
   .controller('MainCtrl', function ($scope,$window,$location,Profile,$routeParams,$rootScope,$timeout) {
 
     $scope.aceLoaded = function(_editor) {
+      function gist_cb(channel, gist) {
+          $window.HACK_DIRTY = false;
+          _editor.getSession().setValue(gist.files[file].content);
+      }
       var ws = $window.HACK_WS;
       // Options
       //_editor.setReadOnly(false);
@@ -18,10 +22,6 @@ angular.module('wearscriptPlaygroundApp')
             $window.HACK_FILE = file;
             console.log('GIST:' + $window.HACK_GISTID + ' File: ' + file);
             var channel = ws.channel(ws.groupDevice, 'gistGet');
-            function gist_cb(channel, gist) {
-                $window.HACK_DIRTY = false;
-                _editor.getSession().setValue(gist.files[file].content);
-            }
             ws.publish_retry(gist_cb.bind(this), 1000, channel, 'gist', 'get', channel, $window.HACK_GISTID);
         } else {
             if ($window.HACK_CONTENT) {
