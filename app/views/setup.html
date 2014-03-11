@@ -2,16 +2,23 @@
 <html>
 <body ng-app="main">
     <div ng-controller="SetupCtrl">
-      <a href="authgh">Auth (Github)</a>
-      <a href="auth">Auth (Google)</a>
-      <button ng-click="qr()">QR</button>
-      <div>
-        <pre>{{adb}}</pre>
-      </div>
-      <div>
-        <img ng-src="{{qrurl}}" />
+      <div class="text-center">
+        <p>
+          Auth with
+          <br>
+          <a href="authgh" class="btn btn-primary"> Github </a>
+          or
+          <a href="auth" class="btn btn-primary"> Google </a>
+        </p>
+        <hr>
+        <button ng-click="qr()" class="btn btn-primary btn-lrg"> Generate QR Code </button>
+        <p>
+          <pre>{{adb}}</pre>
+        </p>
+        <div>
+          <img ng-src="{{qrurl}}" />
+        </div>
       </div>
     </div>
 </body>
 </html>
-
