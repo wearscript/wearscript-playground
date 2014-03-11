@@ -54,13 +54,7 @@ angular.module('wearscriptPlaygroundApp', [
 
   .run(function($log,$http,$window,Socket){
       ace.config.set("basePath", "bower_components/ace-builds/src-min-noconflict") ;
-      var server
-      if ($window.WSURL == "{{.WSUrl}}" ){
-        var port = (location.port != 80) ? ':' + location.port : '';
-        server = 'ws://' + document.domain + port + '/ws';
-      } else {
-        server = window.WSURL + '/ws';
-      }
+      var server = window.WSURL + '/ws';
       Socket = new ReconnectingWebSocket(server);
       //Socket.connect(WSURL + "/ws");
       $window.HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {
