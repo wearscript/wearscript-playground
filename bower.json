@@ -5,12 +5,12 @@
     "angular": "1.2.6",
     "angular-resource": "1.2.6",
     "angular-route": "1.2.6",
-    "angular-table": "https://github.com/samu/angular-table.git",
     "angular-ui-ace": "bower",
     "wearscript-js": "https://github.com/OpenShades/wearscript-js.git",
     "msgpack-javascript": "https://github.com/OpenShades/msgpack-javascript.git",
     "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git",
-    "angular-ui-bootstrap": "~0.10.0"
+    "angular-ui-bootstrap": "~0.10.0",
+    "angular-table": "~1.0.0"
   },
   "devDependencies": {
     "less": "~1.6.1",
