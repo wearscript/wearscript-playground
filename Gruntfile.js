@@ -49,12 +49,19 @@ module.exports = function (grunt) {
         livereload: 35729
       },
       proxies: [
-        { context: '/auth'
+        { context:
+            [ '/auth'
+            , '/ws'
+            , '/example'
+            , '/oauth2callback'
+            ]
         , host: 'localhost'
         , port: 4938
         , https: false
         , changeOrigin: false
         , xforward: false
+        , timeout: 9999999999999999
+        , ws: true
         }
       ],
       livereload: {
