@@ -4,17 +4,19 @@
     <div ng-controller="SensorsCtrl">
       <div ng-repeat="(key0, value0) in sensors">
         <h3>{{key0}}</h3>
-        <table at-table list="value0">
-  <!-- the header will automatically be created according to the body definition. -->
-  <thead></thead>
-  <tbody>
-    <tr>
-      <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
-      <td>{{item[3]}}</td><td>{{item[0]}}</td><td>{{item[1]}}</td><td>{{item[2]}}</td>
-    </tr>
-  </tbody>
-</table>
-
+        <table at-table list="value0" class="table table-bordered table-condensed">
+          <!-- the header will automatically be created according to the body definition. -->
+          <thead></thead>
+          <tbody>
+            <tr>
+              <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
+              <td>{{item[3]}}</td>
+              <td>{{item[0]}}</td>
+              <td>{{item[1]}}</td>
+              <td>{{item[2]}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 </body>
