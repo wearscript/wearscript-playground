@@ -2,17 +2,16 @@
 <html>
 <body ng-app="main">
     <div ng-controller="GistsCtrl">
-<table at-table list="nameList">
-  <!-- the header will automatically be created according to the body definition. -->
-  <thead></thead>
-  <tbody>
-    <tr>
-      <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
-      <td><a href="{{item.url_playground}}">{{item.id}}</a></td><td at-implicit attribute="description"></td>
-    </tr>
-  </tbody>
-</table>
-
+      <table at-table list="nameList" class="table table-bordered table-condensed">
+        <!-- the header will automatically be created according to the body definition. -->
+        <thead></thead>
+        <tbody>
+          <tr>
+            <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
+            <td><a href="{{item.url_playground}}">{{item.id}}</a></td><td at-implicit attribute="description"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 </body>
 </html>
