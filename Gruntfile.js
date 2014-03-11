@@ -60,6 +60,7 @@ module.exports = function (grunt) {
         , https: false
         , changeOrigin: false
         , xforward: false
+        , timeout: 9999999999999999
         , ws: true
         }
       ],
