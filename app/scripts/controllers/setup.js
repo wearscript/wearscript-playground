@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('SetupCtrl', function ($scope,$http) {
+  .controller('SetupCtrl', function ($scope,$http,Profile) {
       $scope.qrurl = '';
       $scope.adb = '';
       $scope.qrsuccess =  function (data) {
@@ -12,5 +12,12 @@ angular.module('wearscriptPlaygroundApp')
       $scope.qr = function () {
           $http.post('user/key/ws').success($scope.qrsuccess);
       }
+      $scope.vimMode = function() {
+          if(!Profile.vim_mode)
+            Profile.vim_mode = true;
+          else
+            Profile.vim_mode = false;
+      }
+      $scope.vim = Profile.vim_mode;
 }
 );
