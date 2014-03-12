@@ -38,10 +38,12 @@
     data-ng-class="{'menu-open': menu }"
     data-ng-cloak >
     <header>
-      <a href="#"
+      <a
          class="menu-button"
          data-ng-click="menu=!menu"
-         data-ng-init="menu=true">Menu</a>
+         data-ng-init="menu=true"><span class="glyphicon glyphicon glyphicon-align-justify"></span></a>
+
+      
       <h1>Wearscript Playground</h1>
     </header>
     <aside ng-show="menu">
@@ -104,7 +106,6 @@
     <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/playground.js"></script>
     <script src="scripts/app.js"></script>
     <!--<script src="scripts/controllers/demo.js"></script>-->
     <script src="scripts/controllers/main.js"></script>
