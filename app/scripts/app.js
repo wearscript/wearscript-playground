@@ -53,13 +53,10 @@ angular.module('wearscriptPlaygroundApp', [
   })
 
   .run(function($log,$http,$window,Socket){
+
       ace.config.set("basePath", "bower_components/ace-builds/src-min-noconflict") ;
-      var server = window.WSURL + '/ws';
-      Socket = new ReconnectingWebSocket(server);
-      //Socket.connect(WSURL + "/ws");
-      $window.HACK_WS = wearScriptConnectionFactory(Socket, function (connected) {
-          console.log('Connected: ' + connected);
-      });
+
+      Socket.connect(window.WSURL + '/ws');
 
       if ($window.GLASS_BODY == "{{.GlassBody}}" ){
         $http.get('/example')
