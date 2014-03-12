@@ -18,7 +18,7 @@ The web-based IDE for WearScript. Write code, pair glass, save, and enjoy.
   1. Clone repo and submodules
 
     ```bash
-    git clone git@github.com/OpenShades/wearscript-playground.git
+    git clone git@github.com:OpenShades/wearscript-playground.git
     git submodule update --init
     ```
   2. Configure API server
