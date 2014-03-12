@@ -7,12 +7,13 @@ body {
   a {
     text-decoration:none;
     color:#AAA;
-  }
-  a:visited{
-    color:#AAA;
+    &:visited{
+      color:#AAA;
+    }
   }
   header {
-    position:absolute;
+    color:#AAA;
+    //position:absolute;
     top:0px;
     right:0px;
     left:0px;
@@ -32,6 +33,9 @@ body {
       }
       &:last-child {
         right:0px;
+      }
+      &:hover {
+        text-decoration: none;
       }
     }
     h1 {
@@ -55,6 +59,7 @@ body {
     left:0px;
     bottom:0px;
     width:@sidebar_width;
+    height:100%;
     background:#444;
     nav {
       * {
@@ -71,9 +76,13 @@ body {
             border-bottom:1px #333 solid;
             height:@nav_height;
             line-height:@nav_height;
-          }
-          a:visited{
-            color:#FFF;
+            &:visited{
+              color:#FFF;
+            }
+            &:hover{
+              text-decoration:none;
+              background: #000;
+            }
           }
         }
       }
