@@ -27,7 +27,7 @@ The web-based IDE for WearScript. Write code, pair glass, save, and enjoy.
     cp server/config.go.example server/config.go
     ```
 
-    Edit server/config.go with Google API Credentials
+    Edit server/config.go to be in single user mode.
 
   3. Compile API Server
 
