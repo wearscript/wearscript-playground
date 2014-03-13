@@ -7,6 +7,8 @@ angular.module('wearscriptPlaygroundApp')
     var service = {}
     
     function onopen(){
+
+      $rootScope.$broadcast('connected')
   
       function log_cb(channel, message) {
         $log.log(channel + ': ' + message);
@@ -25,31 +27,32 @@ angular.module('wearscriptPlaygroundApp')
       }
       
       function subscription_cb(){
-        $log.log('Socket ** Glass Connected: ' + service.exists('glass'));
+        $log.log('Socket ** Glass Connected: ' + service.ws.exists('glass'));
+        $rootScope.$broadcast('subscription')
+        if (service.ws.exists('glass')){
+            $rootScope.$broadcast('glass')
+        }
       }
 
       $log.log('Socket ** Server Connected');
 
-      service.subscribeTestHandler();
-      service.subscribe('subscriptions', subscription_cb);
-      service.subscribe('log', log_cb);
-      service.subscribe('urlopen', urlopen_cb);
+      service.ws.subscribeTestHandler();
+      service.ws.subscribe('subscriptions', subscription_cb);
+      service.ws.subscribe('log', log_cb);
+      service.ws.subscribe('urlopen', urlopen_cb);
     }
 
     service.connect = function(url){
 
-      var socket = new ReconnectingWebSocket(url)
+      service.socket = new ReconnectingWebSocket(url)
       var connect = service.connect
 
-      service = new WearScriptConnection(
-        socket,
+      service.ws = new WearScriptConnection(
+        service.socket,
         "playground",
         Math.floor(Math.random() * 100000),
         onopen
       );
-
-      service.socket = socket
-      service.connect = connect
     }
 
     return service;
