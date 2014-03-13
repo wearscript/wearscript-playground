@@ -10,7 +10,8 @@
     "msgpack-javascript": "https://github.com/OpenShades/msgpack-javascript.git",
     "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git",
     "angular-ui-bootstrap": "~0.10.0",
-    "angular-table": "~1.0.0"
+    "angular-table": "~1.0.0",
+    "components-font-awesome": "~4.0.3"
   },
   "devDependencies": {
     "less": "~1.6.1",
