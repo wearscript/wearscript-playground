@@ -1,5 +1,11 @@
 <div ng-controller="SetupCtrl">
   <div class="text-center tab-setup">
+    <div>
+      User Settings
+      <br>
+      <input type="checkbox" ng-model="vimval" ng-change="vimMode()">
+      Vim Mode
+    </div>
     <p>
       <h3>Auth with Google or Github</h3>
       

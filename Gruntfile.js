@@ -59,8 +59,9 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: ipAddress,
+        hostname: '0.0.0.0',
         livereload: 35729
+
       },
       proxies: [
         { context:
@@ -69,6 +70,8 @@ module.exports = function (grunt) {
             , '/example'
             , '/oauth2callback'
             , '/user'
+            , '/oauth2callbackgh'
+            , '/authgh'
             ]
         , host: 'localhost'
         , port: 4938
@@ -81,7 +84,7 @@ module.exports = function (grunt) {
       ],
       livereload: {
         options:
-          { open: true
+          { open: 'http://' + ipAddress + ':9000'
           , base:
             [ '.tmp'
             , '<%= yeoman.app %>'
