@@ -8,7 +8,7 @@ angular.module('wearscriptPlaygroundApp')
     
     function onopen(){
 
-      $log.log('Socket ** Server Connected');
+      $log.log('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
   
       function log_cb(channel, message) {
@@ -30,7 +30,7 @@ angular.module('wearscriptPlaygroundApp')
       function subscription_cb(foo){
         $rootScope.$broadcast('subscription')
         if (service.ws.exists('glass')){
-            $log.log('Socket ** Glass Connected');
+            $log.log('** Socket','Glass Connected');
             $rootScope.$broadcast('glass')
         }
       }
