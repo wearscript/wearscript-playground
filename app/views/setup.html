@@ -18,6 +18,13 @@
         <div>
           <img ng-src="{{qrurl}}" />
         </div>
+        <div>
+          User Settings
+          <br>
+          <input type="checkbox" ng-model="vimVal" ng-true-value="true" ng-false-value="false" ng-change="vimMode()">
+          Vim Mode  
+          {{ vimVal }}
+        </div>
       </div>
     </div>
 </body>
