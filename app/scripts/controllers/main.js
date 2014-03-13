@@ -11,7 +11,7 @@ angular.module('wearscriptPlaygroundApp')
       var ws = $window.HACK_WS;
       // Options
       //_editor.setReadOnly(false);
-        if (Profile.vim_mode){
+        if (localStorage.getItem("vim_mode")  === "true"){
           _editor.setKeyboardHandler("ace/keyboard/vim");
         }
         // TODO: This section needs to be reworked

@@ -1,4 +1,3 @@
-
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
@@ -13,6 +12,8 @@ angular.module('wearscriptPlaygroundApp')
       glass_id: false,
       vim_mode: false
     }
+    //local storage for vim boolean
+    profile.vim_mode = localStorage.getItem("vim_mode");
 
     return profile
 

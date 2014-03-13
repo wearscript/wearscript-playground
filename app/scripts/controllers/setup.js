@@ -13,11 +13,12 @@ angular.module('wearscriptPlaygroundApp')
           $http.post('user/key/ws').success($scope.qrsuccess);
       }
       $scope.vimMode = function() {
-          if(!Profile.vim_mode)
-            Profile.vim_mode = true;
-          else
-            Profile.vim_mode = false;
+          if(localStorage.getItem("vim_mode") === "false") {
+            localStorage.setItem("vim_mode", "true");
+          } else {
+            localStorage.setItem("vim_mode", "false");
+          }
       }
-      $scope.vim = Profile.vim_mode;
+      $scope.vimval = Profile.vim_mode;
 }
 );
