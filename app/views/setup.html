@@ -1,31 +1,29 @@
-<div ng-controller="SetupCtrl">
-  <div class="text-center tab-setup">
-    <div>
-      User Settings
-      <br>
-      <input type="checkbox" ng-model="vimval" ng-change="vimMode()">
-      Vim Mode
-    </div>
-    <p>
-      <h3>Auth with Google or Github</h3>
-      
-      <a href="authgh" class="btn btn-primary"> Github </a>
-      
-      <a href="auth" class="btn btn-primary"> Google </a>
-    </p>
-    <p>Then</p>
-    <p><button ng-click="qr()" class="btn btn-primary btn-lrg"> Generate QR Code </button></p>
-    
-    <p ng-if="adb">Run setup in WearScript then scan the QR code.</p>
-    
-    <p>
-      <img ng-src="{{qrurl}}" />
-    </p>
-
-    <p ng-if="adb">
-      Otherwise, copy + paste the command below into a terminal
-    </p>
-    <pre ng-if="adb">{{adb}}</pre>
-    
+<div class="text-center tab-setup">
+  <div>
+    User Settings
+    <br>
+    <input type="checkbox" ng-model="vimval" ng-change="vimMode()">
+    Vim Mode
   </div>
+  <p>
+    <h3>Auth with Google or Github</h3>
+    
+    <a href="authgh" class="btn btn-primary"> Github </a>
+    
+    <a href="auth" class="btn btn-primary"> Google </a>
+  </p>
+  <p>Then</p>
+  <p><button ng-click="qr()" class="btn btn-primary btn-lrg"> Generate QR Code </button></p>
+  
+  <p ng-if="adb">Run setup in WearScript then scan the QR code.</p>
+  
+  <p>
+    <img ng-src="{{qrurl}}" />
+  </p>
+
+  <p ng-if="adb">
+    Otherwise, copy + paste the command below into a terminal
+  </p>
+  <pre ng-if="adb">{{adb}}</pre>
+  
 </div>
