@@ -8,11 +8,11 @@ angular.module('wearscriptPlaygroundApp')
     
     function onopen(){
 
-      $log.log('** Socket','Server Connected');
+      $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
   
       function log_cb(channel, message) {
-        $log.log(channel + ': ' + message);
+        $log.info(channel + ': ' + message);
         // TODO(brandyn): Have a notification that a log message was sent
       }
       function gist_modify_cb(channel, gists) {
@@ -30,8 +30,10 @@ angular.module('wearscriptPlaygroundApp')
       function subscription_cb(foo){
         $rootScope.$broadcast('subscription')
         if (service.ws.exists('glass')){
-            $log.log('** Socket','Glass Connected');
+            $log.info('** Socket','Glass Connected');
             $rootScope.$broadcast('glass')
+        } else {
+            $log.warn('!! Socket','Glass Disconnected');
         }
       }
 
