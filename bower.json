@@ -11,7 +11,8 @@
     "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git",
     "angular-ui-bootstrap": "~0.10.0",
     "angular-table": "~1.0.0",
-    "components-font-awesome": "~4.0.3"
+    "components-font-awesome": "~4.0.3",
+    "angular-touch": "~1.2.14"
   },
   "devDependencies": {
     "less": "~1.6.1",
