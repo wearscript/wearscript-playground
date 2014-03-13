@@ -38,8 +38,18 @@
 @import "../bower_components/bootstrap/less/wells.less";
 @import "../bower_components/bootstrap/less/close.less";
 @import "../bower_components/components-font-awesome/less/font-awesome.less";
-@import "../bower_components/components-font-awesome/less/icons.less";
-
+@fa-font-path: "../bower_components/components-font-awesome/fonts";
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('@{fa-font-path}/fontawesome-webfont.eot?v=@{fa-version}');
+  src: url('@{fa-font-path}/fontawesome-webfont.eot?#iefix&v=@{fa-version}') format('embedded-opentype'),
+    url('@{fa-font-path}/fontawesome-webfont.woff?v=@{fa-version}') format('woff'),
+    url('@{fa-font-path}/fontawesome-webfont.ttf?v=@{fa-version}') format('truetype'),
+    url('@{fa-font-path}/fontawesome-webfont.svg?v=@{fa-version}#fontawesomeregular') format('svg');
+//  src: url('@{fa-font-path}/FontAwesome.otf') format('opentype'); // used when developing fonts
+  font-weight: normal;
+  font-style: normal;
+}
 // Components w/ JavaScript
 @import "../bower_components/bootstrap/less/modals.less";
 @import "../bower_components/bootstrap/less/tooltip.less";
