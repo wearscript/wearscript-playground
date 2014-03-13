@@ -2,7 +2,7 @@
 
 angular.module('wearscriptPlaygroundApp')
 
-  .factory( 'Profile', function($rootScope,$log,Storage){
+  .factory( 'Profile', function( Storage ){
 
     var profile = {
       authenticated: false,
@@ -18,6 +18,10 @@ angular.module('wearscriptPlaygroundApp')
       get: function(key) {
         return this[key] || Storage.get(key);
       }
+    }
+
+    if( profile.vim_mode == false) {
+      profile.set('vim_mode', false)
     }
 
     return profile
