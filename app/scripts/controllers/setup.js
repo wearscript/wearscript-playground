@@ -4,7 +4,7 @@ angular.module('wearscriptPlaygroundApp')
   .controller('SetupCtrl', function ($scope,$http,Profile) {
       $scope.qrurl = '';
       $scope.adb = '';
-      $scope.vimval = Boolean(JSON.parse(localStorage.getItem("vim_mode")));
+      $scope.vimval = Profile.get('vim_val');
       $scope.qrsuccess =  function (data) {
           var wsurl = WSURL + "/ws/" + data;
           $scope.qrurl = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" + wsurl +  "&chld=H|4&choe=UTF-8";
@@ -14,13 +14,7 @@ angular.module('wearscriptPlaygroundApp')
           $http.post('user/key/ws').success($scope.qrsuccess);
       }
       $scope.vimMode = function() {
-          if(localStorage.getItem("vim_mode") === "false") {
-            localStorage.setItem("vim_mode", "true");
-            $scope.vimval = true;
-          } else {
-            localStorage.setItem("vim_mode", "false");
-            $scope.vimval = false;
-          }
+          Profile.set('vim_val', $scope.vimval);
       }
 }
 );
