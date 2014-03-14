@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Wearscript Playground</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
     <!--(if target dev)><!-->
     <link rel="stylesheet/less" type="text/css" href="styles/main.less">
     <script>
@@ -41,7 +41,7 @@
       <a
          data-ng-click="menu=!menu"
          data-ng-init="menu=true"><i class="fa fa-bars"></i></a>
-      <a 
+      <a
         data-ng-click=""><i class="fa fa-ellipsis-v"></i></a>
       <h1>Wearscript Playground</h1>
     </header>
@@ -95,6 +95,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
     <!-- endbower -->
     <script src="bower_components/angular-table/src/main/webapp/js/lib/angular-table.js"></script>
     <script src="bower_components/less/dist/less-1.5.0.js"></script>
@@ -103,6 +104,7 @@
     <script src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
