@@ -54,6 +54,11 @@ module.exports = function (grunt) {
       }
     },
 
+    exec: {
+        'api-build': 'cd server; GOPATH=~/.go go build && cd ..',
+        'api-serve': 'killall server; ./server/server &'
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
@@ -365,6 +370,7 @@ module.exports = function (grunt) {
       'clean:server',
       'bower-install',
       'concurrent:server',
+      'exec:api-serve',
       'autoprefixer',
       'configureProxies:server',
       'connect:livereload',
@@ -395,7 +401,8 @@ module.exports = function (grunt) {
     'rev',
     'usemin',
     'targethtml',
-    'htmlmin'
+    'htmlmin',
+    'exec:api-build'
   ]);
 
   grunt.registerTask('default', [
