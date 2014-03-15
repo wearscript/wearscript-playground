@@ -51,7 +51,6 @@ angular.module('wearscriptPlaygroundApp', [
         redirectTo: '/'
       });
   })
-
   .run(function($rootScope,Socket,Editor){
     Socket.connect(window.WSURL + '/ws');
     $rootScope.aceLoaded = function( editor ) {

@@ -23,7 +23,6 @@ angular.module('wearscriptPlaygroundApp')
           modalTemplate = 'views/modals/save-gist.html'
           break
       }
-
       var modalInstance = $modal.open({
         templateUrl: modalTemplate,
         controller: ModalInstanceCtrl,
