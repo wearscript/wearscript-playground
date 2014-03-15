@@ -4,10 +4,26 @@ angular.module('wearscriptPlaygroundApp')
   .controller('HelpmodalCtrl', function ($scope, $modal, $log) {
     $scope.items = ['Run Script', 'Run Line/Selection', 'Save to Gist'];
 
-    $scope.open = function () {
+    $scope.open = function (currentModal) {
 
+      var modalTemplate = '';
+      switch(currentModal){
+        case undefined:
+        case '':
+          modalTemplate = 'views/helpmodal.html';
+          console.log(modalTemplate);
+          break;
+        case 'help':
+          modalTemplate = 'views/helpmodal.html';
+          break;
+        case 'shortcuts': 
+          modalTemplate = 'views/help.html'
+          break;
+          
+      }
+      
       var modalInstance = $modal.open({
-        templateUrl: 'views/helpmodal.html',
+        templateUrl: modalTemplate,
         controller: ModalInstanceCtrl,
         resolve: {
           items: function () {
