@@ -79,19 +79,22 @@
                data-ng-class="{'active': active==setup}"
                href="#/setup">Setup</a>
           </li>
-          <li>
+          <!-- <li>
             <a data-ng-click='active=help'
                data-ng-class="{'active': active==help}"
                href="#/help">Help</a>
-          </li>
+          </li> -->
         </ul>
         <div class="col-xs-12">
           <div class="row">
             <!-- under nav icons -->
-            <div data-ng-controller="HelpmodalCtrl" class="col-xs-12 text-center">
+            <div data-ng-controller="HelpmodalCtrl" class="col-xs-6 text-center">
               <a href="" data-ng-click="open('shortcuts')" title="Keyboard Shortcuts"><i class="fa fa-keyboard-o fa-2x"></i></a>
             </div>
-
+             <div data-ng-controller="HelpmodalCtrl" class="col-xs-6 text-center">
+              <a href="" data-ng-click="open('help')" title="Keyboard Shortcuts"><i class="fa fa-question-circle fa-2x"></i></a>
+            </div>
+            
           </div>
         </div>
       </nav>
