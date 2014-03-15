@@ -75,6 +75,11 @@
                href="#/channels">Channels</a>
           </li>
           <li>
+            <a data-ng-click='active=channels'
+               data-ng-class="{'active': active==logging}"
+               href="#/logging">Logging</a>
+          </li>
+          <li>
             <a data-ng-click='active=setup'
                data-ng-class="{'active': active==setup}"
                href="#/setup">Setup</a>
@@ -107,6 +112,7 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
+    <script src="bower_components/angular-logging/angular-logging.js"></script>
     <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -127,13 +133,15 @@
     <script src="scripts/controllers/channels.js"></script>
     <script src="scripts/controllers/setup.js"></script>
     <script src="scripts/controllers/help.js"></script>
+    <script src="scripts/controllers/helpmodal.js"></script>
+    <script src="scripts/controllers/sidenav.js"></script>
+    <script src="scripts/controllers/logging.js"></script>
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/socket.js"></script>
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/editorservice.js"></script>
-    <script src="scripts/controllers/helpmodal.js"></script>
     <script src="scripts/services/playground.js"></script>
-    <script src="scripts/controllers/sidenav.js"></script>
+>>>>>>> Stashed changes
     <!-- endbuild -->
   </body>
 </html>

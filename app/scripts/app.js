@@ -6,7 +6,8 @@ angular.module('wearscriptPlaygroundApp', [
   'ui.ace',
   'angular-table',
   'ui.bootstrap',
-  'ngTouch'
+  'ngTouch',
+  'ngLogging'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -47,12 +48,20 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/help.html',
         controller: 'HelpCtrl'
       })
+      .when('/logging', {
+        templateUrl: 'views/logging.html',
+        controller: 'LoggingCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
   })
 
-  .run(function($log,$http,$window,Socket){
+  .run(function($log,$http,$window,Socket,Logging){
+
+      // Globally enable/disable logging
+      Logging.enabled = true;
+
       ace.config.set("basePath", "bower_components/ace-builds/src-min-noconflict") ;
       Socket.connect(window.WSURL + '/ws');
       if ($window.GLASS_BODY == "{{.GlassBody}}" ){

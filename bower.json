@@ -6,6 +6,7 @@
     "angular-resource": "1.2.14",
     "angular-route": "1.2.14",
     "angular-ui-ace": "bower",
+    "angular-logging": "https://gist.github.com/6938531.git",
     "wearscript-js": "https://github.com/lrvick/wearscript-js.git",
     "msgpack-javascript": "https://github.com/OpenShades/msgpack-javascript.git",
     "reconnecting-websocket": "https://github.com/joewalnes/reconnecting-websocket.git",
