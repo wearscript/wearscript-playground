@@ -20,7 +20,7 @@ body {
     left:0px;
     height:@nav_height;
     background:#333;
-    a {
+    > a, div > a {
       display:block;
       height:@nav_height;
       line-height:@nav_height;
@@ -28,16 +28,17 @@ body {
       min-width:60px;
       position:absolute;
       top:0px;
-      z-index:9999;
-      &:nth-child(1) {
-        left:0px;
-      }
-      &:nth-child(2) {
-        right:0px;
-      }
+      z-index:1049;
       &:hover {
         text-decoration: none;
       }
+    }
+    div > a {
+      display:block;
+      right:0px;
+    }
+    > a {
+      left:0px;
     }
     h1 {
       margin:0px;
