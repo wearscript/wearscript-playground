@@ -3,9 +3,9 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory('Editor', function(
-    $window,$rootScope,$log,$http,$routeParams,Socket,Profile
+    $window,$rootScope,$log,$http,$routeParams,$timeout,Socket,Profile,Playground
   ) {
-      
+
     ace.config.set(
       "basePath",
       "bower_components/ace-builds/src-min-noconflict"
@@ -18,7 +18,7 @@ angular.module('wearscriptPlaygroundApp')
       file: undefined,
       forkonsave: false,
       session: false
-    } 
+    }
 
     service.init = function(editor){
 
@@ -28,6 +28,12 @@ angular.module('wearscriptPlaygroundApp')
       function gist_cb(channel, gist) {
           service.dirty = false;
           service.editor.getSession().setValue(gist.files[file].content);
+      }
+      function gist_modify_cb(channel, gists) {
+        Profile.set('gists', gists);
+      }
+      function gist_get_cb(channel, gist) {
+        Profile.set('gists', gist);
       }
       var ws = Socket.ws;
 
@@ -87,66 +93,40 @@ angular.module('wearscriptPlaygroundApp')
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
-                $log.log('run');
-                $window.HACK_runservice.editorScriptOnGlass();
+              Playground.runScriptOnGlass(ws, service.editor.session.getValue());
             }
         });
         service.editor.commands.addCommand({
             name: "save-editor",
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
             exec: function(editor) {
-                $log.log('save: ' + $routeParams.gistid + ' ' + $routeParams.file);
-                if ($routeParams.gistid && $routeParams.file) {
-                    gistModify(
-                      Socket.ws,
-                      $routeParams.gistid,
-                      $routeParams.file,
-                      service.editor.session.getValue(),
-                      function (x, y) {
-                        $log.log('Gist saved. Result in HACK_GIST_MODIFY');
-                        HACK_GIST_MODIFY=y;
-                        service.dirty = false;
-                      }
-                    );
-                } else {
-                    // HACK(brandyn): Need to allow user to select secret and
-                    // set description with a modal
-                    gistCreate(
-                      Socket.ws,
-                      true,
-                      "[wearscript]",
-                      'glass.html',
-                      service.editor.session.getValue(),
-                      function (x, y) {
-                        $log.log('Gist saved. Result in HACK_GIST_CREATE');
-                        service.dirty = false;
-                        HACK_GIST_CREATE=y;
-                        if (y && y.id) {
-                            $rootScope.$apply(function() {
-                                $location.path("/gist/" + y.id);
-                            });
-                        }
-                      }
-                    );
-                }
+              if ($routeParams.gistid && $routeParams.file) {
+                Playground.gistModify(ws, $routeParams.gistid, $routeParams.file, service.editor.session.getValue(), function (x, modGist) {
+                  Playground.updateLocalGists( modGist );
+                });
+              } else {
+                // @TODO: Need to allow user to select secret and set description with a modal
+                Playground.gistCreate(ws, true, "[wearscript]", 'glass.html', service.editor.session.getValue(), function (x, y) {
+                  if (y && y.id) {
+                    Playground.updateLocalGists( y )
+                    $location.path("/gist/" + y.id);
+                  }
+                });
+              }
             }
         });
         service.editor.commands.addCommand({
             name: "evaluate-region",
             bindKey: {win: "Alt-Enter", mac: "Alt-Enter"},
             exec: function(editor) {
-                var line = service.editor.session.getTextRange(
-                  service.editor.getSelectionRange()
-                );
-                if (!line.length) {
-                    line = service.editor.session.getLine(
-                      service.editor.selection.getCursor().row
-                    );
-                }
-                $window.HACK_runLambdaOnGlass(line);
+              var line = service.editor.session.getTextRange(service.editor.getSelectionRange());
+              if (!line.length) {
+                line = service.editor.session.getLine(service.editor.selection.getCursor().row);
+              }
+              Playground.runLambdaOnGlass(ws, line);
             }
         });
-    
+
     }
 
     return service;

@@ -53,11 +53,8 @@ angular.module('wearscriptPlaygroundApp', [
   })
 
   .run(function($rootScope,Socket,Editor){
-
-      Socket.connect(window.WSURL + '/ws');
-
-      $rootScope.aceLoaded = function( editor ) {
-        Editor.init(editor)
-      }
-
+    Socket.connect(window.WSURL + '/ws');
+    $rootScope.aceLoaded = function( editor ) {
+      Editor.init(editor)
+    }
   });
