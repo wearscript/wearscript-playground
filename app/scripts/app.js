@@ -56,7 +56,7 @@ angular.module('wearscriptPlaygroundApp', [
         redirectTo: '/'
       });
   })
-  .run(function($log,$http,$window,Socket,Logging){
+  .run(function($log,$http,$window,$rootScope,Socket,Logging,Editor){
     // Globally enable/disable logging
     Logging.enabled = true;
     Socket.connect(window.WSURL + '/ws');
