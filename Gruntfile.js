@@ -56,7 +56,7 @@ module.exports = function (grunt) {
 
     exec: {
         'api-build': 'cd server; GOPATH=~/.go go build && cd ..',
-        'api-serve': 'killall server; ./server/server &'
+        'api-serve': 'killall server; cd server; ./server &'
     },
 
     // The actual grunt server settings
