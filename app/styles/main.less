@@ -80,12 +80,16 @@ body {
             border-bottom:1px #333 solid;
             height:@nav_height;
             line-height:@nav_height;
-            &:visited{
+            color:#FFF;
+            &:active, &:visited, &:hover, &:focus {
               color:#FFF;
             }
             &:hover{
               text-decoration:none;
               background: #000;
+            }
+            &:focus{
+              text-decoration:none;
             }
           }
         }
@@ -121,6 +125,9 @@ body {
   }
   .tab-view {
     overflow: auto;
+  }
+  .fa:hover {
+    color: rgb(42, 100, 150);
   }
 }
 
