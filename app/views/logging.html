@@ -1,0 +1,10 @@
+<table at-table class="table table-bordered table-condensed">
+  <thead></thead>
+  <tbody>
+    <tr data-ng-repeat="log in logs" class="log-{{log.type}}">
+      <td>{{log.type}}</td>
+      <td>{{log.time}}</td>
+      <td>{{log.message}}</td>
+    </tr>
+  </tbody>
+<table>
