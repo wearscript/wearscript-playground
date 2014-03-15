@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: HelpmodalCtrl', function () {
+describe('Controller: ModalCtrl', function () {
 
   // load the controller's module
   beforeEach(module('wearscriptPlaygroundApp'));
 
-  var HelpmodalCtrl,
+  var ModalCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    HelpmodalCtrl = $controller('HelpmodalCtrl', {
+    ModalCtrl = $controller('ModalCtrl', {
       $scope: scope
     });
   }));

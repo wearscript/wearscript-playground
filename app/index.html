@@ -41,12 +41,12 @@
       <a
          data-ng-click="menu=!menu"
          data-ng-init="menu=true"><i class="fa fa-bars"></i></a>
-      <div ng-controller="HelpmodalCtrl">
+      <div ng-controller="ModalCtrl">
           <a ng-click="open()"><i class="fa fa-ellipsis-v"></i></a>
       </div>
       <h1>Wearscript Playground</h1>
     </header>
-    <aside ng-show="menu">
+    <aside  ng-show="menu">
       <nav>
         <ul>
           <li>
@@ -79,12 +79,24 @@
                data-ng-class="{'active': active==setup}"
                href="#/setup">Setup</a>
           </li>
-          <li>
+          <!-- <li>
             <a data-ng-click='active=help'
                data-ng-class="{'active': active==help}"
                href="#/help">Help</a>
-          </li>
+          </li> -->
         </ul>
+        <div class="col-xs-12">
+          <div class="row">
+            <!-- under nav icons -->
+            <div data-ng-controller="ModalCtrl" class="col-xs-6 text-center">
+              <a href="" data-ng-click="open('shortcuts')" title="Keyboard Shortcuts"><i class="fa fa-keyboard-o fa-2x"></i></a>
+            </div>
+             <div data-ng-controller="ModalCtrl" class="col-xs-6 text-center">
+              <a href="" data-ng-click="open('help')" title="Keyboard Shortcuts"><i class="fa fa-question-circle fa-2x"></i></a>
+            </div>
+
+          </div>
+        </div>
       </nav>
     </aside>
     <div class="container-fluid" ng-view=""></div>
@@ -120,6 +132,8 @@
     <script src="scripts/services/editor.js"></script>
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/profile.js"></script>
+    <script src="scripts/controllers/helpmodal.js"></script>
+    <script src="scripts/services/playground.js"></script>
     <!-- endbuild -->
   </body>
 </html>

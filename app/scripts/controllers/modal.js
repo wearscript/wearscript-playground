@@ -1,13 +1,31 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('HelpmodalCtrl', function ($scope, $modal, $log) {
+  .controller('ModalCtrl', function ($scope, $modal, $log) {
     $scope.items = ['Run Script', 'Run Line/Selection', 'Save to Gist'];
 
-    $scope.open = function () {
+    $scope.open = function (currentModal) {
+
+      var modalTemplate = '';
+      switch(currentModal){
+        case undefined:
+        case '':
+          modalTemplate = 'views/modals/help.html'
+          console.log(modalTemplate);
+          break;
+        case 'help':
+          modalTemplate = 'views/modals/help.html'
+          break;
+        case 'shortcuts':
+          modalTemplate = 'views/modals/shortcuts.html'
+          break;
+        case 'save-gist':
+          modalTemplate = 'views/modals/save-gist.html'
+          break
+      }
 
       var modalInstance = $modal.open({
-        templateUrl: 'views/helpmodal.html',
+        templateUrl: modalTemplate,
         controller: ModalInstanceCtrl,
         resolve: {
           items: function () {
