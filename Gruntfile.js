@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     },
 
     exec: {
-        'api-build': 'cd server; GOPATH=~/.go go build && cd ..',
+        'api-build': 'cd server; GOPATH=$HOME/go go build && cd ..',
         'api-serve': 'killall server; cd server; ./server &'
     },
 
