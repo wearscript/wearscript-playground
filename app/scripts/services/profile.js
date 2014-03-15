@@ -2,7 +2,7 @@
 
 angular.module('wearscriptPlaygroundApp')
 
-  .factory( 'Profile', function( Storage ){
+  .factory( 'Profile', function( Storage, $rootScope ){
 
     var profile = {
       authenticated: false,
@@ -11,6 +11,7 @@ angular.module('wearscriptPlaygroundApp')
       google_user: false,
       glass_id: false,
       vim_mode: Storage.get('vim_mode') || false,
+      gists: Storage.get('gists') || {},
       set: function(key, val) {
         this[key] = val;
         Storage.set(key, val);

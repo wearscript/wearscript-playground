@@ -2,31 +2,22 @@
 
 angular.module('wearscriptPlaygroundApp')
 
-  .factory( 'Socket', function($rootScope,$log,$window){
+  .factory( 'Socket', function($log,$window, Profile, $rootScope){
 
     var service = {}
-    
+
     function onopen(){
 
       $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
-  
       function log_cb(channel, message) {
         $log.info(channel + ': ' + message);
         // TODO(brandyn): Have a notification that a log message was sent
       }
-      function gist_modify_cb(channel, gists) {
-        HACK_GIST_MODIFIED = gists;
-        $log.log('Gist modified');
-      }
-      function gist_get_cb(channel, gist) {
-        $window.HACK_GIST = gist;
-        $log.log(channel + ': ' + gist);
-      }
+
       function urlopen_cb(channel, url) {
         $window.open(url);
       }
-      
       function subscription_cb(foo){
         $rootScope.$broadcast('subscription')
         if (service.ws.exists('glass')){
