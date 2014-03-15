@@ -46,7 +46,7 @@
       </div>
       <h1>Wearscript Playground</h1>
     </header>
-    <aside ng-show="menu">
+    <aside data-ng-controller="SidenavCtrl" ng-show="menu">
       <nav>
         <ul>
           <li>
@@ -85,6 +85,15 @@
                href="#/help">Help</a>
           </li>
         </ul>
+        <div class="col-xs-12">
+          <div class="row">
+            <!-- under nav icons -->
+            <div data-ng-controller="HelpmodalCtrl" class="col-xs-12 text-center">
+              <a href="" data-ng-click="open()" title="Keyboard Shortcuts"><i class="fa fa-keyboard-o fa-2x"></i></a>
+            </div>
+           
+          </div>
+        </div>
       </nav>
     </aside>
     <div class="container-fluid" ng-view=""></div>
@@ -120,6 +129,7 @@
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/editorservice.js"></script>
     <script src="scripts/controllers/helpmodal.js"></script>
+    <script src="scripts/controllers/sidenav.js"></script>
     <!-- endbuild -->
   </body>
 </html>
