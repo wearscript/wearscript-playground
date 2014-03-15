@@ -52,16 +52,12 @@ angular.module('wearscriptPlaygroundApp', [
       });
   })
 
-  .run(function($log,$http,$window,Socket){
-
-      ace.config.set("basePath", "bower_components/ace-builds/src-min-noconflict") ;
+  .run(function($rootScope,Socket,Editor){
 
       Socket.connect(window.WSURL + '/ws');
 
-      if ($window.GLASS_BODY == "{{.GlassBody}}" ){
-        $http.get('/example')
-          .then(function(res){
-            $window.GLASS_BODY = res.data;
-          });
+      $rootScope.aceLoaded = function( editor ) {
+        Editor.init(editor)
       }
+
   });
