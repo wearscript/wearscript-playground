@@ -2,6 +2,15 @@
 
 @nav_height: 35px;
 @sidebar_width: 100px;
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('bower_components/components-font-awesome/fonts/fontawesome-webfont.eot?v=3.0.1');
+  src: url('bower_components/components-font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
+    url('bower_components/components-font-awesome/fonts/fontawesome-webfont.woff?v=3.0.1') format('woff'),
+    url('bower_components/components-font-awesome/fonts/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   overflow: hidden;
@@ -136,6 +145,46 @@ body {
   }
   .fa:hover {
     color: rgb(42, 100, 150);
+  }
+  #loggingTable{
+    > tbody{
+      > tr:hover{
+        > td{
+          background-color: #333;
+        }
+      }
+      > tr{
+        .log-error:after{
+          font-family: 'FontAwesome';
+          font-size: 18px;
+          color: #F37373;
+          margin-left: 5px;
+          content: "\f071";
+          .pull-right;
+        }
+        .log-info:after{
+          font-family: 'FontAwesome';
+          font-size: 18px;
+          color: #52C452;
+          margin-left: 5px;
+          content: "\f05a";
+          .pull-right;
+        }
+      }
+
+    tr{
+      > td{
+          min-width: 75px;
+        border-left: 1px dashed #FFF;
+        border-right: 1px dashed #FFF;
+        }
+      }
+      > th{
+        min-width: 75px;
+        border-left: 1px solid #FFF;
+        border-right: 1px solid #FFF;
+      }
+    } 
   }
 }
 

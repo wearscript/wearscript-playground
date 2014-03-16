@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('ModalCtrl', function ($scope, $modal, $log, $route) {
+  .controller('ModalCtrl', function ($scope, $modal, $log, $route, Logging) {
+    $scope.logs = Logging.logs;
     $scope.shortcuts = [
       {
         description:'Run Script',

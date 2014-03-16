@@ -13,7 +13,8 @@
     "angular-table": "~1.0.0",
     "components-font-awesome": "~4.0.3",
     "angular-touch": "~1.2.14",
-    "angular-bootstrap": "~0.10.0"
+    "angular-bootstrap": "~0.10.0",
+    "ng-csv": "~0.0.7"
   },
   "devDependencies": {
     "less": "~1.7.0",
