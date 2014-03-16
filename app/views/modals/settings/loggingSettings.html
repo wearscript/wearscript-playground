@@ -3,6 +3,7 @@
             <h3>Logging Settings</h3>
         </div>
         <div class="modal-body">
+         <section ng-include src="generalSettingsUrl"></section>
            <div class="row">
                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
                <button type="button" ng-csv="logs" filename="wearscriptLog.csv" csv-header="[ 'Time', 'Description','Type']" >Export Logs <i class="fa fa-cloud-download"></i></button>

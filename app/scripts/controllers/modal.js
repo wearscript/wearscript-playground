@@ -3,6 +3,7 @@
 angular.module('wearscriptPlaygroundApp')
   .controller('ModalCtrl', function ($scope, $modal, $log, $route, Logging) {
     $scope.logs = Logging.logs;
+    $scope.generalSettingsUrl = "/views/modals/settings/generalSettings.html";
     $scope.shortcuts = [
       {
         description:'Run Script',
@@ -76,6 +77,30 @@ angular.module('wearscriptPlaygroundApp')
         else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
         else   {modalTemplate = 'views/modals/help.html';}
       };
+    };
+    /**
+     * @title saveToGist
+     * button click to save current code to gist
+     * should change the modal view to a spinner modal
+     * spins until $broadcast (confirmed saved to gist)
+     * when confirmed saved, return to editor setting modal
+     * @return {NILL} 
+     */
+    $scope.saveToGist = function(){
+      // modalTemplate = '*TODO*'
+      console.log("Save to Gists: ", "A modal should pop up!")
+    };
+    /**
+     * @title saveToGlass
+     * button click to save current code to glass
+     * should change the modal view to a spinner modal
+     * spins until $broadcast (confirmed saved to glass)
+     * when confirmed saved, return to editor setting modal
+     * @return {NILL} 
+     */
+    $scope.saveToGlass = function(){
+      // modalTemplate = '*TODO*'
+      console.log("Save to Glass: ", "A modal should pop up!")
     };
   });
 
