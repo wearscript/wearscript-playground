@@ -7,8 +7,7 @@ angular.module('wearscriptPlaygroundApp', [
   'angular-table',
   'ui.bootstrap',
   'ngTouch',
-  'ngLogging',
-  'ngCsv'
+  'ngLogging'
 ])
   .config(function ($routeProvider) {
     $routeProvider

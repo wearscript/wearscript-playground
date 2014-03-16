@@ -8,11 +8,11 @@ angular.module('wearscriptPlaygroundApp')
       {
         description:'Run Script',
         command:'Ctrl+Enter (Cmd+Enter for OSX)'
-      }, 
+      },
       {
         description:'Run Line/Selection',
         command:'Alt+Enter'
-      }, 
+      },
       {
         description:'Save to Gist',
         command:'Ctrl+S'
@@ -40,7 +40,7 @@ angular.module('wearscriptPlaygroundApp')
         case 'settings':
           settingsModal();
           break;
-        default: 
+        default:
           modalTemplate = 'views/modals/help.html';
           break;
       }
@@ -64,8 +64,8 @@ angular.module('wearscriptPlaygroundApp')
        * @title SettingsModal
        * Different settings for the current pages settings. Will get very large, but
        * for now, it is purely for routing different pages settings. No other logic.
-       * 
-       * @return {NILL} 
+       *
+       * @return {NILL}
        */
       function settingsModal(){
         var url = $route.current.$$route.originalPath;
@@ -74,7 +74,7 @@ angular.module('wearscriptPlaygroundApp')
         else if(url === '/images'){modalTemplate = 'views/modals/settings/imageSettings.html';}
         else if(url === '/sensors'){modalTemplate = 'views/modals/settings/sensorSettings.html';}
         else if(url === '/channels'){modalTemplate = 'views/modals/settings/channelSettings.html';}
-        else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
+        //else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
         else   {modalTemplate = 'views/modals/help.html';}
       };
     };
@@ -84,7 +84,7 @@ angular.module('wearscriptPlaygroundApp')
      * should change the modal view to a spinner modal
      * spins until $broadcast (confirmed saved to gist)
      * when confirmed saved, return to editor setting modal
-     * @return {NILL} 
+     * @return {NILL}
      */
     $scope.saveToGist = function(){
       // modalTemplate = '*TODO*'
@@ -96,7 +96,7 @@ angular.module('wearscriptPlaygroundApp')
      * should change the modal view to a spinner modal
      * spins until $broadcast (confirmed saved to glass)
      * when confirmed saved, return to editor setting modal
-     * @return {NILL} 
+     * @return {NILL}
      */
     $scope.saveToGlass = function(){
       // modalTemplate = '*TODO*'
@@ -105,16 +105,16 @@ angular.module('wearscriptPlaygroundApp')
   });
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, shortcuts) {
-  
+
     $scope.shortcuts = shortcuts;
     $scope.selected = {
       shortcut: $scope.shortcuts[0]
     };
-  
+
     $scope.ok = function () {
       $modalInstance.close($scope.selected.shotrcut);
     };
-  
+
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
