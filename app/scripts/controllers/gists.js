@@ -2,7 +2,7 @@
 
 angular.module('wearscriptPlaygroundApp')
   .controller('GistsCtrl', function ($scope, Profile, Socket, $rootScope, $log) {
-    $rootScope.$on('glass', function(){
+    $rootScope.$on('connected', function(){
       function gistList(channel, gists) {
         if (typeof gists == 'object') {
           for (var i = 0; i < gists.length; i++)
@@ -16,5 +16,5 @@ angular.module('wearscriptPlaygroundApp')
       var channel = ws.channel(ws.groupDevice, 'gistList');
       ws.publish_retry(gistList.bind(this), 1000, channel, 'gist', 'list', channel);
     })
-    $scope.gists = Profile.gists;
+    $scope.gists = Profile.get('gists')
   });

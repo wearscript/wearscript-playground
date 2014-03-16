@@ -1,4 +1,4 @@
-<table at-table list="nameList" class="table table-bordered table-condensed">
+<table at-table list="nameList" class="table table-bordered table-condensed" ng-show="gists.length > 0">
   <!-- the header will automatically be created according to the body definition. -->
   <thead>
     <tr>
@@ -31,3 +31,6 @@
     </tr>
   </tbody>
 </table>
+<div ng-show="gists.length < 1">
+Checking your github for Gists.
+</div>
