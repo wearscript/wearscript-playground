@@ -19,7 +19,7 @@ The web-based IDE for WearScript. Write code, pair glass, save, and enjoy.
 
     ```bash
     git clone git@github.com:OpenShades/wearscript-playground.git
-    cd wearscript-playground    
+    cd wearscript-playground
     git submodule update --init
     ```
   2. Configure API server
@@ -30,11 +30,10 @@ The web-based IDE for WearScript. Write code, pair glass, save, and enjoy.
 
     Edit server/config.go to be in single user mode.
 
-  3. Compile API Server
+  3. Compile API Server (requires a working Go environment)
 
     ```bash
     mkdir $HOME/go
-    export GOPATH=$HOME/go
     cd server
     sh install.sh
     cd ..
