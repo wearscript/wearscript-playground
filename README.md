@@ -33,8 +33,8 @@ The web-based IDE for WearScript. Write code, pair glass, save, and enjoy.
   3. Compile API Server
 
     ```bash
-    mkdir ~/.go
-    export GOPATH=~/.go
+    mkdir $HOME/go
+    export GOPATH=$HOME/go
     cd server
     sh install.sh
     cd ..
