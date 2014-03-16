@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('ModalCtrl', function ($scope, $modal, $log) {
+  .controller('ModalCtrl', function ($scope, $modal, $log, $route) {
     $scope.shortcuts = [
       {
         description:'Run Script',
@@ -34,7 +34,13 @@ angular.module('wearscriptPlaygroundApp')
           break;
         case 'save-gist':
           modalTemplate = 'views/modals/save-gist.html'
-          break
+          break;
+        case 'settings':
+          settingsModal();
+          break;
+        default: 
+          modalTemplate = 'views/modals/help.html';
+          break;
       }
       var modalInstance = $modal.open({
         templateUrl: modalTemplate,
@@ -51,6 +57,24 @@ angular.module('wearscriptPlaygroundApp')
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
+
+      /**
+       * @title SettingsModal
+       * Different settings for the current pages settings. Will get very large, but
+       * for now, it is purely for routing different pages settings. No other logic.
+       * 
+       * @return {NILL} 
+       */
+      function settingsModal(){
+        var url = $route.current.$$route.originalPath;
+             if(url === '/'){modalTemplate = 'views/modals/settings/editorSettings.html';}
+        else if(url === '/gists'){modalTemplate = 'views/modals/settings/gistSettings.html';}
+        else if(url === '/images'){modalTemplate = 'views/modals/settings/imageSettings.html';}
+        else if(url === '/sensors'){modalTemplate = 'views/modals/settings/sensorSettings.html';}
+        else if(url === '/channels'){modalTemplate = 'views/modals/settings/channelSettings.html';}
+        else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
+        else   {modalTemplate = 'views/modals/help.html';}
+      };
     };
   });
 

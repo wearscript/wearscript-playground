@@ -90,7 +90,12 @@
                href="#/help">Help</a>
           </li> -->
         </ul>
-        <div class="col-xs-12">
+        <div class="col-xs-12" id="iconSetArea">
+          <div class="row" data-ng-controller="ModalCtrl" id="setupIconRow">
+            <div class="col-xs-12 text-center">
+              <a href="" data-ng-click="open('settings')"><i title="Current Page Settings"  class="fa fa-cogs fa-2x"></i></a>
+            </div>
+          </div>
           <div class="row">
             <!-- under nav icons -->
             <div data-ng-controller="ModalCtrl" class="col-xs-6 text-center">
@@ -140,6 +145,7 @@
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/playground.js"></script>
+    <script src="scripts/controllers/editorcontroller.js"></script>
     <!-- endbuild -->
   </body>
 </html>
