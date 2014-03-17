@@ -311,6 +311,60 @@ module.exports = function (grunt) {
       }
     },
 
+    uglify: {
+      dist:{
+        options : {
+          sourceMap: '<%= yeoman.dist %>/scripts/scripts.map.js',
+          sourceMapRoot: '/scripts/',
+          mangle: false,
+          report: 'min',
+          beautify: {
+            beautify      : true,   //  beautify output?
+            indent_level  : 4,      //  indentation level (only when `beautify`)
+            indent_start  : 0,      //  start indentation on every line (only when `beautify`)
+            quote_keys    : true,   //  quote all keys in object literals?
+            space_colon   : true,   //  add a space after colon signs?
+            ascii_only    : true,   //  output ASCII-safe? (encodes Unicode characters as ASCII)
+            inline_script : true,   //  escape "</script"?
+            width         : 80,     //  informative maximum line width (for beautified output)
+            max_line_len  : 32000,  //  maximum line length (for non-beautified output)
+            bracketize    : true,   //  use brackets every time?
+            semicolons    : true,   //  use semicolons to separate statements? (otherwise newlines)
+            comments      : false,   //  output comments?
+          },
+          compress: {
+            sequences     : false, // join consecutive statemets with the 'comma operator'
+            properties    : false, // optimize property access: a["foo"] -> a.foo
+            dead_code     : false, // discard unreachable code
+            drop_debugger : false, // discard 'debugger' statements
+            unsafe        : false, // some unsafe optimizations (see docs)
+            conditionals  : false, // optimize if-s and conditional expressions
+            comparisons   : false, // optimize comparisons
+            evaluate      : false, // evaluate constant expressions
+            booleans      : false, // optimize boolean expressions
+            loops         : false, // optimize loops
+            unused        : false, // drop unused variables/functions
+            hoist_funs    : false, // hoist function declarations
+            hoist_vars    : false, // hoist variable declarations
+            if_return     : false, // optimize if-s followed by return/continue
+            join_vars     : false, // join var declarations
+            cascade       : false, // try to cascade `right` into `left` in sequences
+            side_effects  : false, // drop side-effect-free statements
+            warnings      : false, // warn about potentially dangerous optimizations/code
+            global_defs   : {}     // global definitions
+          }
+        },
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat/scripts',
+          src: '*.js',
+          dest: '<%= yeoman.dist %>/scripts'
+        }]
+      }
+
+    },
+ 
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -342,6 +396,8 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       }
     },
+
+
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
@@ -397,8 +453,8 @@ module.exports = function (grunt) {
     'cdnify',
     'less',
     'cssmin',
-    'uglify',
-    'rev',
+    'uglify:dist',
+    //'rev',
     'usemin',
     'targethtml',
     'htmlmin',
