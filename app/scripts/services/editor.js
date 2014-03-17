@@ -3,7 +3,7 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory('Editor', function(
-    $window,$rootScope,$log,$http,$routeParams,$timeout,Socket,Profile,Playground
+    $window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Profile,Playground
   ) {
 
     ace.config.set(

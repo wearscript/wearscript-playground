@@ -2,6 +2,15 @@
 
 @nav_height: 35px;
 @sidebar_width: 100px;
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('/bower_components/components-font-awesome/fonts/fontawesome-webfont.eot');
+  src: url('/bower_components/components-font-awesome/fonts/fontawesome-webfont.eot') format('embedded-opentype'),
+    url('/bower_components/components-font-awesome/fonts/fontawesome-webfont.woff') format('woff'),
+    url('/bower_components/components-font-awesome/fonts/fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   overflow: hidden;
@@ -80,21 +89,33 @@ body {
             border-bottom:1px #333 solid;
             height:@nav_height;
             line-height:@nav_height;
-            &:visited{
+            color:#FFF;
+            &:active, &:visited, &:hover, &:focus {
               color:#FFF;
             }
             &:hover{
               text-decoration:none;
               background: #000;
             }
+            &:focus{
+              text-decoration:none;
+            }
           }
         }
       }
       > div.col-xs-12 {
         position:absolute;
-        height:40px;
-        bottom:30px;
+        height:60px;
+        bottom:40px;
 
+      }
+    }
+    #iconSetArea{
+      margin-bottom: 10px;
+      #setupIconRow{
+        border-bottom: 1px solid #333;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
       }
     }
   }
@@ -111,15 +132,60 @@ body {
       width:100%;
     }
   }
-  &.menu-open .container-fluid{
+  &.menu-open .container-fluid {
     left:@sidebar_width;
   }
 
-  .icon-label{
+  .icon-label {
     font-size: 12pt;
     color: white;
   }
+  .tab-view {
+    overflow: auto;
+  }
+  .fa:hover {
+    color: rgb(42, 100, 150);
+  }
+  #loggingTable{
+    > tbody{
+      > tr:hover{
+        > td{
+          background-color: #333;
+        }
+      }
+      > tr{
+        .log-error:after{
+          font-family: 'FontAwesome';
+          font-size: 18px;
+          color: #F37373;
+          margin-left: 5px;
+          content: "\f071";
+          .pull-right;
+        }
+        .log-info:after{
+          font-family: 'FontAwesome';
+          font-size: 18px;
+          color: #52C452;
+          margin-left: 5px;
+          content: "\f05a";
+          .pull-right;
+        }
+      }
 
+    tr{
+      > td{
+          min-width: 75px;
+        border-left: 1px dashed #FFF;
+        border-right: 1px dashed #FFF;
+        }
+      }
+      > th{
+        min-width: 75px;
+        border-left: 1px solid #FFF;
+        border-right: 1px solid #FFF;
+      }
+    } 
+  }
 }
 
 .modal-container{
