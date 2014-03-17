@@ -78,10 +78,12 @@ angular.module('wearscriptPlaygroundApp')
             } else {
 
               if ($window.GLASS_BODY == "{{.GlassBody}}" ){
-                $http.get('/example')
+                $http.get('example')
                   .then(function(res){
                     service.editor.getSession().setValue(res.data);
                   });
+              } else {
+                service.editor.getSession().setValue(GLASS_BODY);
               }
             }
         }
