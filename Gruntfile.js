@@ -75,7 +75,7 @@ module.exports = function (grunt) {
     },
 
     exec: {
-        //'api-build': 'cd server; GOPATH=$HOME/.go go build && cd ..',
+        'api-build': 'cd server; go build && cd ..',
         'api-serve': 'killall server; cd server; ./server &'
     },
 
@@ -366,7 +366,7 @@ module.exports = function (grunt) {
       }
 
     },
- 
+
 
     // Copies remaining files to places other tasks can use
     copy: {
@@ -420,7 +420,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    
+
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
