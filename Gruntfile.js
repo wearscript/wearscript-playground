@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     },
 
     exec: {
-        'api-build': 'cd server; GOPATH=$HOME/go go build && cd ..',
+        //'api-build': 'cd server; GOPATH=$HOME/.go go build && cd ..',
         'api-serve': 'killall server; cd server; ./server &'
     },
 
@@ -315,11 +315,11 @@ module.exports = function (grunt) {
       dist:{
         options : {
           sourceMap: '<%= yeoman.dist %>/scripts/scripts.map.js',
-          sourceMapRoot: '/scripts/',
+          sourceMapRoot: '/',
           mangle: false,
           report: 'min',
           beautify: {
-            beautify      : true,   //  beautify output?
+            beautify      : false,   //  beautify output?
             indent_level  : 4,      //  indentation level (only when `beautify`)
             indent_start  : 0,      //  start indentation on every line (only when `beautify`)
             quote_keys    : true,   //  quote all keys in object literals?
@@ -333,33 +333,33 @@ module.exports = function (grunt) {
             comments      : false,   //  output comments?
           },
           compress: {
-            sequences     : false, // join consecutive statemets with the 'comma operator'
-            properties    : false, // optimize property access: a["foo"] -> a.foo
-            dead_code     : false, // discard unreachable code
-            drop_debugger : false, // discard 'debugger' statements
-            unsafe        : false, // some unsafe optimizations (see docs)
-            conditionals  : false, // optimize if-s and conditional expressions
-            comparisons   : false, // optimize comparisons
-            evaluate      : false, // evaluate constant expressions
-            booleans      : false, // optimize boolean expressions
-            loops         : false, // optimize loops
-            unused        : false, // drop unused variables/functions
-            hoist_funs    : false, // hoist function declarations
-            hoist_vars    : false, // hoist variable declarations
-            if_return     : false, // optimize if-s followed by return/continue
-            join_vars     : false, // join var declarations
-            cascade       : false, // try to cascade `right` into `left` in sequences
-            side_effects  : false, // drop side-effect-free statements
-            warnings      : false, // warn about potentially dangerous optimizations/code
+            sequences     : true, // join consecutive statemets with the 'comma operator'
+            properties    : true, // optimize property access: a["foo"] -> a.foo
+            dead_code     : true, // discard unreachable code
+            drop_debugger : true, // discard 'debugger' statements
+            unsafe        : true, // some unsafe optimizations (see docs)
+            conditionals  : true, // optimize if-s and conditional expressions
+            comparisons   : true, // optimize comparisons
+            evaluate      : true, // evaluate constant expressions
+            booleans      : true, // optimize boolean expressions
+            loops         : true, // optimize loops
+            unused        : true, // drop unused variables/functions
+            hoist_funs    : true, // hoist function declarations
+            hoist_vars    : true, // hoist variable declarations
+            if_return     : true, // optimize if-s followed by return/continue
+            join_vars     : true, // join var declarations
+            cascade       : true, // try to cascade `right` into `left` in sequences
+            side_effects  : true, // drop side-effect-free statements
+            warnings      : true, // warn about potentially dangerous optimizations/code
             global_defs   : {}     // global definitions
           }
         },
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat/scripts',
-          src: '*.js',
-          dest: '<%= yeoman.dist %>/scripts'
-        }]
+        files: {
+          '<%= yeoman.dist %>/scripts/scripts.min.js': [
+            '.tmp/concat/scripts/vendor.js',
+            '.tmp/concat/scripts/scripts.js'
+          ]
+        }
       }
 
     },
@@ -389,11 +389,17 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }]
       },
+      scripts: {
+        expand: true,
+        cwd: '.tmp/concat/scripts',
+        dest: 'dist/scripts/',
+        src: '{,*/}*.js'
+      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        src: '{,*/}*.css',
       }
     },
 
@@ -419,7 +425,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      return grunt.task.run([
+        'build',
+        'connect:dist:keepalive'
+      ]);
     }
 
     grunt.task.run([
@@ -454,11 +463,12 @@ module.exports = function (grunt) {
     'less',
     'cssmin',
     'uglify:dist',
+    'copy:scripts',
     //'rev',
     'usemin',
     'targethtml',
     'htmlmin',
-    'exec:api-build'
+    //'exec:api-build'
   ]);
 
   grunt.registerTask('default', [
