@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('ChannelsCtrl', function ($scope) {
+  .controller('ChannelsCtrl', function ($scope,Socket) {
     $scope.update = function () {
-        var channels = HACK_WS.channelsExternal();
+        var ws = Socket.ws;
+        var channels = ws.channelsExternal();
         var channelsOut = [];
         for (var i in channels) {
             if (channels.hasOwnProperty(i)) {
