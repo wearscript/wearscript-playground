@@ -68,10 +68,16 @@ angular.module('wearscriptPlaygroundApp', [
         redirectTo: '/'
       });
   })
-  .run(function($log,$http,$window,$rootScope,Socket,Logging,Editor){
+  .run(function($log,$http,$window,$rootScope,Socket,Logging,Editor,Profile){
+
     // Globally enable/disable logging
     Logging.enabled = true;
+
+    // Expose profile globally for use in templates
+    $rootScope.profile = Profile
+
     Socket.connect(window.WSURL + '/ws');
+
     $window.HACK_WS = Socket.ws;
     $rootScope.aceLoaded = function( editor ) {
       Editor.init(editor)

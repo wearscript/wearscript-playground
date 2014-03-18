@@ -17,7 +17,9 @@ angular.module('wearscriptPlaygroundApp')
       gistid: undefined,
       file: undefined,
       forkonsave: false,
-      session: false
+      session: false,
+      menu: true,
+      status: "Loaded"
     }
 
     service.init = function(editor){

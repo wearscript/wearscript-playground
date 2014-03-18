@@ -12,6 +12,7 @@ angular.module('wearscriptPlaygroundApp')
       glass_id: false,
       vim_mode: Storage.get('vim_mode') || false,
       debug_mode: Storage.get('debug_mode') || false,
+      menu: Storage.get('menu') || true,
       gists: Storage.get('gists') || {},
       set: function(key, val) {
         this[key] = val;
@@ -19,6 +20,11 @@ angular.module('wearscriptPlaygroundApp')
       },
       get: function(key) {
         return this[key] || Storage.get(key);
+      },
+      toggle: function(key) {
+        this[key] = !this[key];
+        Storage.set(key,this[key]);
+        return this[key];
       }
     }
 
