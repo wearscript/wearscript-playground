@@ -26,12 +26,6 @@ angular.module('wearscriptPlaygroundApp')
       switch(currentModal){
         case undefined:
         case '':
-          modalTemplate = 'views/modals/help.html'
-          break;
-        case 'help':
-          modalTemplate = 'views/modals/help.html'
-          break;
-        case 'shortcuts':
           modalTemplate = 'views/modals/shortcuts.html'
           break;
         case 'save-gist':
