@@ -40,8 +40,8 @@
       <a data-ng-click="profile.toggle('menu')">
          <i class="fa fa-bars"></i>
       </a>
-      <div class="status" data-ng-bind="editor.status"></div>
-      <div ng-controller="ModalCtrl">
+      <div ng-show="location.$$path=='/'" class="status" data-ng-bind="editor.status"></div>
+      <div ng-show="location.$$path=='/'" ng-controller="ModalCtrl">
           <a ng-click="open()"><i class="fa fa-ellipsis-v"></i></a>
       </div>
       <h1>Wearscript Playground</h1>
