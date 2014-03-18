@@ -2,5 +2,6 @@
 
 angular.module('wearscriptPlaygroundApp')
   .controller('LoggingCtrl', function ($scope,Logging) {
-    $scope.logs = Logging.logs;
+    Logging.ws = Logging.ws || []
+    $scope.logs = Logging.ws;
   });

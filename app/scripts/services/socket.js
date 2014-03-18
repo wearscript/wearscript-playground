@@ -2,7 +2,7 @@
 
 angular.module('wearscriptPlaygroundApp')
 
-  .factory( 'Socket', function($log,$window, Profile, $rootScope){
+  .factory( 'Socket', function($log,$window, Profile, $rootScope, Logging){
 
     var service = {}
 
@@ -11,11 +11,17 @@ angular.module('wearscriptPlaygroundApp')
       $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
       function log_cb(channel, message) {
-        if(channel.indexOf('log') != -1){
-          $log.log(channel + ': ' + message);
-        } else {
-          $log.info(channel + " : " + message);
+        Logging.ws = Logging.ws || [];
+        if(Logging.ws.length > 1000){
+          Logging.ws.pop()
         }
+        if(channel.indexOf('log') != -1){
+          var log = {}
+          log.type = 'log'
+          log.message = message
+          Logging.ws.unshift(log);
+        }
+        $log.info(channel + " : " + message);
 
         // TODO(brandyn): Have a notification that a log message was sent
       }
