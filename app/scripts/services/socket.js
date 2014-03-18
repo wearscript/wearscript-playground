@@ -11,7 +11,12 @@ angular.module('wearscriptPlaygroundApp')
       $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
       function log_cb(channel, message) {
-        $log.info(channel + ': ' + message);
+        if(channel.indexOf('log') != -1){
+          $log.log(channel + ': ' + message);
+        } else {
+          $log.info(channel + " : " + message);
+        }
+
         // TODO(brandyn): Have a notification that a log message was sent
       }
 

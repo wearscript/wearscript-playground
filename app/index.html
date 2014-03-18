@@ -46,7 +46,7 @@
       </div>
       <h1>Wearscript Playground</h1>
     </header>
-    <aside  ng-show="menu">
+    <aside  ng-show="menu" data-ng-controller="MenuCtrl">
       <nav>
         <ul>
           <li>
@@ -78,6 +78,11 @@
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==logging}"
                href="#/logging">Logging</a>
+          </li>
+          <li data-ng-show="debugMode">
+            <a data-ng-click='active=channels'
+               data-ng-class="{'active': active==debug}"
+               href="#/debug">Debug</a>
           </li>
           <li>
             <a data-ng-click='active=setup'
@@ -133,6 +138,7 @@
     <script src="scripts/app.js"></script>
     <!--<script src="scripts/controllers/demo.js"></script>-->
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/editor.js"></script>
     <script src="scripts/controllers/gists.js"></script>
     <script src="scripts/controllers/images.js"></script>
     <script src="scripts/controllers/sensors.js"></script>
@@ -147,7 +153,8 @@
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/playground.js"></script>
-    <script src="scripts/controllers/editorcontroller.js"></script>
+    <script src="scripts/controllers/debug.js"></script>
+    <script src="scripts/controllers/menu.js"></script>
     <!-- endbuild -->
   </body>
 </html>

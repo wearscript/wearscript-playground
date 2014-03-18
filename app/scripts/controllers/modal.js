@@ -74,7 +74,7 @@ angular.module('wearscriptPlaygroundApp')
         else if(url === '/images'){modalTemplate = 'views/modals/settings/imageSettings.html';}
         else if(url === '/sensors'){modalTemplate = 'views/modals/settings/sensorSettings.html';}
         else if(url === '/channels'){modalTemplate = 'views/modals/settings/channelSettings.html';}
-        //else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
+        else if(url === '/logging'){modalTemplate = 'views/modals/settings/loggingSettings.html';}
         else   {modalTemplate = 'views/modals/help.html';}
       };
     };

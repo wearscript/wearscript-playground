@@ -7,4 +7,5 @@ angular.module('wearscriptPlaygroundApp')
      $scope.vimMode = function() {
           Profile.set('vim_mode', $scope.vimval);
       }
+
   });

@@ -1,5 +1,5 @@
 <!-- TODO: add functionality to  the sorting arrows depending on the RFC on github issue #22 -->
-<table id="loggingTable" at-table class="table table-hover table-bordered table-condensed">
+<table id="debugTable" at-table class="table table-hover table-bordered table-condensed">
 	<thead>
 		<tr>
 			<th>Type <i class="pull-right fa fa-arrows-v"></i></th>
@@ -8,10 +8,10 @@
 		</tr>
 	</thead>
 	<tbody>
-  <tr data-ng-repeat="log in logs" data-ng-show="log.type == 'log'">
-			<td class="log-{{log.type}}" >{{log.type}}</td>
-      		<td>{{log.time}}</td>
-      		<td>{{log.message}}</td>
+		<tr data-ng-repeat="bug in debug" >
+			<td class="log-{{bug.type}}">{{bug.type}}</td>
+      		<td>{{bug.time}}</td>
+      		<td>{{bug.message}}</td>
 		</tr>
 	</tbody>
 </table>

@@ -11,6 +11,7 @@ angular.module('wearscriptPlaygroundApp')
       google_user: false,
       glass_id: false,
       vim_mode: Storage.get('vim_mode') || false,
+      debug_mode: Storage.get('debug_mode') || false,
       gists: Storage.get('gists') || {},
       set: function(key, val) {
         this[key] = val;
@@ -19,10 +20,6 @@ angular.module('wearscriptPlaygroundApp')
       get: function(key) {
         return this[key] || Storage.get(key);
       }
-    }
-
-    if( profile.vim_mode == false) {
-      profile.set('vim_mode', false)
     }
 
     return profile

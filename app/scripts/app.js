@@ -52,6 +52,10 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/logging.html',
         controller: 'LoggingCtrl'
       })
+      .when('/debug', {
+        templateUrl: 'views/debug.html',
+        controller: 'DebugCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
