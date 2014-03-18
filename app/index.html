@@ -101,8 +101,12 @@
           </li> -->
         </ul>
         <div class="col-xs-12" id="iconSetArea">
-          <div class="row">
-             <div data-ng-controller="ModalCtrl" class="col-xs-12 text-center">
+          <div class="row" data-ng-controller="ModalCtrl">
+            <!-- under nav icons -->
+            <div class="col-xs-6 text-center">
+              <a href="" data-ng-click="open('settings')"><i title="Current Page Settings"  class="fa fa-cogs fa-2x"></i></a>
+            </div>
+             <div class="col-xs-6 text-center">
               <a href="" data-ng-click="open('help')" title="Help"><i class="fa fa-question-circle fa-2x"></i></a>
             </div>
           </div>
