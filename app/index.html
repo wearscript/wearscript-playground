@@ -94,24 +94,14 @@
                data-ng-class="{'active': active==weariverse}"
                href="#/weariverse">Weariverse</a>
           </li>
-          <li>
-            <a data-ng-click='active=setup'
-               data-ng-class="{'active': active==setup}"
-               href="#/setup">Setup</a>
-          </li>
-          <!-- <li>
-            <a data-ng-click='active=help'
-               data-ng-class="{'active': active==help}"
-               href="#/help">Help</a>
-          </li> -->
         </ul>
         <div class="col-xs-12" id="iconSetArea">
-          <div class="row" data-ng-controller="ModalCtrl">
+          <div class="row" >
             <!-- under nav icons -->
-            <div class="col-xs-6 text-center">
-              <a href="" data-ng-click="open('settings')"><i title="Current Page Settings"  class="fa fa-cogs fa-2x"></i></a>
+            <div class="col-xs-6 text-center" data-ng-controller="ModalCtrl">
+              <a href="" data-ng-click="open('setup')"><i title="Device Setup"  class="fa fa-cogs fa-2x"></i></a>
             </div>
-             <div class="col-xs-6 text-center">
+             <div class="col-xs-6 text-center" data-ng-controller="ModalCtrl">
               <a href="" data-ng-click="open('help')" title="Help"><i class="fa fa-question-circle fa-2x"></i></a>
             </div>
           </div>
@@ -141,7 +131,6 @@
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <!--<script src="scripts/controllers/demo.js"></script>-->
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/editor.js"></script>
     <script src="scripts/controllers/gists.js"></script>

@@ -22,11 +22,11 @@ angular.module('wearscriptPlaygroundApp')
     $scope.open = function (currentModal) {
 
       var modalTemplate = '';
+      var controller = '';
       switch(currentModal){
         case undefined:
         case '':
           modalTemplate = 'views/modals/help.html'
-          console.log(modalTemplate);
           break;
         case 'help':
           modalTemplate = 'views/modals/help.html'
@@ -37,6 +37,10 @@ angular.module('wearscriptPlaygroundApp')
         case 'save-gist':
           modalTemplate = 'views/modals/save-gist.html'
           break;
+        case 'setup':
+          modalTemplate = 'views/modals/setup.html'
+          controller = 'SetupCtrl'
+          break;
         case 'settings':
           settingsModal();
           break;
@@ -46,10 +50,13 @@ angular.module('wearscriptPlaygroundApp')
       }
       var modalInstance = $modal.open({
         templateUrl: modalTemplate,
-        controller: ModalInstanceCtrl,
-        resolve: {
-          shortcuts: function () {
+        controller: ( controller != '' ? controller : ModalInstanceCtrl),
+        resolve: 
+        { shortcuts: function () {
             return $scope.shortcuts;
+          }
+        , ok: function(){
+            return $scope.ok
           }
         }
       });
@@ -93,7 +100,7 @@ angular.module('wearscriptPlaygroundApp')
     /**
      * @title saveToGlass
      * button click to save current code to glass
-     * should change the modal view to a spinner modal
+     change the modal view to a spinner modal
      * spins until $broadcast (confirmed saved to glass)
      * when confirmed saved, return to editor setting modal
      * @return {NILL}

@@ -1,0 +1,47 @@
+<div class="modal-container">
+  <div class="modal-header text-center">
+      <h3>Device Setup</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h3>Auth with Google and Github
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-xs-offset-3 text-center">
+        <a href="auth" class="btn btn-primary"> Google </a>
+      </div>
+      <div class="col-xs-3 text-center">
+        <a href="authgh" class="btn btn-primary"> Github </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h3>Pair your Device</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4 text-center">
+        <button ng-click="qr()" type="button" class="btn btn-primary btn-lrg"> Generate QR Code </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <p ng-if="adb">Run in WearScript then scan the QR code.</p>
+
+        <p>
+          <img ng-src="{{qrurl}}" />
+        </p>
+
+        <p ng-if="adb">
+          Otherwise, copy + paste the command below into a terminal
+        </p>
+        <pre ng-if="adb">{{adb}}</pre>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" data-ng-controller="ModalCtrl">
+      <button class="btn btn-primary" ng-click="ok()">OK</button>
+  </div>
+</div>

@@ -44,10 +44,6 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/channels.html',
         controller: 'ChannelsCtrl'
       })
-      .when('/setup', {
-        templateUrl: 'views/setup.html',
-        controller: 'SetupCtrl'
-      })
       .when('/help', {
         templateUrl: 'views/help.html',
         controller: 'HelpCtrl'
