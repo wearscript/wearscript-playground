@@ -1,6 +1,6 @@
 <!doctype html>
-<html>
-  <head>
+<html data-ng-app="wearscriptPlaygroundApp">
+  <head >
     <meta charset="utf-8">
     <title>Wearscript Playground</title>
     <meta name="description" content="">
@@ -34,19 +34,19 @@
     <!(endif)-->
   </head>
   <body
-    data-ng-app="wearscriptPlaygroundApp"
-    data-ng-class="{'menu-open': menu }"
+    data-ng-class="{'menu-open': profile.menu }"
     data-ng-cloak >
-    <header>
-      <a
-         data-ng-click="menu=!menu"
-         data-ng-init="menu=true"><i class="fa fa-bars"></i></a>
+    <header data-ng-controller="HeaderCtrl">
+      <a data-ng-click="profile.toggle('menu')">
+         <i class="fa fa-bars"></i>
+      </a>
+      <div class="status">{{status}}</div>
       <div ng-controller="ModalCtrl">
           <a ng-click="open()"><i class="fa fa-ellipsis-v"></i></a>
       </div>
       <h1>Wearscript Playground</h1>
     </header>
-    <aside  ng-show="menu" data-ng-controller="MenuCtrl">
+    <aside  ng-show="profile.menu" data-ng-controller="MenuCtrl">
       <nav>
         <ul>
           <li>
@@ -79,7 +79,7 @@
                data-ng-class="{'active': active==logging}"
                href="#/logging">Logging</a>
           </li>
-          <li data-ng-show="debugMode">
+          <li data-ng-show="profile.debug_mode">
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==debug}"
                href="#/debug">Debug</a>
@@ -148,14 +148,15 @@
     <script src="scripts/controllers/help.js"></script>
     <script src="scripts/controllers/modal.js"></script>
     <script src="scripts/controllers/logging.js"></script>
+    <script src="scripts/controllers/header.js"></script>
+    <script src="scripts/controllers/debug.js"></script>
+    <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/socket.js"></script>
     <script src="scripts/services/editor.js"></script>
     <script src="scripts/services/storage.js"></script>
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/playground.js"></script>
-    <script src="scripts/controllers/debug.js"></script>
-    <script src="scripts/controllers/menu.js"></script>
     <!-- endbuild -->
   </body>
 </html>
