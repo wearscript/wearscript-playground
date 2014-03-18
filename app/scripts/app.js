@@ -28,6 +28,10 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/gists.html',
         controller: 'GistsCtrl'
       })
+      .when('/weariverse', {
+        templateUrl: 'views/weariverse.html',
+        controller: 'WeariverseCtrl'
+      })
       .when('/images', {
         templateUrl: 'views/images.html',
         controller: 'ImagesCtrl'
