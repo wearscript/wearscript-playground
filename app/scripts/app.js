@@ -60,6 +60,7 @@ angular.module('wearscriptPlaygroundApp', [
     // Globally enable/disable logging
     Logging.enabled = true;
     Socket.connect(window.WSURL + '/ws');
+    $window.HACK_WS = Socket.ws;
     $rootScope.aceLoaded = function( editor ) {
       Editor.init(editor)
     }
