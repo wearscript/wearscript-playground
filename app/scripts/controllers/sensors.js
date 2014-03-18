@@ -10,9 +10,13 @@ angular.module('wearscriptPlaygroundApp')
           for (var key in sensorValues)
               if (sensorValues.hasOwnProperty(key)) {
                   var values = sensorValues[key];
-                  $scope.sensors[channel][key] = values[values.length - 1];
-                  $scope.sensors[channel][key].push(key); // HACK(brandyn): How do we use the key in the view for the table?
+                  var value = values[values.length - 1];
+                  var d = new Date(0);
+                  d.setUTCSeconds(value[1]);
+                  value[1] = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
+                  $scope.sensors[channel][key] = value;
               }
+          console.log('applying: ' + JSON.stringify($scope.sensors));
           $scope.$apply(); // HACK(brandyn): Not sure why we have to do this
       }
       ws.subscribe('sensors', sensors_cb);

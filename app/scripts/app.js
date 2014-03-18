@@ -28,6 +28,10 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/gists.html',
         controller: 'GistsCtrl'
       })
+      .when('/weariverse', {
+        templateUrl: 'views/weariverse.html',
+        controller: 'WeariverseCtrl'
+      })
       .when('/images', {
         templateUrl: 'views/images.html',
         controller: 'ImagesCtrl'
@@ -64,6 +68,7 @@ angular.module('wearscriptPlaygroundApp', [
     // Globally enable/disable logging
     Logging.enabled = true;
     Socket.connect(window.WSURL + '/ws');
+    $window.HACK_WS = Socket.ws;
     $rootScope.aceLoaded = function( editor ) {
       Editor.init(editor)
     }
