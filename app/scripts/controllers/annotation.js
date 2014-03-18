@@ -14,5 +14,5 @@ angular.module('wearscriptPlaygroundApp')
       $scope.$on('$destroy', function cleanup() {
           ws.unsubscribe('annotationimage');
       });
-      $scope.
+      //$scope.
   });

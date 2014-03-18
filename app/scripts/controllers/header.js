@@ -2,6 +2,6 @@
 
 angular.module('wearscriptPlaygroundApp')
   .controller('HeaderCtrl', function ($scope,Editor) {
-    $scope.status = Editor.status || "Loaded"
+    $scope.editor = Editor;
     $scope.editorActive = Editor.active; 
   });

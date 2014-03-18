@@ -19,7 +19,7 @@ angular.module('wearscriptPlaygroundApp')
       forkonsave: false,
       session: false,
       menu: true,
-      status: "Loaded"
+      status: false
     }
 
     service.init = function(editor){
@@ -54,6 +54,8 @@ angular.module('wearscriptPlaygroundApp')
             var file = $routeParams.file || service.file || 'glass.html';
             service.file = file;
             $log.log('GIST:' + service.gistid + ' File: ' + file);
+            service.status = "Loaded: #" + service.gistid+ "/" + service.file
+            $rootScope.title = service.gistid + "/" + service.file
             var channel = ws.channel(ws.groupDevice, 'gistGet');
             ws.publish_retry(
                 gist_cb.bind(this),
@@ -87,6 +89,8 @@ angular.module('wearscriptPlaygroundApp')
               } else {
                 service.editor.getSession().setValue(GLASS_BODY);
               }
+              service.status = "Loaded: Example"
+              console.log(service.status)
             }
         }
         service.editor.getSession().on('change', function(e) {
@@ -107,6 +111,7 @@ angular.module('wearscriptPlaygroundApp')
               if ($routeParams.gistid && $routeParams.file) {
                 Playground.gistModify(ws, $routeParams.gistid, $routeParams.file, service.editor.session.getValue(), function (x, modGist) {
                   Playground.updateLocalGists( modGist );
+                  service.status = "Saved: #" + service.gistid+ "/" + service.file
                 });
               } else {
                 // @TODO: Need to allow user to select secret and set description with a modal
