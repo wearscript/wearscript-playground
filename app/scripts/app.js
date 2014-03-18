@@ -64,13 +64,14 @@ angular.module('wearscriptPlaygroundApp', [
         redirectTo: '/'
       });
   })
-  .run(function($log,$http,$window,$rootScope,Socket,Logging,Editor,Profile){
+  .run(function($log,$http,$window,$location,$rootScope,Socket,Logging,Editor,Profile){
 
     // Globally enable/disable logging
     Logging.enabled = true;
 
-    // Expose profile globally for use in templates
+    // Expose profile/path globally for use in templates
     $rootScope.profile = Profile
+    $rootScope.location = $location
 
     Socket.connect(window.WSURL + '/ws');
 
