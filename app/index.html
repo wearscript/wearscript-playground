@@ -85,6 +85,11 @@
                href="#/debug">Debug</a>
           </li>
           <li>
+            <a data-ng-click='active=annotation'
+               data-ng-class="{'active': active==annotation}"
+               href="#/annotation">Annotation</a>
+          </li>
+          <li>
             <a data-ng-click='active=weariverse'
                data-ng-class="{'active': active==weariverse}"
                href="#/weariverse">Weariverse</a>
@@ -147,6 +152,7 @@
     <script src="scripts/controllers/setup.js"></script>
     <script src="scripts/controllers/help.js"></script>
     <script src="scripts/controllers/modal.js"></script>
+    <script src="scripts/controllers/annotation.js"></script>
     <script src="scripts/controllers/logging.js"></script>
     <script src="scripts/controllers/header.js"></script>
     <script src="scripts/controllers/debug.js"></script>

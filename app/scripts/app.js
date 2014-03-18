@@ -60,6 +60,10 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/debug.html',
         controller: 'DebugCtrl'
       })
+      .when('/annotation', {
+        templateUrl: 'views/annotation.html',
+        controller: 'AnnotationCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
