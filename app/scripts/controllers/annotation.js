@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('AnnotationCtrl', function ($scope) {
+  .controller('AnnotationCtrl', function ($scope, Socket) {
       var ws = Socket.ws;
       $scope.images = {}; // [device] = imageb64
       function image_cb(channel, time, imageData, numPoints, description) {
