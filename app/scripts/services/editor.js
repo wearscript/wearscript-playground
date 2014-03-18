@@ -55,7 +55,7 @@ angular.module('wearscriptPlaygroundApp')
             service.file = file;
             $log.log('GIST:' + service.gistid + ' File: ' + file);
             service.status = "Loaded: #" + service.gistid+ "/" + service.file
-            $rootScope.title = service.gistid + "/" + service.file + " |"
+            $rootScope.title = service.gistid + "/" + service.file + " | " + $rootScope.title
             var channel = ws.channel(ws.groupDevice, 'gistGet');
             ws.publish_retry(
                 gist_cb.bind(this),
@@ -90,7 +90,7 @@ angular.module('wearscriptPlaygroundApp')
                 service.editor.getSession().setValue(GLASS_BODY);
               }
               service.status = "Loaded: Example"
-              $rootScope.title = "Example |"
+              $rootScope.title = "Example | " + $rootScope.title
               console.log(service.status)
             }
         }
