@@ -15,6 +15,7 @@ angular.module('wearscriptPlaygroundApp')
       dirty: false,
       content: '',
       gistid: undefined,
+      gist: undefined,
       file: undefined,
       forkonsave: false,
       session: false,
@@ -27,15 +28,23 @@ angular.module('wearscriptPlaygroundApp')
       service.editor = editor;
       service.session = editor.session;
 
+      function gist_list_cb(channel, gists) {
+        if (typeof gists == 'object') {
+          for (var i = 0; i < gists.length; i++) {
+            gists[i].url_playground = '#/gist/' + gists[i].id;
+          }
+          Profile.set("gists", gists)
+          if(gists[0] && gists[0].user){
+            Profile.set("github_user", gists[0].user)
+          }
+        }
+      }
+      
       function gist_cb(channel, gist) {
           service.dirty = false;
           service.editor.getSession().setValue(gist.files[file].content);
-      }
-      function gist_modify_cb(channel, gists) {
-        Profile.set('gists', gists);
-      }
-      function gist_get_cb(channel, gist) {
-        Profile.set('gists', gist);
+          service.gist = gist;
+          service.status = "Loaded: #" + service.gist.id+ "/" + service.file
       }
       var ws = Socket.ws;
 
@@ -54,18 +63,26 @@ angular.module('wearscriptPlaygroundApp')
             var file = $routeParams.file || service.file || 'glass.html';
             service.file = file;
             $log.log('GIST:' + service.gistid + ' File: ' + file);
-            service.status = "Loaded: #" + service.gistid+ "/" + service.file
             $rootScope.title = service.gistid + "/" + service.file + " | " + $rootScope.title
-            var channel = ws.channel(ws.groupDevice, 'gistGet');
             ws.publish_retry(
-                gist_cb.bind(this),
-                1000,
-                channel,
-                'gist',
-                'get',
-                channel,
-                service.gistid
+              gist_cb.bind(this),
+              1000,
+              ws.channel(ws.groupDevice, 'gistGet'),
+              'gist',
+              'get',
+              ws.channel(ws.groupDevice, 'gistGet'),
+              service.gistid
             );
+
+            ws.publish_retry(
+              gist_list_cb.bind(this),
+              1000,
+              ws.channel(ws.groupDevice, 'gistList'),
+              'gist',
+              'list',
+              ws.channel(ws.groupDevice, 'gistList')
+            );
+
         } else {
             if (service.content) {
                 // If it's a gist reset the route properly
@@ -91,7 +108,6 @@ angular.module('wearscriptPlaygroundApp')
               }
               service.status = "Loaded: Example"
               $rootScope.title = "Example | " + $rootScope.title
-              console.log(service.status)
             }
         }
         service.editor.getSession().on('change', function(e) {
@@ -110,10 +126,30 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
             exec: function(editor) {
               if ($routeParams.gistid && $routeParams.file) {
-                Playground.gistModify(ws, $routeParams.gistid, $routeParams.file, service.editor.session.getValue(), function (x, modGist) {
-                  Playground.updateLocalGists( modGist );
-                  service.status = "Saved: #" + service.gistid+ "/" + service.file
-                });
+                if (service.gist.user.id == Profile.github_user.id){
+                  Playground.gistModify(
+                    ws,
+                    $routeParams.gistid,
+                    $routeParams.file,
+                    service.editor.session.getValue(),
+                    function (x, modGist) {
+                      Playground.updateLocalGists( modGist );
+                      service.status = "Saved: #" + service.gistid+ "/" + service.file
+                    }
+                  );
+                } else {
+                  Playground.gistFork(
+                    ws,
+                    $routeParams.gistid,
+                    function (x, gist) {
+                      Playground.updateLocalGists( gist );
+                      service.gist = gist;
+                      service.status = "Forked: #" + gist.id+ "/" + service.file
+                      $location.path("/gist/" + gist.id);
+                    }
+                  );
+                }
+
               } else {
 
                 $modal.open({
@@ -128,7 +164,6 @@ angular.module('wearscriptPlaygroundApp')
                     }
                   }
                 }).result.then(function(file){
-                  $log.info('<< Editor','Gist Create',file)
                   Playground.gistCreate(
                     ws,
                     !file.private,
@@ -137,7 +172,6 @@ angular.module('wearscriptPlaygroundApp')
                     service.editor.session.getValue(),
                     function (x, y) {
                       if (y && y.id) {
-                        $log.info('** Editor','Gist Created',file)
                         Playground.updateLocalGists( y )
                         $location.path("/gist/" + y.id);
                       }
