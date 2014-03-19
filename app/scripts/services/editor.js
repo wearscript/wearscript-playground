@@ -128,11 +128,12 @@ angular.module('wearscriptPlaygroundApp')
                     }
                   }
                 }).result.then(function(file){
+                  console.log(file)
                   Playground.gistCreate(
                     ws,
-                    true,
-                    "[wearscript]",
-                    file.name,
+                    !file.private,
+                    "[wearscript] " + file.description,
+                    "glass.html",
                     service.editor.session.getValue(),
                     function (x, y) {
                       if (y && y.id) {

@@ -6,28 +6,33 @@
     <div class="row">
       <div class="col-xs-12">
         <form novalidate>
-          <div class="input-group">
+          <div class="form-group">
             <input
               type="text"
               class="form-control"
-              placeholder="glass.html"
-              name="fileName"
-              data-ng-model="file.name"
+              placeholder="Some descriptive text here"
+              data-ng-model="file.description"
             >
-          <span class="input-group-btn">
-            <button
-              class="btn btn-default"
-              type="button"
-              data-ng-disabled="!file.name"
-              data-ng-click="ok(file)"
-            >Save</button>
-          </span>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input
+                type="checkbox"
+                data-ng-model="file.private"
+              > Make Private
+            </label>
           </div>
         </form>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-ng-disabled="!file.description"
+      data-ng-click="ok(file)"
+    >Save</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
   </div>
 </div>
