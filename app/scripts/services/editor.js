@@ -128,7 +128,7 @@ angular.module('wearscriptPlaygroundApp')
                     }
                   }
                 }).result.then(function(file){
-                  console.log(file)
+                  $log.info('<< Editor','Gist Create',file)
                   Playground.gistCreate(
                     ws,
                     !file.private,
@@ -137,6 +137,7 @@ angular.module('wearscriptPlaygroundApp')
                     service.editor.session.getValue(),
                     function (x, y) {
                       if (y && y.id) {
+                        $log.info('** Editor','Gist Created',file)
                         Playground.updateLocalGists( y )
                         $location.path("/gist/" + y.id);
                       }
