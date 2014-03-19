@@ -43,7 +43,7 @@
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" class="status" data-ng-bind="editor.status"></div>
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" ng-controller="ModalCtrl">
           <a ng-click="open('fileManager')" ><i class="fa fa-file-text"></i></a>
-          <a ng-click="open()"><i class="fa fa-ellipsis-v"></i></a>
+          <a ng-click="open('shortcuts')"><i class="fa fa-ellipsis-v"></i></a>
       </div>
       <h1>Wearscript Playground</h1>
     </header>
@@ -51,14 +51,23 @@
       <nav>
         <ul>
           <li>
-            <a data-ng-click='active=editor'
-               ng-class="{'active': active==editor}"
-               href="#/">Editor</a>
+            <a
+              data-ng-click='active=editor'
+              ng-class="{'active': active==editor}"
+              href="#/"
+            >
+              Editor
+            </a>
+
           </li>
           <li>
-            <a data-ng-click='active=gists'
-               data-ng-class="{'active': active==gists}"
-               href="#/gists">Gists</a>
+            <a 
+              data-ng-click='active=gists'
+              data-ng-class="{'active': active==gists}"
+              href="#/gists"
+            >
+              Gists
+            </a>
           </li>
           <li>
             <a data-ng-click='active=images'
