@@ -3,7 +3,7 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory('Editor', function(
-    $window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Profile,Playground
+    $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Profile,Playground
   ) {
 
     ace.config.set(
@@ -115,13 +115,34 @@ angular.module('wearscriptPlaygroundApp')
                   service.status = "Saved: #" + service.gistid+ "/" + service.file
                 });
               } else {
-                // @TODO: Need to allow user to select secret and set description with a modal
-                Playground.gistCreate(ws, true, "[wearscript]", 'glass.html', service.editor.session.getValue(), function (x, y) {
-                  if (y && y.id) {
-                    Playground.updateLocalGists( y )
-                    $location.path("/gist/" + y.id);
+
+                $modal.open({
+                  templateUrl: 'views/modals/save-gist.html',
+                  controller: function($scope,$modalInstance){
+                    $scope.file = {}
+                    $scope.ok = function(file){
+                      $modalInstance.close(file)
+                    }
+                    $scope.cancel = function(){
+                      $modalInstance.dismiss()
+                    }
                   }
-                });
+                }).result.then(function(file){
+                  Playground.gistCreate(
+                    ws,
+                    true,
+                    "[wearscript]",
+                    file.name,
+                    service.editor.session.getValue(),
+                    function (x, y) {
+                      if (y && y.id) {
+                        Playground.updateLocalGists( y )
+                        $location.path("/gist/" + y.id);
+                      }
+                    }
+                  );
+                })
+
               }
             }
         });

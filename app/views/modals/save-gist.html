@@ -1,16 +1,33 @@
 <div class="modal-container" ng-controller="ModalCtrl">
   <div class="modal-header text-center">
-      <h3>Help!</h3>
+      <h3>Save File</h3>
   </div>
   <div class="modal-body">
     <div class="row">
       <div class="col-xs-12">
-
+        <form novalidate>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="glass.html"
+              name="fileName"
+              data-ng-model="file.name"
+            >
+          <span class="input-group-btn">
+            <button
+              class="btn btn-default"
+              type="button"
+              data-ng-disabled="!file.name"
+              data-ng-click="ok(file)"
+            >Save</button>
+          </span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
   </div>
 </div>
