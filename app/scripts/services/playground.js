@@ -1,6 +1,6 @@
 'use strict'
 angular.module('wearscriptPlaygroundApp')
-  .factory( 'Playground', function($rootScope,$location,Socket, Profile){
+  .factory( 'Playground', function($log,$rootScope,$location,Socket, Profile){
     var service = {}
     service.redirectAuthGoogle = function() {
         $location.replace('auth')
@@ -41,7 +41,8 @@ angular.module('wearscriptPlaygroundApp')
         var c = ws.channel(ws.groupDevice, 'gistCreate')
         ws.subscribe(c, callback)
         var files = {}
-        files[fileName] = {content: content}
+        files['manifest.json'] = { content: '{"name":""}' }
+        files[fileName] = { content: content }
         ws.publish('gist', 'create', c, secret, description, files)
     }
     service.updateLocalGists = function(g){
