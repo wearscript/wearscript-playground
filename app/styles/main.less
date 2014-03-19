@@ -50,7 +50,7 @@ body {
       height:@nav_height;
       line-height:@nav_height;
       text-align:center;
-      min-width:60px;
+      min-width:20px;
       position:absolute;
       top:0px;
       z-index:1049;
@@ -58,9 +58,13 @@ body {
         text-decoration: none;
       }
     }
-    div > a {
+    div > a:last-child {
       display:block;
       right:0px;
+    }
+    div > a:first-child {
+      display:block;
+      right: 20px;
     }
     > a {
       left:0px;
@@ -209,6 +213,10 @@ body {
   }
   .modal-body{
     color: white;
+
+    select{
+      color: #000;
+    }
   }
   a:visited {
     color: white;

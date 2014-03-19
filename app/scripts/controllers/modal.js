@@ -24,8 +24,7 @@ angular.module('wearscriptPlaygroundApp')
       var modalTemplate = '';
       var controller = '';
       switch(currentModal){
-        case undefined:
-        case '':
+        case 'shortcuts':
           modalTemplate = 'views/modals/shortcuts.html'
           break;
         case 'save-gist':
@@ -34,6 +33,10 @@ angular.module('wearscriptPlaygroundApp')
         case 'setup':
           modalTemplate = 'views/modals/setup.html'
           controller = 'SetupCtrl'
+          break;
+        case 'fileManager':
+          modalTemplate = 'views/modals/fileManager.html'
+          controller = 'FileManagerCtrl'
           break;
         case 'settings':
           settingsModal();
@@ -45,7 +48,7 @@ angular.module('wearscriptPlaygroundApp')
       var modalInstance = $modal.open({
         templateUrl: modalTemplate,
         controller: ( controller != '' ? controller : ModalInstanceCtrl),
-        resolve: 
+        resolve:
         { shortcuts: function () {
             return $scope.shortcuts;
           }

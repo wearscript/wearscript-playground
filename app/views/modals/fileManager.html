@@ -1,0 +1,89 @@
+<div class="modal-container">
+  <div class="modal-header text-center">
+      <h3>File Manager</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-xs-6 text-center">
+        <h3>Open an existing file</h3>
+        <form name="openFileForm">
+          <div class="input-group">
+            <select
+              data-ng-modal="fileSelected"
+              data-ng-disabled="availableFiles.length == 0"
+              class="form-control"
+              name="fileSelected"
+            >
+              <option value="">Select a File</option>
+              <option
+                data-ng-repeat="file in availableFiles"
+                data-ng-bind="file.filename"
+                value="{{file.filename}}"
+              >
+              </option>-->
+            </select>
+            <span class="input-group-btn">
+              <button
+                class="btn btn-default"
+                type="button"
+                data-ng-disabled="availableFiles.length == 0"
+                data-ng-click="openFile()"
+              >
+                Open
+              </button>
+            </span>
+          </div>
+          <div data-ng-show="openFileForm.fileSelected.$error">
+            Please select a file!
+          </div>
+        </form>
+      </div>
+      <div class="col-xs-6 text-center">
+        <h3>Create a new file</h3>
+        <form name="newFileForm">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              data-ng-model="newFileName"
+              name="newFileName"
+            />
+            <span class="input-group-btn">
+              <button
+                class="btn btn-default"
+                type="button"
+                data-ng-click="newFile()"
+                data-ng-disabled="newFileName.length == 0"
+              >
+                Create
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2 text-center">
+      <h3>Create a new Gist</h3>
+      <div class="input-group">
+        <input type="text" class="form-control" data-ng-model="gistName">
+        <span class="input-group-btn">
+          <button
+            class="btn btn-default"
+            type="button"
+            data-ng-click="newGist()"
+            data-ng-disabled="gistName.length == 0"
+          >
+            Create
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  -->
+  <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="ok()">Close</button>
+  </div>
+</div>
