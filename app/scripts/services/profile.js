@@ -13,7 +13,6 @@ angular.module('wearscriptPlaygroundApp')
       vim_mode: Storage.get('vim_mode') || false,
       debug_mode: Storage.get('debug_mode') || false,
       menu: Storage.get('menu') || true,
-      gists: Storage.get('gists') || {},
       set: function(key, val) {
         this[key] = val;
         Storage.set(key, val);

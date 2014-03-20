@@ -4,7 +4,9 @@ angular.module('wearscriptPlaygroundApp')
 
   .factory( 'Socket', function($log,$window, Profile, $rootScope, Logging){
 
-    var service = {}
+    var service = {
+      ws: {}
+    }
 
     function onopen(){
 
