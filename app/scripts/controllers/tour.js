@@ -2,70 +2,34 @@
 
 angular.module('wearscriptPlaygroundApp')
   .controller('TourCtrl', function ($scope) {
-    /*
-    $scope.changeStyle = function (element, changeTo){
-      dict = {}
-      changeTo = {
-        'borderBottom': 'none'
-      }
-      if(element && element.style){
-        for(var i = 0; i < element.style.length; i++) {
-          var key = element.style[i];
-          var value = element.style[key];
-          dict[key] = element.style[value];
-        }
-        for(var i in changeTo) {
-          var key = i;
-          var value = element.style[key];
-          dict[key] = element.style[value];
-        }
-        cache.push({
-          element: element,
-          changedStyles: dict
-        });
-        
-      }
-    }
-    */
+    
     $scope.onCompletedEvent = function (element) {
       console.log("Completed Event called"); 
-      console.log("" + arguments.length +" arguments were passed.");
-      //element.style.borderBottom = self.cache.borderBottom;
+      console.log("DEBUG: " + arguments.length +" arguments were passed.");
+      
     };
 
     $scope.onExitEvent = function () { 
       console.log("Exit Change Event called");
-      console.log("" + arguments.length +" arguments were passed.");
-      //e.style.borderBottom = self.cache.borderBottom;
-      /*
-      for(var i = 0; i < self.cache.length; i ++){
-        self.cache[i].element.style = self.cache[i].style;
-      }
-      */
+      console.log("DEBUG: " + arguments.length +" arguments were passed.");
+      
     };
 
     $scope.onBeforeChangeEvent = function () { 
       console.log("Before Change Event called"); 
-      console.log("" + arguments.length +" arguments were passed.");
+      console.log("DEBUG: " + arguments.length +" arguments were passed.");
 
     };
 
     $scope.onChangeEvent = function (element) { 
       console.log("Change Event called");
-      console.log("" + arguments.length +" arguments were passed.");
-      /*
-      self.cache.push({
-        element: element,
-        style: element.style
-      });
-
-      element.style.borderBottom = "none"; 
-      */
+      console.log("DEBUG: " + arguments.length +" arguments were passed.");
+      
     };
 
     $scope.onAfterChangeEvent = function () { 
       console.log("After Change Event called"); 
-      console.log("" + arguments.length +" arguments were passed.");
+      console.log("DEBUG: " + arguments.length +" arguments were passed.");
 
     };
 
