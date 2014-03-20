@@ -6,7 +6,6 @@ angular.module('wearscriptPlaygroundApp', [
   'ui.ace',
   'angular-table',
   'ui.bootstrap',
-  'ngTouch',
   'ngLogging'
 ])
   .config(function ($routeProvider) {
@@ -71,6 +70,9 @@ angular.module('wearscriptPlaygroundApp', [
 
     // Expose profile/path globally for use in templates
     $rootScope.profile = Profile
+    if( window.innerWidth < 400){
+      Profile.menu = false
+    }
     $rootScope.location = $location
 
     Socket.connect(window.WSURL + '/ws');
