@@ -13,7 +13,8 @@
     "angular-table": "~1.0.0",
     "components-font-awesome": "~4.0.3",
     "angular-bootstrap": "~0.10.0",
-    "angular-hammer": "~1.0.3"
+    "angular-hammer": "~1.0.3",
+    "angular-ui-utils": "~0.1.1"
   },
   "devDependencies": {
     "less": "~1.7.0",
