@@ -3,7 +3,7 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory('Editor', function(
-    $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Gist,Profile,Playground
+    $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Gist,Profile,Playground, Storage
   ) {
 
     ace.config.set(
@@ -33,14 +33,14 @@ angular.module('wearscriptPlaygroundApp')
           for (var i = 0; i < gists.length; i++) {
             gists[i].url_playground = '#/gist/' + gists[i].id;
           }
-          Gists.gists = gists;
-          Storage.set('gists',gist)
+          Gist.gists = gists;
+          Storage.set('gists',gists)
           if(gists[0] && gists[0].user){
             Profile.set("github_user", gists[0].user)
           }
         }
       }
-      
+
       function gist_cb(channel, gist) {
           service.dirty = false;
           service.editor.getSession().setValue(gist.files[file].content);
