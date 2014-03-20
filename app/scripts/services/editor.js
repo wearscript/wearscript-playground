@@ -131,7 +131,7 @@ angular.module('wearscriptPlaygroundApp')
                     $routeParams.file,
                     service.editor.session.getValue(),
                     function (x, modGist) {
-                      gist.refresh( modGist );
+                      Gist.refresh( modGist );
                       service.status = "Saved: #" + service.gistid+ "/" + service.file
                     }
                   );
