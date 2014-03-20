@@ -26,53 +26,5 @@ angular.module('wearscriptPlaygroundApp')
     service.runLambdaOnGlass = function(ws, script) {
         ws.publish('glass', 'lambda', script)
     }
-    service.gistGet = function(ws, gistid, callback) {
-        $log.info('<< Playground','gistGet',gistid)
-        ws.subscribe(
-          ws.channel(ws.groupDevice, 'gistGet'),
-          function(){
-            $log.info('>> Playground','gistGet',arguments)
-            callback.apply(this,arguments)
-          }
-        )
-        ws.publish_retry('gist', 'get', ws.channel(ws.groupDevice, 'gistGet'), gistid)
-    }
-    service.gistModify = function(ws, gistid, fileName, content, callback) {
-        $log.info('<< Playground','gistModify',gistid,fileName,content)
-        var c = ws.channel(ws.groupDevice, 'gistModify')
-        ws.subscribe(c, callback)
-        var files = {}
-        files[fileName] = {content: content}
-        ws.publish('gist', 'modify', c, gistid, undefined, files)
-    }
-    service.gistCreate = function(ws, secret, description, fileName, content, callback) {
-        $log.info('<< Playground','gistCreate',description,fileName,content)
-        var c = ws.channel(ws.groupDevice, 'gistCreate')
-        ws.subscribe(c, callback)
-        var files = {}
-        files['manifest.json'] = { content: '{"name":""}' }
-        files[fileName] = { content: content }
-        ws.publish('gist', 'create', c, secret, description, files)
-    }
-    service.gistFork = function(ws, gistid, callback) {
-        $log.info('<< Playground','gistFork',gistid)
-        ws.subscribe(ws.channel(ws.groupDevice, 'gistFork'), callback)
-        ws.publish('gist', 'fork', ws.channel(ws.groupDevice, 'gistFork'), gistid)
-    }
-    service.updateLocalGists = function(g){
-      $log.info('** Playground','updateLocalGists',g)
-      var gists = Profile.get('gists')
-      var exists = false
-      for( var idx in gists ){
-        if( gists[idx].id == g.id){
-          gists[idx] = g
-          exists = true
-        }
-      }
-      if(!exists){
-        gists.push(g)
-      }
-      Profile.set('gists', gists)
-    }
     return service
 })
