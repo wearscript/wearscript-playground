@@ -3,7 +3,7 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory('Editor', function(
-    $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Profile,Playground,Gist
+    $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Gist,Profile,Playground
   ) {
 
     ace.config.set(
@@ -33,7 +33,8 @@ angular.module('wearscriptPlaygroundApp')
           for (var i = 0; i < gists.length; i++) {
             gists[i].url_playground = '#/gist/' + gists[i].id;
           }
-          Profile.set("gists", gists)
+          Gists.gists = gists;
+          Storage.set('gists',gist)
           if(gists[0] && gists[0].user){
             Profile.set("github_user", gists[0].user)
           }
