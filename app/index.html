@@ -1,11 +1,12 @@
 <!doctype html>
 <html data-ng-app="wearscriptPlaygroundApp">
-  <head >
+  <head>
     <meta charset="utf-8">
     <title ng-init="title='Wearscript Playground'" ng-bind="title"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
     <!--(if target dev)><!-->
+    <link rel="stylesheet" href="bower_components/intro.js/introjs.css">
     <link rel="stylesheet/less" type="text/css" href="styles/main.less">
     <script>
       var less = {
@@ -18,7 +19,7 @@
       }
     </script>
     <script type="text/javascript" src="bower_components/less/dist/less-1.7.0.min.js"></script>
-    <script type="text/javascript">less.watch()</script>
+    <script type="text/javascript">//less.watch()</script>
     <script>
       var port = (location.port != 80) ? ':' + location.port : '';
       WSURL = 'ws://' + location.host;
@@ -35,7 +36,17 @@
   </head>
   <body
     data-ng-class="{'menu-open': profile.menu }"
-    data-ng-cloak >
+    data-ng-cloak 
+    ng-intro-options="IntroOptions"
+    ng-intro-method="CallMe"
+    ng-intro-oncomplete="onCompletedEvent"
+    ng-intro-onexit="onExitEvent"
+    ng-intro-onchange="onChangeEvent"
+    ng-intro-onbeforechange="onBeforeChangeEvent"
+    ng-intro-onafterchange="onAfterChangeEvent"
+    ng-intro-autostart="false"
+    ng-controller="TourCtrl">
+
     <header data-ng-controller="HeaderCtrl" class="row">
       <a data-ng-click="profile.toggle('menu')">
          <i class="fa fa-bars"></i>
@@ -53,27 +64,32 @@
           <li>
             <a data-ng-click='active=editor'
                ng-class="{'active': active==editor}"
-               href="#/">Editor</a>
+               href="#/"
+               id="editor-tab">Editor</a>
           </li>
           <li>
             <a data-ng-click='active=gists'
                data-ng-class="{'active': active==gists}"
-               href="#/gists">Gists</a>
+               href="#/gists"
+               id="step2">Gists</a>
           </li>
           <li>
             <a data-ng-click='active=images'
                data-ng-class="{'active': active==images}"
-               href="#/images">Images</a>
+               href="#/images"
+               id="step3">Images</a>
           </li>
           <li>
             <a data-ng-click='active=sensors'
                data-ng-class="{'active': active==sensors}"
-               href="#/sensors">Sensors</a>
+               href="#/sensors"
+               id="step4">Sensors</a>
           </li>
           <li>
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==channels}"
-               href="#/channels">Channels</a>
+               href="#/channels"
+               id="step5">Channels</a>
           </li>
           <li>
             <a data-ng-click='active=channels'
@@ -95,6 +111,13 @@
                data-ng-class="{'active': active==weariverse}"
                href="#/weariverse">Weariverse</a>
           </li>
+          <li>
+            <a
+              data-ng-click="active=editor;CallMe();"
+              data-ng-class="{'active': active==editor}"
+              href="">Tour</a>
+          </li>
+
         </ul>
         <div class="col-xs-12" id="iconSetArea">
           <div class="row" >
@@ -122,6 +145,8 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+    <script src="bower_components/intro.js/intro.js"></script>
+    <script src="bower_components/mendhak/angular-intro.js/angular-intro.js"></script>
     <!-- endbower -->
     <script src="bower_components/angular-table/src/main/webapp/js/lib/angular-table.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -154,6 +179,7 @@
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/playground.js"></script>
     <script src="scripts/controllers/filemanager.js"></script>
+    <script src="scripts/controllers/tour.js"></script>
     <!-- endbuild -->
   </body>
 </html>
