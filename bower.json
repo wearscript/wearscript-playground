@@ -15,7 +15,7 @@
     "angular-touch": "~1.2.14",
     "angular-bootstrap": "~0.10.0",
     "ng-csv": "~0.0.7",
-    "mendhak/angular-intro.js": "https://github.com/coryk135/angular-intro.js.git#~0.1.0"
+    "angular-intro.js": "v1.0.2"
   },
   "devDependencies": {
     "less": "~1.7.0",
