@@ -131,7 +131,7 @@ angular.module('wearscriptPlaygroundApp')
                     $routeParams.file,
                     service.editor.session.getValue(),
                     function (x, modGist) {
-                      Playground.updateLocalGists( modGist );
+                      gist.refresh( modGist );
                       service.status = "Saved: #" + service.gistid+ "/" + service.file
                     }
                   );
@@ -139,7 +139,7 @@ angular.module('wearscriptPlaygroundApp')
                   Gist.fork(
                     $routeParams.gistid,
                     function (x, gist) {
-                      Playground.updateLocalGists( gist );
+                      Gist.refresh( gist );
                       service.gist = gist;
                       service.status = "Forked: #" + gist.id+ "/" + service.file
                       $location.path("/gist/" + gist.id);
