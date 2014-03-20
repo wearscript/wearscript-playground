@@ -31,7 +31,7 @@
         <p ng-if="adb">Run in WearScript then scan the QR code.</p>
 
         <p>
-          <img ng-src="{{qrurl}}" height="250px"/>
+        <img ng-src="{{qrurl}}" height="{{ qrurl.length > 0 ? '250px' : '0px'}}"/>
         </p>
 
         <p ng-if="adb">
