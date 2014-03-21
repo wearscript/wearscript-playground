@@ -140,10 +140,18 @@ angular.module('wearscriptPlaygroundApp')
                   Gist.fork(
                     $routeParams.gistid,
                     function (x, gist) {
-                      Gist.refresh( gist );
-                      service.gist = gist;
-                      service.status = "Forked: #" + gist.id+ "/" + service.file
-                      $location.path("/gist/" + gist.id);
+                      Gist.modify(
+                        gist.id,
+                        $routeParams.file,
+                        service.editor.session.getValue(),
+                        function (x, gist){
+                          service.status = "Forked: #" + gist.id+ "/" + service.file
+                          Gist.refresh( gist );
+                          service.gist = gist;
+                          $location.path("/gist/" + gist.id);
+                          $rootScope.$apply()
+                        }
+                      )
                     }
                   );
                 }
