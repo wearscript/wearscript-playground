@@ -43,7 +43,8 @@ angular.module('wearscriptPlaygroundApp')
 
       function gist_cb(channel, gist) {
           service.dirty = false;
-          service.editor.getSession().setValue(gist.files[file].content);
+          var content = ((gist.files[file] || []).content || '')
+          service.editor.getSession().setValue(content);
           service.gist = gist;
           service.status = "Loaded: #" + service.gist.id+ "/" + service.file
       }
