@@ -94,14 +94,15 @@ angular.module('wearscriptPlaygroundApp')
             }
         }
         service.editor.getSession().on('change', function(e) {
-            service.content = service.editor.session.getValue();
-            service.dirty = true;
-            Gist.setLocal(
-              service.gistid,
-              service.file,
-              service.editor.session.getValue()
-            )
-
+            if (service.gistid){
+              service.content = service.editor.session.getValue();
+              service.dirty = true;
+              Gist.setLocal(
+                service.gistid,
+                service.file,
+                service.editor.session.getValue()
+              )
+            }
         });
         service.editor.commands.addCommand({
             name: "wake-screen",
@@ -112,6 +113,8 @@ angular.module('wearscriptPlaygroundApp')
                 'lambda',
                 'WS.wake();WS.activityCreate();'
               )
+              service.status = "Woke Glass Screen"
+              $rootScope.$apply()
             }
         });
         service.editor.commands.addCommand({
@@ -119,15 +122,28 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
               var filesForGlass = {};
-              var gist = Gist.getLocal(service.gistid);
-              angular.forEach(gist.files, function(file, fileName){
-                filesForGlass[fileName] = file.content
-              })
+              if (service.gistid){
+                var gist = Gist.getLocal(service.gistid);
+                angular.forEach(gist.files, function(file, fileName){
+                  filesForGlass[fileName] = file.content
+                })
+              } else {
+                filesForGlass = { 
+                  'glass.html': service.editor.session.getValue()
+                }
+              }
+              Socket.ws.publish(
+                'glass',
+                'lambda',
+                'WS.wake();WS.activityCreate();'
+              )
               Socket.ws.publish(
                 'glass',
                 'script',
                 filesForGlass
               );
+              service.status = "Sent project to Glass"
+              $rootScope.$apply()
             }
         });
         service.editor.commands.addCommand({
@@ -204,7 +220,9 @@ angular.module('wearscriptPlaygroundApp')
               if (!line.length) {
                 line = service.editor.session.getLine(service.editor.selection.getCursor().row);
               }
-              Socket.ws.publish('glass','lambda',line);
+              Socket.ws.publish('glass','lambda',line)
+              service.status = "Executed Current Line"
+              $rootScope.$apply()
             }
         });
 
