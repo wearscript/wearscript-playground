@@ -39,6 +39,20 @@ angular.module('wearscriptPlaygroundApp')
       );
     }
 
+    service.getLocal = function(id){
+     angular.forEach(service.gists, function(gist){
+        if(gist.id == id) return gist
+      })
+    }
+
+    service.setLocal = function(id, file, content){
+     angular.forEach(service.gists, function(gist){
+        if(gist.id == id){
+          gist.files[file].content = content
+        }
+      })
+    }
+
     service.modify = function(id, fileName, content, callback) {
         $log.info('<< Gist','modify',id,fileName,content)
         var channel = Socket.ws.channel(Socket.ws.groupDevice, 'gistModify')
