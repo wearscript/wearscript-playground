@@ -28,8 +28,15 @@ angular.module('wearscriptPlaygroundApp')
     service.get = function(id, callback) {
       var channel = Socket.ws.channel(Socket.ws.groupDevice, 'gistGet')
       $log.info('<< Gist','get',id)
-      Socket.ws.subscribe(channel, callback)
-      Socket.ws.publish_retry('gist','get',channel, id)
+      Socket.ws.publish_retry(
+        callback,
+        1000,
+        channel,
+        'gist',
+        'get',
+        channel,
+        id
+      );
     }
 
     service.modify = function(id, fileName, content, callback) {
