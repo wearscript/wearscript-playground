@@ -13,6 +13,15 @@
   font-style: normal;
 }
 
+/* Global Styles! */
+.success{
+  color: #577C37;
+}
+.failed{
+  color: #A91217;
+}
+/* End Global Styles! */
+
 body {
   overflow: hidden;
   background:rgb(29, 31, 33);
@@ -32,11 +41,19 @@ body {
     left:0px;
     height:@nav_height;
     background:#333;
-    div.status {
+
+    #headerIconUl{
+      li{
+        display: inline;
+        list-style: none;
+        margin-right:20px;
+      }
+    }
+    .status {
         font-size:12px;
-        position:absolute;
+        max-width: 257px;
         color:#888;
-        right: 75px;
+        line-height: 22px;
         top:6px;
         border:1px #111 solid;
         background:#222;
@@ -44,19 +61,10 @@ body {
         padding:2px 8px;
         text-align:center;
         border-radius:10px;
+        height: 23px;
     }
     > a, div > a {
-      display:block;
-      height:@nav_height;
-      line-height:@nav_height;
-      text-align:center;
-      min-width:20px;
-      position:absolute;
-      top:0px;
-      z-index:1049;
-      &:hover {
-        text-decoration: none;
-      }
+     
     }
     div > a:last-child {
       display:block;
@@ -69,18 +77,17 @@ body {
     > a {
       left: 5px;
     }
+
     h1 {
-      margin:0px;
-      padding:0px;
-      color:#AAA;
-      font-size:15px;
-      position:absolute;
-      top:0px;
-      left:0px;
-      right:0px;
-      text-align:center;
-      height:@nav_height;
-      line-height:@nav_height;
+     
+      color: #AAA;
+      font-size: 15px;
+      text-align: center;
+      line-height: 15px;
+      margin-top: 10px;
+    }
+    #pageTitle{
+      white-space: nowrap;
     }
   }
   aside {
@@ -202,6 +209,21 @@ body {
     }
   }
 }
+
+ #header{
+      width: 100% !important;
+      margin:0px auto;
+      padding:0px;
+      color:#AAA;
+      font-size:15px;
+      
+      top:0px;
+      left:0px;
+      right:0px;
+      text-align:center;
+      height:@nav_height;
+      line-height:@nav_height;
+    }
 
 .modal-container{
   background-color: #333;

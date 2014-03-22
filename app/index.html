@@ -18,7 +18,6 @@
       }
     </script>
     <script type="text/javascript" src="bower_components/less/dist/less-1.7.0.min.js"></script>
-    <script type="text/javascript">less.watch()</script>
     <script>
       var port = (location.port != 80) ? ':' + location.port : '';
       WSURL = 'ws://' + location.host;
@@ -33,19 +32,40 @@
     </script>
     <!(endif)-->
   </head>
-  <body
-  data-ng-class="{'menu-open': profile.menu}"
-    data-ng-cloak >
-    <header data-ng-controller="HeaderCtrl" class="row">
-      <a data-ng-click="profile.toggle('menu')">
+  <body data-ng-class="{'menu-open': profile.menu}" data-ng-cloak >
+    <header id="header" data-ng-controller="HeaderCtrl" class="container">
+     <!--  <a data-ng-click="profile.toggle('menu')">
          <i class="fa fa-bars"></i>
       </a>
+      
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" class="status" data-ng-bind="editor.status"></div>
+      <a href="" class=" pull-right fa fa-rss"></a>
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" ng-controller="ModalCtrl">
           <a data-ng-click="open('fileManager')" ><i class="fa fa-file-text"></i></a>
           <a data-ng-click="open('shortcuts')"><i class="fa fa-ellipsis-v"></i></a>
       </div>
-      <h1>Wearscript Playground</h1>
+      <h1>Wearscript Playground</h1> -->
+
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+        <a data-ng-click="profile.toggle('menu')">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 text-center">
+        <h1 id="pageTitle">Wearscript Playground</h1>
+      </div>
+      <div  ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" data-ng-bind="editor.status" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xs-offset-3 col-sm-offset-2 hidden-xs status"></div>
+      <div ng-controller="ModalCtrl" class=" col-sm-2 col-md-2 col-lg-2 hidden-xs pull-left">
+        <ul id="headerIconUl">
+          <li><a data-ng-click="open('fileManager')" ><i class="headerIcon fa fa-file-text"></i></a></li>
+          <li><a data-ng-click="open('shortcuts')"><i class="headerIcon fa fa-ellipsis-v"></i></a></li>
+          <li data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i></a><span class="badge">{{socket.deviceCount}} asdf</span></li>
+        </ul>
+         
+          
+          
+      </div>
+
     </header>
     <aside  ng-show="profile.menu" data-ng-controller="MenuCtrl">
       <nav>
@@ -168,6 +188,7 @@
     <script src="scripts/services/playground.js"></script>
     <script src="scripts/controllers/filemanager.js"></script>
     <script src="scripts/services/gist.js"></script>
+    <script src="scripts/controllers/connected.js"></script>
     <!-- endbuild -->
   </body>
 </html>

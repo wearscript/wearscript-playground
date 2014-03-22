@@ -1,0 +1,14 @@
+<div class="modal-container" ng-controller="ModalCtrl">
+  <div class="modal-header text-center">
+      <h3>Connections</h3>
+  </div>
+  <div data-ng-controller="ConnectedCtrl" class="modal-body">
+    <ul>
+      <li>Server: {{socket.connected}}</li>
+      <li data-ng-repeat="device in socket.devices">{{device.name}}: <i class="fa fa-check-circle" data-ng-class="{success: device.connected, failed: !device.connected}"></i></li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+  
+  </div>
+</div>
