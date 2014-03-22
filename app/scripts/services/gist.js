@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .factory('Gist', function($log,Storage,Socket, Profile) {
+.factory('Gist', function($log,$http,$window,Storage,Socket, Profile) {
 
     var service = {
       gists: [],
@@ -47,11 +47,19 @@ angular.module('wearscriptPlaygroundApp')
     }
 
     service.setLocal = function(id, file, content){
-     angular.forEach(service.gists, function(gist){
+      var update = false
+      angular.forEach(service.gists, function(gist){
         if(gist.id == id){
+          if (!gist.files[file]) gist.files[file] = {}
           gist.files[file].content = content
+          update = true
         }
       })
+      if (!update){
+        var gist = {'id':id,'files':{}}
+        gist.files[file] = {'content':content}
+        service.gists.push(gist)  
+      }
     }
 
     service.modify = function(id, fileName, content, callback) {
@@ -101,14 +109,15 @@ angular.module('wearscriptPlaygroundApp')
           for (var i = 0; i < gists.length; i++) {
             gists[i].url_playground = '#/gist/' + gists[i].id;
           }
-          service.gists = gists;
+          angular.forEach(gists,function(gist){
+            service.refresh(gist)
+          })
           Storage.set('gists',gists)
-          if(gists[0] && gists[0].user){
+          if(gists[1] && gists[1].user){
             Profile.set("github_user", gists[0].user)
           }
         }
       }
-
 
       Socket.ws.publish_retry(
         gist_list_cb.bind(this),
@@ -118,7 +127,9 @@ angular.module('wearscriptPlaygroundApp')
         'list',
         Socket.ws.channel(Socket.ws.groupDevice, 'gistList')
       );
+
     }
+
 
     return service
 
