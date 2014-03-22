@@ -7,6 +7,24 @@ angular.module('wearscriptPlaygroundApp')
       gists: Storage.get('gists') || [],
     }
 
+    service.list = function(callback){
+      var ws = Socket.ws;
+      var channel = ws.channel(ws.groupDevice, 'gistList');
+      ws.publish_retry(function(channel, gists){
+        if(typeof gists == 'object'){
+          if (typeof gists == 'object') {
+            for (var i = 0; i < gists.length; i++)
+              gists[i].url_playground = '#/gist/' + gists[i].id
+            Storage.set('gists', gists)
+            service.gists = gists;
+            if(typeof callback == 'function'){
+              callback.call(this)
+            }
+          }
+        }
+      }.bind(this), 1000, channel, 'gist', 'list', channel);
+    }
+
     service.get = function(id, callback) {
       var channel = Socket.ws.channel(Socket.ws.groupDevice, 'gistGet')
       $log.info('<< Gist','get',id)
