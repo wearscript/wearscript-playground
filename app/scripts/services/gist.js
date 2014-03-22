@@ -40,9 +40,10 @@ angular.module('wearscriptPlaygroundApp')
     }
 
     service.getLocal = function(id){
-     angular.forEach(service.gists, function(gist){
-        if(gist.id == id) return gist
-      })
+      for(var idx in service.gists){
+          var gist = service.gists[idx]
+          if(gist.id == id) return gist
+      }
     }
 
     service.setLocal = function(id, file, content){

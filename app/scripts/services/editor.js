@@ -11,20 +11,7 @@ angular.module('wearscriptPlaygroundApp')
       service.dirty = false;
       var content = ((gist.files[file] || []).content || '')
       service.editor.getSession().setValue(content);
-      if(Gist.gists.length > 0){
-        angular.forEach(Gist.gists, function(localGist){
-          if(gist.id == localGist.id){
-            angular.forEach(localGist.files, function(filename, file){
-              if(!file.content && gist.files[filename]){
-                file.content = gist.files[filename].content;
-              }
-            })
-            service.gist = localGist
-          }
-        })
-      } else {
-        service.gist = gist;
-      }
+      Gist.setLocal(service.gistid, file, content)
       service.status = "Loaded: #" + service.gistid+ "/" + service.file
     }
     ace.config.set(
@@ -109,6 +96,12 @@ angular.module('wearscriptPlaygroundApp')
         service.editor.getSession().on('change', function(e) {
             service.content = service.editor.session.getValue();
             service.dirty = true;
+            Gist.setLocal(
+              service.gistid,
+              service.file,
+              service.editor.session.getValue()
+            )
+
         });
         service.editor.commands.addCommand({
             name: "wake-screen",
@@ -125,10 +118,15 @@ angular.module('wearscriptPlaygroundApp')
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
+              var filesForGlass = {};
+              var gist = Gist.getLocal(service.gistid);
+              angular.forEach(gist.files, function(file, fileName){
+                filesForGlass[fileName] = file.content
+              })
               Socket.ws.publish(
                 'glass',
                 'script',
-                service.editor.session.getValue()
+                filesForGlass
               );
             }
         });
@@ -137,7 +135,8 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
             exec: function(editor) {
               if ($routeParams.gistid && $routeParams.file) {
-                if (service.gist.user.id == Profile.github_user.id){
+                var gist = Gist.getLocal($routeParams.gistid);
+                if (gist.user.id == Profile.github_user.id){
                   Gist.modify(
                     $routeParams.gistid,
                     $routeParams.file,
@@ -158,7 +157,6 @@ angular.module('wearscriptPlaygroundApp')
                         function (x, gist){
                           service.status = "Forked: #" + gist.id+ "/" + service.file
                           Gist.refresh( gist );
-                          service.gist = gist;
                           $location.path("/gist/" + gist.id);
                           $rootScope.$apply()
                         }
