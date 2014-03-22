@@ -37,7 +37,7 @@
      <!--  <a data-ng-click="profile.toggle('menu')">
          <i class="fa fa-bars"></i>
       </a>
-      
+
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" class="status" data-ng-bind="editor.status"></div>
       <a href="" class=" pull-right fa fa-rss"></a>
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" ng-controller="ModalCtrl">
@@ -54,17 +54,17 @@
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 text-center">
         <h1 id="pageTitle">Wearscript Playground</h1>
       </div>
-   
+
       <div ng-controller="ModalCtrl" class=" col-sm-2 col-md-2 col-lg-2 hidden-xs  pull-right ">
         <ul id="headerIconUl">
-         
-          <li ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1"><a  data-ng-click="open('shortcuts')"><i class="headerIcon fa fa-ellipsis-v"></i></a></li> 
+
+          <li ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1"><a  data-ng-click="open('shortcuts')"><i class="headerIcon fa fa-ellipsis-v"></i></a></li>
           <li ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1"><a  data-ng-click="open('fileManager')" ><i class="headerIcon fa fa-file-text"></i></a></li>
-          <li data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i>{{socket.deviceCount}}</span></a></li>
+          <li data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i><span data-ng-bind="socket.deviceCount"></span></span></a></li>
         </ul>
-         
-          
-          
+
+
+
       </div>
 
     </header>
@@ -125,7 +125,7 @@
                data-ng-class="{'active': active==weariverse}"
                href="#/weariverse">Weariverse</a>
           </li>
-         <li class="visible-xs" data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i>{{socket.deviceCount}}</span></a></li>
+          <li class="visible-xs" data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i><span data-ng-bind="socket.deviceCount"></span></span></a></li>
         </ul>
         <div class="row" id="iconSetArea">
           <div class="col-xs-12">
@@ -141,9 +141,9 @@
       </nav>
     </aside>
     <div  class="container-fluid tab-view" ng-view="">
-      
+
     </div>
-    
+
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
