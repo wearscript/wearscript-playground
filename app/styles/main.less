@@ -16,9 +16,13 @@
 /* Global Styles! */
 .success{
   color: #577C37;
+  font-size: 15px;
+  margin-right: 5px;
 }
 .failed{
   color: #A91217;
+  font-size: 15px;
+  margin-right: 5px;
 }
 /* End Global Styles! */
 
@@ -33,6 +37,7 @@ body {
       color:#AAA;
     }
   }
+
   header {
     color:#AAA;
     //position:absolute;
@@ -41,12 +46,27 @@ body {
     left:0px;
     height:@nav_height;
     background:#333;
-
+    #menuLines{
+      a{
+        i{
+          position: absolute;
+          left: 10px;
+          top: 10px;
+        }
+      }
+      
+    }
     #headerIconUl{
+      position: absolute;
+      right: 0px;
+      white-space: nowrap;
       li{
         display: inline;
         list-style: none;
-        margin-right:20px;
+        padding-right:20px;
+        .badge{
+         background-color: #474747;
+        }
       }
     }
     .status {
@@ -59,7 +79,7 @@ body {
         background:#222;
         opacity:0.6;
         padding:2px 8px;
-        text-align:center;
+        text-align:left;
         border-radius:10px;
         height: 23px;
     }
@@ -141,18 +161,40 @@ body {
       bottom:45px;
     }
   }
+
   .container-fluid {
+    overflow: visible !important;
     margin:0px;
     padding:0px;
     position:absolute;
     left:0px;
     right:0px;
-    bottom:0px;
+    bottom:20px;
     top:@nav_height;
     .ace_editor {
       height:100%;
       width:100%;
     }
+  }
+
+  #statusBar{
+      color:#888;
+      position: absolute;
+      text-indent:5px;
+      background:#121212;
+      margin:0px;
+      padding:0px;
+      bottom:-20px;
+      left:0px;
+      right:0px;
+      height:20px;
+      z-index:9998;
+      text-indent:5px;
+      .status{
+        left :0px;
+        overflow: visible;
+        white-space: nowrap;
+      }
   }
   &.menu-open .container-fluid {
     left:@sidebar_width;
