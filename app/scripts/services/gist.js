@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .factory('Gist', function($log,Storage,Socket) {
+  .factory('Gist', function($log,Storage,Socket, Profile) {
 
     var service = {
-      gists: Storage.get('gists') || [],
+      gists: [],
     }
 
     service.list = function(callback){
@@ -78,6 +78,31 @@ angular.module('wearscriptPlaygroundApp')
         service.gists.push(gist)
       }
       Storage.set('gists',service.gists)
+    }
+
+    service.init = function(){
+      function gist_list_cb(channel, gists) {
+        if (typeof gists == 'object') {
+          for (var i = 0; i < gists.length; i++) {
+            gists[i].url_playground = '#/gist/' + gists[i].id;
+          }
+          service.gists = gists;
+          Storage.set('gists',gists)
+          if(gists[0] && gists[0].user){
+            Profile.set("github_user", gists[0].user)
+          }
+        }
+      }
+
+
+      Socket.ws.publish_retry(
+        gist_list_cb.bind(this),
+        1000,
+        Socket.ws.channel(Socket.ws.groupDevice, 'gistList'),
+        'gist',
+        'list',
+        Socket.ws.channel(Socket.ws.groupDevice, 'gistList')
+      );
     }
 
     return service

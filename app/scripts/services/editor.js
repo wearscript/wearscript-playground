@@ -6,6 +6,27 @@ angular.module('wearscriptPlaygroundApp')
     $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Gist,Profile,Playground, Storage
   ) {
 
+    function gist_cb(channel, gist) {
+      var file = $routeParams.file || service.file || 'glass.html';
+      service.dirty = false;
+      var content = ((gist.files[file] || []).content || '')
+      service.editor.getSession().setValue(content);
+      if(Gist.gists.length > 0){
+        angular.forEach(Gist.gists, function(localGist){
+          if(gist.id == localGist.id){
+            angular.forEach(localGist.files, function(filename, file){
+              if(!file.content && gist.files[filename]){
+                file.content = gist.files[filename].content;
+              }
+            })
+            service.gist = localGist
+          }
+        })
+      } else {
+        service.gist = gist;
+      }
+      service.status = "Loaded: #" + service.gistid+ "/" + service.file
+    }
     ace.config.set(
       "basePath",
       "bower_components/ace-builds/src-min-noconflict"
@@ -28,26 +49,7 @@ angular.module('wearscriptPlaygroundApp')
       service.editor = editor;
       service.session = editor.session;
 
-      function gist_list_cb(channel, gists) {
-        if (typeof gists == 'object') {
-          for (var i = 0; i < gists.length; i++) {
-            gists[i].url_playground = '#/gist/' + gists[i].id;
-          }
-          Gist.gists = gists;
-          Storage.set('gists',gists)
-          if(gists[0] && gists[0].user){
-            Profile.set("github_user", gists[0].user)
-          }
-        }
-      }
 
-      function gist_cb(channel, gist) {
-          service.dirty = false;
-          var content = ((gist.files[file] || []).content || '')
-          service.editor.getSession().setValue(content);
-          service.gist = gist;
-          service.status = "Loaded: #" + service.gist.id+ "/" + service.file
-      }
 
       //service.editor.setReadOnly(false);
       if ( Profile.get("vim_mode") ){
@@ -60,11 +62,12 @@ angular.module('wearscriptPlaygroundApp')
               )
            ) {
             // Drops changes in this case
-            service.gistid = $routeParams.gistid;
             var file = $routeParams.file || service.file || 'glass.html';
+            service.gistid = $routeParams.gistid;
             service.file = file;
             $log.log('GIST:' + service.gistid + ' File: ' + file);
             $rootScope.title = service.gistid + "/" + service.file + " | " + $rootScope.title
+
             Socket.ws.publish_retry(
               gist_cb.bind(this),
               1000,
@@ -75,15 +78,7 @@ angular.module('wearscriptPlaygroundApp')
               service.gistid
             );
 
-            Socket.ws.publish_retry(
-              gist_list_cb.bind(this),
-              1000,
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistList'),
-              'gist',
-              'list',
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistList')
-            );
-
+            service.status = "Loaded: #" + service.gistid + "/" + service.file
         } else {
             if (service.content) {
                 // If it's a gist reset the route properly

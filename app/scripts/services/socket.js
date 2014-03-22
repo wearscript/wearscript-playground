@@ -61,7 +61,7 @@ angular.module('wearscriptPlaygroundApp')
       service.ws.subscribe('urlopen', urlopen_cb);
     }
 
-    service.connect = function(url){
+    service.connect = function(url, callback){
 
       service.socket = new ReconnectingWebSocket(url)
       service.socket.onclose = function(){
@@ -76,7 +76,10 @@ angular.module('wearscriptPlaygroundApp')
         service.socket,
         "playground",
         Math.floor(Math.random() * 100000),
-        onopen
+        function(){
+          onopen()
+          callback()
+        }
       );
     }
 
