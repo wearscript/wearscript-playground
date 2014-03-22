@@ -8,7 +8,12 @@ angular.module('wearscriptPlaygroundApp')
       ws: {},
       deviceCount: 0,
       connected: false,
-      devices: [{name:"myo", connected:false}, {name:"glass", connected:false}, {name:"pebble", connected:false}, {name:"phone", connected:false}],
+      devices: [
+        //{ name:"myo", connected:false},
+        //{ name:"pebble", connected:false},
+        //{ name:"phone", connected:false},
+        { name:"glass", connected:false}
+      ]
     }
 
     function onopen(){
