@@ -5,13 +5,16 @@ angular.module('wearscriptPlaygroundApp')
   .factory( 'Socket', function($log,$window, Profile, $rootScope, Logging){
 
     var service = {
-      ws: {}
+      ws: {},
+      connected: false,
+      devices: {},
     }
 
     function onopen(){
 
       $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
+      service.connected=false;
       function log_cb(channel, message) {
         Logging.ws = Logging.ws || [];
         if(Logging.ws.length > 1000){
@@ -34,10 +37,12 @@ angular.module('wearscriptPlaygroundApp')
       function subscription_cb(foo){
         $rootScope.$broadcast('subscription')
         if (service.ws.exists('glass')){
-            $log.info('** Socket','Glass Connected');
-            $rootScope.$broadcast('glass')
+          $log.info('** Socket','Glass Connected');
+          $rootScope.$broadcast('glass')
+          devices['glass'] = true;
         } else {
-            $log.warn('!! Socket','Glass Disconnected');
+          $log.warn('!! Socket','Glass Disconnected');
+          delete devices['glass'];
         }
       }
 
@@ -50,6 +55,11 @@ angular.module('wearscriptPlaygroundApp')
     service.connect = function(url){
 
       service.socket = new ReconnectingWebSocket(url)
+      service.socket.onclose = function(){
+        service.connected = false;
+        $log.error('!! Socket','Server Disconnected');
+      }
+
       var connect = service.connect
 
       service.ws = new WearScriptConnection(
