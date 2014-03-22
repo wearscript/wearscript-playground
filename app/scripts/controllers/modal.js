@@ -14,6 +14,10 @@ angular.module('wearscriptPlaygroundApp')
         command:'Alt+Enter'
       },
       {
+        description:'Wake Display',
+        command:'Shift+Enter'
+      },
+      {
         description:'Save to Gist',
         command:'Ctrl+S'
       }

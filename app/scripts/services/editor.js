@@ -116,10 +116,25 @@ angular.module('wearscriptPlaygroundApp')
             service.dirty = true;
         });
         service.editor.commands.addCommand({
+            name: "wake-screen",
+            bindKey: {win: "Shift-Enter", mac: "Shift-Enter"},
+            exec: function(editor) {
+              Socket.ws.publish(
+                'glass',
+                'lambda',
+                'WS.wake();WS.activityCreate();'
+              )
+            }
+        });
+        service.editor.commands.addCommand({
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
-              Playground.runScriptOnGlass(Socket.ws, service.editor.session.getValue());
+              Socket.ws.publish(
+                'glass',
+                'script',
+                service.editor.session.getValue()
+              );
             }
         });
         service.editor.commands.addCommand({
@@ -196,7 +211,7 @@ angular.module('wearscriptPlaygroundApp')
               if (!line.length) {
                 line = service.editor.session.getLine(service.editor.selection.getCursor().row);
               }
-              Playground.runLambdaOnGlass(Socket.ws, line);
+              Socket.ws.publish('glass','lambda',line);
             }
         });
 

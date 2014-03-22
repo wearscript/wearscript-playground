@@ -35,7 +35,7 @@ angular.module('wearscriptPlaygroundApp')
                 result = data;
             }
 
-            $log.info('>> storageService',key,result);
+            //$log.info('>> storageService',key,result);
             return result;
         },
         set: function(key,data){
@@ -45,7 +45,7 @@ angular.module('wearscriptPlaygroundApp')
 
             try{
                 localStorage.setItem(this.storage_id+key, data);
-                $log.info('<< storageService',key,data);
+                //$log.info('<< storageService',key,data);
             } catch(e){
                 $log.error('!! storageService',e);
             }
