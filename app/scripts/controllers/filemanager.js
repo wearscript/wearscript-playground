@@ -11,12 +11,10 @@ angular.module('wearscriptPlaygroundApp')
     $scope.fileSelected = '';
     var gistIndex = 0;
 
-    for(var idx in gists){
-      if(gists[idx].id === $routeParams.gistid){
-        $scope.availableFiles = gists[idx].files
-        gistIndex = idx
-      }
-    }
+    var gistid = $routeParams.gistid || 'example'
+    $routeParams.gistid = gistid
+    var gist = Gist.getLocal(gistid)
+    $scope.availableFiles = Object.keys(gist.files)
 
     $scope.openFile = function($event){
       $scope.fileSelected = openFileForm.fileSelected.value;
