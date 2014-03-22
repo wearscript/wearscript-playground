@@ -3,13 +3,19 @@
 angular.module('wearscriptPlaygroundApp')
 
   .factory( 'Socket', function($log,$window, Profile, $rootScope, Logging){
-
-    var service = {}
+    
+    var service = {
+      ws: {},
+      deviceCount: 0,
+      connected: false,
+      devices: [{name:"myo", connected:false}, {name:"glass", connected:false}, {name:"pebble", connected:false}, {name:"phone", connected:false}],
+    }
 
     function onopen(){
 
       $log.info('** Socket','Server Connected');
       $rootScope.$broadcast('connected')
+      service.connected=true;
       function log_cb(channel, message) {
         Logging.ws = Logging.ws || [];
         if(Logging.ws.length > 1000){
@@ -30,13 +36,23 @@ angular.module('wearscriptPlaygroundApp')
         $window.open(url);
       }
       function subscription_cb(foo){
+        
         $rootScope.$broadcast('subscription')
         if (service.ws.exists('glass')){
-            $log.info('** Socket','Glass Connected');
-            $rootScope.$broadcast('glass')
+          $log.info('** Socket','Glass Connected');
+          $rootScope.$broadcast('glass')
+          angular.forEach(service.devices, function(k){
+            if(k.name == "glass") k.connected = true;
+          })
+          $rootScope.$apply();
         } else {
-            $log.warn('!! Socket','Glass Disconnected');
+          $log.warn('!! Socket','Glass Disconnected');
+          angular.forEach(service.devices, function(k){
+            if(k.name == "glass") k.connected = false;
+            
+          })
         }
+        service.counter();
       }
 
       service.ws.subscribeTestHandler();
@@ -48,6 +64,12 @@ angular.module('wearscriptPlaygroundApp')
     service.connect = function(url){
 
       service.socket = new ReconnectingWebSocket(url)
+      service.socket.onclose = function(){
+        service.connected = false;
+        
+        $log.error('!! Socket','Server Disconnected');
+      }
+
       var connect = service.connect
 
       service.ws = new WearScriptConnection(
@@ -56,6 +78,13 @@ angular.module('wearscriptPlaygroundApp')
         Math.floor(Math.random() * 100000),
         onopen
       );
+    }
+
+    service.counter = function(){
+      service.deviceCount = 0;
+       angular.forEach(service.devices, function(k){
+            if(k.connected == true) service.deviceCount++;
+          })
     }
 
     return service;

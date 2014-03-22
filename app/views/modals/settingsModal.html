@@ -1,0 +1,26 @@
+<div class="modal-container" ng-controller="ModalCtrl">
+        <div class="modal-header text-center">
+            <h3>Authentication!</h3>
+        </div>
+        <div data-ng-controller="SetupCtrl" class="modal-body">
+         
+           <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                <button href="authgh" class="btn btn-lg btn-wsBtn btn-large">Github <i class=" authIcon fa fa-github "></i></button>
+              </div>
+
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                <button href="auth" class="btn btn-lg btn-wsBtn btn-large">Google <i class="authIcon fa fa-google-plus-square"></i></button>
+              </div>
+           </div>
+           <div class="row">
+             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" ng-click="qr()">
+               <a id="qrImageBox" >Click here to generate QR Code<img ng-src="{{qrurl}}" /></a>
+             </div>
+           </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</div>

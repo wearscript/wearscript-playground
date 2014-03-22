@@ -26,38 +26,5 @@ angular.module('wearscriptPlaygroundApp')
     service.runLambdaOnGlass = function(ws, script) {
         ws.publish('glass', 'lambda', script)
     }
-    service.gistGet = function(ws, gistid, callback) {
-        ws.subscribe(ws.channel(ws.groupDevice, 'gistGet'), callback)
-        ws.publish('gist', 'get', ws.channel(ws.groupDevice, 'gistGet'), gistid)
-    }
-    service.gistModify = function(ws, gistid, fileName, content, callback) {
-        var c = ws.channel(ws.groupDevice, 'gistModify')
-        ws.subscribe(c, callback)
-        var files = {}
-        files[fileName] = {content: content}
-        ws.publish('gist', 'modify', c, gistid, undefined, files)
-    }
-    service.gistCreate = function(ws, secret, description, fileName, content, callback) {
-        var c = ws.channel(ws.groupDevice, 'gistCreate')
-        ws.subscribe(c, callback)
-        var files = {}
-        files['manifest.json'] = { content: '{"name":""}' }
-        files[fileName] = { content: content }
-        ws.publish('gist', 'create', c, secret, description, files)
-    }
-    service.updateLocalGists = function(g){
-      var gists = Profile.get('gists')
-      var exists = false
-      for( var idx in gists ){
-        if( gists[idx].id == g.id){
-          gists[idx] = g
-          exists = true
-        }
-      }
-      if(!exists){
-        gists.push(g)
-      }
-      Profile.set('gists', gists)
-    }
     return service
 })

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('FileManagerCtrl', function ($scope, Profile, $modalInstance, $routeParams, $location, Playground, Socket, Editor) {
+  .controller('FileManagerCtrl', function ($scope, Gist, $modalInstance, $routeParams, $location, Playground, Socket, Editor) {
     var ws = Socket.ws;
-    var gists = Profile.gists
+    var gists = Gist.gists
     var currentFile = $routeParams.file || '';
     $scope.availableFiles = [];
     $scope.gistName = '';
@@ -15,8 +15,10 @@ angular.module('wearscriptPlaygroundApp')
       }
     }
 
-    $scope.openFile = function(){
+    $scope.openFile = function($event){
       $scope.fileSelected = openFileForm.fileSelected.value;
+      if(typeof $event != "undefined")
+        $event.preventDefault()
       if(typeof $scope.fileSelected == "undefined" || $scope.fileSelected == ''){
         openFileForm.fileSelected.$error = true;
       } else {
@@ -25,10 +27,12 @@ angular.module('wearscriptPlaygroundApp')
       }
     }
 
-    $scope.newFile = function(){
+    $scope.newFile = function($event){
       $scope.newFileName = newFileForm.newFileName.value;
       Editor.status = "Created new file:" + $scope.newFileName
       $scope.ok()
+      if(typeof $event != "undefined")
+        $event.preventDefault()
       $location.path('/gist/' + $routeParams.gistid + '/' + $scope.newFileName)
     }
 

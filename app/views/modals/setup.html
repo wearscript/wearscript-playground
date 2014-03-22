@@ -31,13 +31,18 @@
         <p ng-if="adb">Run in WearScript then scan the QR code.</p>
 
         <p>
-          <img ng-src="{{qrurl}}" />
+        <img ng-src="{{qrurl}}" height="{{imageHeight}}"/>
         </p>
 
         <p ng-if="adb">
           Otherwise, copy + paste the command below into a terminal
         </p>
         <pre ng-if="adb">{{adb}}</pre>
+        
+        <p ng-if="wsurl">
+          Client Endpoint URL:
+        </p>
+        <pre ng-if="wsurl">{{wsurl}}</pre>
       </div>
     </div>
   </div>

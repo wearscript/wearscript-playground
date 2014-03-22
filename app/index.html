@@ -19,7 +19,6 @@
       }
     </script>
     <script type="text/javascript" src="bower_components/less/dist/less-1.7.0.min.js"></script>
-    <script type="text/javascript">//less.watch()</script>
     <script>
       var port = (location.port != 80) ? ':' + location.port : '';
       WSURL = 'ws://' + location.host;
@@ -47,88 +46,111 @@
     ng-intro-autostart="false"
     ng-controller="TourCtrl">
 
-    <header data-ng-controller="HeaderCtrl" class="row">
-      <a data-ng-click="profile.toggle('menu')">
+    <header id="header" data-ng-controller="HeaderCtrl" class="container">
+     <!--  <a data-ng-click="profile.toggle('menu')">
          <i class="fa fa-bars"></i>
       </a>
+      
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" class="status" data-ng-bind="editor.status"></div>
+      <a href="" class=" pull-right fa fa-rss"></a>
       <div ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" ng-controller="ModalCtrl">
-          <a ng-click="open('fileManager')" ><i class="fa fa-file-text"></i></a>
-          <a ng-click="open()"><i class="fa fa-ellipsis-v"></i></a>
+          <a data-ng-click="open('fileManager')" ><i class="fa fa-file-text"></i></a>
+          <a data-ng-click="open('shortcuts')"><i class="fa fa-ellipsis-v"></i></a>
       </div>
-      <h1>Wearscript Playground</h1>
+      <h1>Wearscript Playground</h1> -->
+
+      <div id="menuLines" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+        <a data-ng-click="profile.toggle('menu')">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 text-center">
+        <h1 id="pageTitle">Wearscript Playground</h1>
+      </div>
+   
+      <div ng-controller="ModalCtrl" class=" col-sm-2 col-md-2 col-lg-2 hidden-xs  pull-right ">
+        <ul id="headerIconUl">
+         
+          <li ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1"><a  data-ng-click="open('shortcuts')"><i class="headerIcon fa fa-ellipsis-v"></i></a></li> 
+          <li ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1"><a  data-ng-click="open('fileManager')" ><i class="headerIcon fa fa-file-text"></i></a></li>
+          <li data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i>{{socket.deviceCount}}</span></a></li>
+        </ul>
+         
+          
+          
+      </div>
+
     </header>
     <aside  ng-show="profile.menu" data-ng-controller="MenuCtrl">
       <nav>
         <ul>
           <li>
-            <a data-ng-click='active=editor'
+            <a data-hm-tap='active=editor'
                ng-class="{'active': active==editor}"
                href="#/"
                id="editor-tab">Editor</a>
           </li>
           <li>
-            <a data-ng-click='active=gists'
+            <a data-hm-tap='active=gists'
                data-ng-class="{'active': active==gists}"
                href="#/gists"
                id="gists-tab">Gists</a>
           </li>
           <li>
-            <a data-ng-click='active=images'
+            <a data-hm-tap='active=images'
                data-ng-class="{'active': active==images}"
                href="#/images"
                id="images-tab">Images</a>
           </li>
           <li>
-            <a data-ng-click='active=sensors'
+            <a data-hm-tap='active=sensors'
                data-ng-class="{'active': active==sensors}"
                href="#/sensors"
                id="sensors-tab">Sensors</a>
           </li>
           <li>
-            <a data-ng-click='active=channels'
+            <a data-hm-tap='active=channels'
                data-ng-class="{'active': active==channels}"
                href="#/channels"
                id="channels-tab">Channels</a>
           </li>
           <li>
-            <a data-ng-click='active=channels'
+            <a data-hm-tap='active=channels'
                data-ng-class="{'active': active==logging}"
                href="#/logging"
                id="logging-tab">Logging</a>
           </li>
           <li data-ng-show="profile.debug_mode">
-            <a data-ng-click='active=channels'
+            <a data-hm-tap='active=channels'
                data-ng-class="{'active': active==debug}"
                href="#/debug"
                id="debug-tab">Debug</a>
           </li>
           <li>
-            <a data-ng-click='active=annotation'
+            <a data-hm-tap='active=annotation'
                data-ng-class="{'active': active==annotation}"
                href="#/annotation"
                id="annotation-tab">Annotation</a>
           </li>
           <li>
-            <a data-ng-click='active=weariverse'
+            <a data-hm-tap='active=weariverse'
                data-ng-class="{'active': active==weariverse}"
                href="#/weariverse"
                id="weariverse-tab">Weariverse</a>
           </li>
           <li>
-            <a
-              data-ng-click="active=editor;CallMe();"
-              data-ng-class="{'active': active==editor}"
-              href=""
-              id="tour-tab">Tour</a>
+            <a data-ng-click="active=editor;CallMe();"
+               data-ng-class="{'active': active==editor}"
+               href=""
+               id="tour-tab">Tour</a>
           </li>
-
+         <li class="visible-xs" data-ng-controller="ConnectedCtrl"><a data-ng-click="open('connected')"><span class="badge"><i class="headerIcon fa fa-rss" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i>{{socket.deviceCount}}</span></a></li>
         </ul>
-        <div class="col-xs-12" id="iconSetArea">
-          <div class="row" >
+        <div class="row" id="iconSetArea">
+          <div class="col-xs-12">
             <!-- under nav icons -->
             <div class="col-xs-6 text-center" data-ng-controller="ModalCtrl">
-              <a href="" data-ng-click="open('setup')"><i title="Device Setup"  class="fa fa-cogs fa-2x"></i></a>
+              <a data-ng-click="open('setup')"><i title="Device Setup"  class="fa fa-cogs fa-2x"></i></a>
             </div>
              <div class="col-xs-6 text-center" data-ng-controller="ModalCtrl">
               <a href="http://www.wearscript.com/en/latest/" target="_blank" title="Help"><i class="fa fa-question-circle fa-2x"></i></a>
@@ -137,7 +159,8 @@
         </div>
       </nav>
     </aside>
-    <div class="container-fluid tab-view" ng-view=""></div>
+    <div  class="container-fluid tab-view" ng-view=""> </div>
+    
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -147,11 +170,12 @@
     <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
     <script src="bower_components/angular-logging/angular-logging.js"></script>
     <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
     <script src="bower_components/intro.js/intro.js"></script>
     <script src="bower_components/angular-intro.js/angular-intro.js"></script>
+    <script src="bower_components/hammerjs/hammer.js"></script>
+    <script src="bower_components/angular-hammer/angular-hammer.js"></script>
+    <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
     <!-- endbower -->
     <script src="bower_components/angular-table/src/main/webapp/js/lib/angular-table.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -184,6 +208,8 @@
     <script src="scripts/services/profile.js"></script>
     <script src="scripts/services/playground.js"></script>
     <script src="scripts/controllers/filemanager.js"></script>
+    <script src="scripts/services/gist.js"></script>
+    <script src="scripts/controllers/connected.js"></script>
     <script src="scripts/controllers/tour.js"></script>
     <!-- endbuild -->
   </body>

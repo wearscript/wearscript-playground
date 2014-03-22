@@ -13,6 +13,19 @@
   font-style: normal;
 }
 
+/* Global Styles! */
+.success{
+  color: #577C37;
+  font-size: 15px;
+  margin-right: 5px;
+}
+.failed{
+  color: #A91217;
+  font-size: 15px;
+  margin-right: 5px;
+}
+/* End Global Styles! */
+
 body {
   overflow: hidden;
   background:rgb(29, 31, 33);
@@ -24,6 +37,7 @@ body {
       color:#AAA;
     }
   }
+
   header {
     color:#AAA;
     //position:absolute;
@@ -32,55 +46,68 @@ body {
     left:0px;
     height:@nav_height;
     background:#333;
-    div.status {
+    #menuLines{
+      a{
+        i{
+          position: absolute;
+          left: 10px;
+          top: 10px;
+        }
+      }
+      
+    }
+    #headerIconUl{
+      position: absolute;
+      right: 0px;
+      white-space: nowrap;
+      li{
+        display: inline;
+        list-style: none;
+        padding-right:20px;
+        .badge{
+         background-color: #474747;
+        }
+      }
+    }
+    .status {
         font-size:12px;
-        position:absolute;
+        max-width: 257px;
         color:#888;
-        right:50px;
+        line-height: 22px;
         top:6px;
         border:1px #111 solid;
         background:#222;
         opacity:0.6;
         padding:2px 8px;
-        text-align:center;
+        text-align:left;
         border-radius:10px;
+        height: 23px;
     }
     > a, div > a {
-      display:block;
-      height:@nav_height;
-      line-height:@nav_height;
-      text-align:center;
-      min-width:20px;
-      position:absolute;
-      top:0px;
-      z-index:1049;
-      &:hover {
-        text-decoration: none;
-      }
+     
     }
     div > a:last-child {
       display:block;
-      right:0px;
+      right: 5px;
     }
     div > a:first-child {
       display:block;
-      right: 20px;
+      right: 35px;
     }
     > a {
-      left:0px;
+      left: 5px;
     }
+
     h1 {
-      margin:0px;
-      padding:0px;
-      color:#AAA;
-      font-size:15px;
-      position:absolute;
-      top:0px;
-      left:0px;
-      right:0px;
-      text-align:center;
-      height:@nav_height;
-      line-height:@nav_height;
+     
+      color: #AAA;
+      font-size: 15px;
+      text-align: center;
+      line-height: 15px;
+      margin-top: 10px;
+    }
+    #pageTitle{
+      white-space: nowrap;
     }
   }
   aside {
@@ -132,26 +159,45 @@ body {
       }
     }
     #iconSetArea{
-      margin-bottom: 10px;
-      #setupIconRow{
-        border-bottom: 1px solid #333;
-        margin-bottom: 5px;
-        padding-bottom: 5px;
-      }
+      position:absolute;
+      left:-3px;
+      bottom:45px;
     }
   }
+
   .container-fluid {
+    overflow: visible !important;
     margin:0px;
     padding:0px;
     position:absolute;
     left:0px;
     right:0px;
-    bottom:0px;
+    bottom:20px;
     top:@nav_height;
     .ace_editor {
       height:100%;
       width:100%;
     }
+  }
+
+  #statusBar{
+      color:#888;
+      position: absolute;
+      text-indent:5px;
+      background:#121212;
+      margin:0px;
+      padding:0px;
+      bottom:-20px;
+      left:0px;
+      right:0px;
+      height:20px;
+      z-index:9998;
+      text-indent:5px;
+      .status{
+        left :0px;
+        overflow: visible;
+        white-space: nowrap;
+      }
   }
   &.menu-open .container-fluid {
     left:@sidebar_width;
@@ -209,6 +255,21 @@ body {
   }
 }
 
+ #header{
+      width: 100% !important;
+      margin:0px auto;
+      padding:0px;
+      color:#AAA;
+      font-size:15px;
+      
+      top:0px;
+      left:0px;
+      right:0px;
+      text-align:center;
+      height:@nav_height;
+      line-height:@nav_height;
+    }
+
 .modal-container{
   background-color: #333;
   .modal-header{
@@ -219,6 +280,23 @@ body {
 
     select{
       color: #000;
+    }
+    #connectionList{
+      list-style: none;
+      li{
+        border-bottom: 1px solid white;
+        font-size: 18px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        margin-right: 30px;
+        text-transform: uppercase;
+        i{
+          margin-left: .3em;
+          margin-right: 25px;
+          font-size: 25px;
+        }
+      }
+      
     }
   }
   a:visited {
