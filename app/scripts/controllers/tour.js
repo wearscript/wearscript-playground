@@ -42,17 +42,17 @@ angular.module('wearscriptPlaygroundApp')
         },
         {
           element: document.querySelectorAll('#step2')[0],
-          intro: "<strong>You</strong> can also <em>include</em> HTML",
+          intro: "Save your code as Gists on Github!",
           position: 'right'
         },
         {
           element: '#step3',
-          intro: 'More features, more fun.',
+          intro: "Tab to view pictures from your devices.",
           position: 'right'
         },
         {
           element: '#step4',
-          intro: "Another step.",
+          intro: "",
           position: 'right'
         },
         {

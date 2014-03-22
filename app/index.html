@@ -71,51 +71,56 @@
             <a data-ng-click='active=gists'
                data-ng-class="{'active': active==gists}"
                href="#/gists"
-               id="step2">Gists</a>
+               id="gists-tab">Gists</a>
           </li>
           <li>
             <a data-ng-click='active=images'
                data-ng-class="{'active': active==images}"
                href="#/images"
-               id="step3">Images</a>
+               id="images-tab">Images</a>
           </li>
           <li>
             <a data-ng-click='active=sensors'
                data-ng-class="{'active': active==sensors}"
                href="#/sensors"
-               id="step4">Sensors</a>
+               id="sensors-tab">Sensors</a>
           </li>
           <li>
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==channels}"
                href="#/channels"
-               id="step5">Channels</a>
+               id="channels-tab">Channels</a>
           </li>
           <li>
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==logging}"
-               href="#/logging">Logging</a>
+               href="#/logging"
+               id="logging-tab">Logging</a>
           </li>
           <li data-ng-show="profile.debug_mode">
             <a data-ng-click='active=channels'
                data-ng-class="{'active': active==debug}"
-               href="#/debug">Debug</a>
+               href="#/debug"
+               id="debug-tab">Debug</a>
           </li>
           <li>
             <a data-ng-click='active=annotation'
                data-ng-class="{'active': active==annotation}"
-               href="#/annotation">Annotation</a>
+               href="#/annotation"
+               id="annotation-tab">Annotation</a>
           </li>
           <li>
             <a data-ng-click='active=weariverse'
                data-ng-class="{'active': active==weariverse}"
-               href="#/weariverse">Weariverse</a>
+               href="#/weariverse"
+               id="weariverse-tab">Weariverse</a>
           </li>
           <li>
             <a
               data-ng-click="active=editor;CallMe();"
               data-ng-class="{'active': active==editor}"
-              href="">Tour</a>
+              href=""
+              id="tour-tab">Tour</a>
           </li>
 
         </ul>
