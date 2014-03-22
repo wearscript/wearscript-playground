@@ -39,10 +39,10 @@ angular.module('wearscriptPlaygroundApp')
         if (service.ws.exists('glass')){
           $log.info('** Socket','Glass Connected');
           $rootScope.$broadcast('glass')
-          devices['glass'] = true;
+          service.devices['glass'] = true;
         } else {
           $log.warn('!! Socket','Glass Disconnected');
-          delete devices['glass'];
+          delete service.devices['glass'];
         }
       }
 
