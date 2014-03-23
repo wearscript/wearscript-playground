@@ -9,7 +9,6 @@ angular.module('wearscriptPlaygroundApp')
     $scope.gistName = '';
     $scope.newFileName = '';
     $scope.fileSelected = '';
-    var gistIndex = 0;
 
     var gistid = $routeParams.gistid || 'example'
     $routeParams.gistid = gistid
@@ -29,17 +28,11 @@ angular.module('wearscriptPlaygroundApp')
     }
 
     $scope.newFile = function($event){
-      $scope.newFileName = newFileForm.newFileName.value;
-      if(typeof $event != "undefined")
-        $event.preventDefault()
-      var file = {};
-      file.filename = $scope.newFileName;
-      file.content = '';
-      var curGist = Gist.gists[gistIndex]
-      curGist.files[$scope.newFileName] = file
-      Gist.gists[gistIndex] = curGist;
+      var fileName = newFileForm.newFileName.value;
+      if(typeof $event != "undefined") $event.preventDefault()
+      Gist.setLocal(Editor.gistid,fileName,' ')
       $modalInstance.dismiss('cancel')
-      $location.path('/gist/' + $routeParams.gistid + '/' + $scope.newFileName)
+      $location.path('/gist/' + Editor.gistid + '/' + fileName)
     }
 
     $scope.newGist = function(){
