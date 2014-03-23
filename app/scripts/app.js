@@ -7,7 +7,8 @@ angular.module('wearscriptPlaygroundApp', [
   'angular-table',
   'ui.bootstrap',
   'ngLogging',
-  'ui.utils'
+  'ui.utils',
+  'ja.qr'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -84,4 +85,9 @@ angular.module('wearscriptPlaygroundApp', [
     $rootScope.aceLoaded = function( editor ) {
       Editor.init(editor)
     }
+
+    $http.post('user/key/ws').success(function(wskey){
+      $rootScope.wskey = wskey;
+    });
+
   });

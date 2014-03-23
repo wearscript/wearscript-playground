@@ -23,26 +23,28 @@
     </div>
     <div class="row">
       <div class="col-xs-4 col-xs-offset-4 text-center">
-        <button ng-click="qr()" type="button" class="btn btn-primary btn-lrg"> Generate QR Code </button>
+        <button ng-click="qr=!qr" type="button" class="btn btn-primary btn-lrg"> Generate QR Code </button>
       </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="qr">
       <div class="col-xs-12 text-center">
-        <p ng-if="adb">Run in WearScript then scan the QR code.</p>
+        <p>Run in WearScript then scan the QR code.</p>
 
         <p>
-        <img ng-src="{{qrurl}}" height="{{imageHeight}}"/>
+        <qr 
+        style="display:block;border:10px white solid;background:white;"
+        type-number="0" correction-level="'M'" size="500"  text="wsurl"></qr>
         </p>
 
-        <p ng-if="adb">
+        <p>
           Otherwise, copy + paste the command below into a terminal
         </p>
-        <pre ng-if="adb">{{adb}}</pre>
+        <pre>{{adb}}</pre>
         
-        <p ng-if="wsurl">
+        <p>
           Client Endpoint URL:
         </p>
-        <pre ng-if="wsurl">{{wsurl}}</pre>
+        <pre>{{wsurl}}</pre>
       </div>
     </div>
   </div>
