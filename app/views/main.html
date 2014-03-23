@@ -1,11 +1,13 @@
-<div data-ui-ace="{
-  useWrapMode : true,
-  showGutter: true,
-  theme:'tomorrow_night',
-  mode: 'html',
-  onLoad: aceLoaded,
-  onChange: aceChanged
-}"></div>
+<div class="ace_wrapper">
+  <div data-ui-ace="{
+    useWrapMode : true,
+    showGutter: true,
+    theme:'tomorrow_night',
+    mode: 'html',
+    onLoad: aceLoaded,
+    onChange: aceChanged
+  }"></div>
+</div>
 <div  id="statusBar" class=" text-left" >
    <div  ng-show="location.$$path=='/' || location.$$path.indexOf('gist') != -1" data-ng-bind="editor.status" class="col-xs-4 col-sm-3 col-md-3 col-lg-3  text-left status"></div>
     </div>

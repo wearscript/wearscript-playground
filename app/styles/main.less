@@ -166,17 +166,24 @@ body {
   }
 
   .container-fluid {
-    overflow: visible !important;
+    overflow: auto;
     margin:0px;
     padding:0px;
     position:absolute;
     left:0px;
     right:0px;
-    bottom:20px;
+    bottom:0px;
     top:@nav_height;
-    .ace_editor {
-      height:100%;
-      width:100%;
+    .ace_wrapper {
+       position:absolute;
+       top:0px;
+       bottom:20px;
+       left:0px;
+       right:0px;
+      .ace_editor {
+        height:100%;
+        width:100%;
+      }
     }
   }
 
@@ -187,7 +194,7 @@ body {
       background:#121212;
       margin:0px;
       padding:0px;
-      bottom:-20px;
+      bottom:0px;
       left:0px;
       right:0px;
       height:20px;
