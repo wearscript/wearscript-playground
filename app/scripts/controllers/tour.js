@@ -7,16 +7,17 @@ angular.module('wearscriptPlaygroundApp')
 
     $scope.onBeforeChangeEvent = function (element) { 
         console.log("Before Change Event called"); 
+        console.log($scope.intro)
         
         var eID = element.id;
         switch(eID){
           case "menu-toggle":
             //$scope.IntroOptions.nextLabel = "hi";
+            /*
             element.onclick = function(event){
               document.querySelector('.introjs-nextbutton').click();
               console.log('you set an event listener')
               $scope.nextLabel = 'good job';
-              $timeout(function(){}, 200);
             }
             //introJs(4).setOption("nextLable", "swag").start()
             break;
@@ -24,6 +25,7 @@ angular.module('wearscriptPlaygroundApp')
             $scope.$on('modal-shown', function() {
 
             });
+            */
             break;
           case "editor-tab":
             break;
@@ -47,7 +49,7 @@ angular.module('wearscriptPlaygroundApp')
 
     $scope.onChangeEvent = function (element) { 
       console.log("Change Event called");
-      console.log("DEBUG: " + arguments.length +" arguments were passed.");
+      
       var eID = element.id;
       switch(eID){
         case "menu-toggle":
@@ -79,7 +81,7 @@ angular.module('wearscriptPlaygroundApp')
       var eID = element.id;
       switch(eID){
         case "menu-toggle":
-          element.onClick = null
+          //element.onClick = null
 
           break;
         case "editor-tab":
@@ -115,38 +117,68 @@ angular.module('wearscriptPlaygroundApp')
 
     $scope.steps = [
         {
-          element: '#menu-toggle',
-          intro: "Click this button to toggle the menu on the left.",
-          position: 'right'
+          element: '#page-title-text',
+          intro: "Welcome! You are currently in the WearScript Playground. Use your arrow keys or press the next button to continue with the tour!",
+          position: 'bottom'
         },
         {
           element: '#menu-toggle',
-          intro: "Ok now press it again to re-open the modal",
+          intro: "Clicking this button will toggle the menu on the left.",
           position: 'right'
         },
         {
           element: '#shortcuts-button',
-          intro: "Shortcuts can be found here when the editor is open.",
+          intro: "Keyboard shortcuts can be found by clicking this button.",
           position: 'left'
         },
         {
+          element: '#file-manager',
+          intro: "Clicking this button will allow you to load gists and create new ones.",
+          position: 'left'
+        },
+        {
+          element: '#connection-status',
+          intro: "The connection status of the server and glass will be displayed here. <span style='color:green;'>Green</span> means connected and <span style='color:red;'>Red</span> means not connected.",
+          position: 'left'
+        },
+        {
+          element: '#setup',
+          intro: "Setup your connection to WearScript and GitHub by clicking on the gears.",
+          position: 'top'
+        },
+        {
+          element: '#apidocs',
+          intro: "To find out more information about wearscript and an api reference click on the question mark.",
+          position: 'top'
+        },
+        {
+          element: '#statusBar',
+          intro: "You can find contextual information about your project status in the status bar.",
+          position: 'top'
+        },
+        {
+          element: '#tabs',
+          intro: "You can find all of the menus in the nav bar.",
+          position: 'right'
+        },
+        {
           element: '#editor-tab',
-          intro: "This is the editor tab. It is where all of the coding happens!",
+          intro: "This is the editor-tab. It is where all of the WearScript coding happens.",
           position: 'right'
         },
         {
           element: '#gists-tab',
-          intro: "Save your code as Gists on Github!",
+          intro: "Use the Gists tab to view and load gists.",
           position: 'right'
         },
         {
           element: '#images-tab',
-          intro: "Tab to view pictures from your devices.",
+          intro: "When you wear a script that uses your devices camera, the imagery will be displayed in this tab.",
           position: 'right'
         },
         {
           element: '#sensors-tab',
-          intro: "This is the Sensors tab",
+          intro: "Use this tab to view a graphical representation of sensor data.",
           position: 'right'
         },
         {
@@ -156,7 +188,7 @@ angular.module('wearscriptPlaygroundApp')
         },
         {
           element: '#logging-tab',
-          intro: 'This is the Logging tab',
+          intro: 'View logs in the logging tab',
           position: 'right'
         },
         {
@@ -172,6 +204,7 @@ angular.module('wearscriptPlaygroundApp')
       ]
     $scope.IntroOptions = {
       steps: $scope.steps,
+      scrollToElement: false,
       showStepNumbers: false,
       exitOnOverlayClick: true,
       exitOnEsc:true,
@@ -180,9 +213,5 @@ angular.module('wearscriptPlaygroundApp')
       skipLabel: 'Exit',
       doneLabel: 'Thanks'
     };
-
-    $scope.startTour = function(){
-
-    }
 
   });
