@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('FileManagerCtrl', function ($scope, Gist, $modalInstance, $routeParams, $location, Playground, Socket, Editor) {
+  .controller('FileManagerCtrl', function ($scope, Gist, $modalInstance, $routeParams, $location, Playground, Socket, Editor, Storage) {
     var ws = Socket.ws;
     var gists = Gist.gists
     var currentFile = $routeParams.file || '';
@@ -9,11 +9,11 @@ angular.module('wearscriptPlaygroundApp')
     $scope.gistName = '';
     $scope.newFileName = '';
     $scope.fileSelected = '';
-    for(var idx in gists){
-      if(gists[idx].id === $routeParams.gistid){
-        $scope.availableFiles = gists[idx].files
-      }
-    }
+
+    var gistid = $routeParams.gistid || 'example'
+    $routeParams.gistid = gistid
+    var gist = Gist.getLocal(gistid)
+    $scope.availableFiles = Object.keys(gist.files)
 
     $scope.openFile = function($event){
       $scope.fileSelected = openFileForm.fileSelected.value;
@@ -28,12 +28,11 @@ angular.module('wearscriptPlaygroundApp')
     }
 
     $scope.newFile = function($event){
-      $scope.newFileName = newFileForm.newFileName.value;
-      Editor.status = "Created new file:" + $scope.newFileName
-      $scope.ok()
-      if(typeof $event != "undefined")
-        $event.preventDefault()
-      $location.path('/gist/' + $routeParams.gistid + '/' + $scope.newFileName)
+      var fileName = newFileForm.newFileName.value;
+      if(typeof $event != "undefined") $event.preventDefault()
+      Gist.setLocal(Editor.gistid,fileName,' ')
+      $modalInstance.dismiss('cancel')
+      $location.path('/gist/' + Editor.gistid + '/' + fileName)
     }
 
     $scope.newGist = function(){

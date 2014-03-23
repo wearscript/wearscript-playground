@@ -7,7 +7,7 @@ angular.module('wearscriptPlaygroundApp')
 
     $scope.onBeforeChangeEvent = function (element) { 
         console.log("Before Change Event called"); 
-        console.log($scope.intro)
+        //console.log($scope.intro)
         
         var eID = element.id;
         switch(eID){

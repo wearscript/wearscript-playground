@@ -5,7 +5,6 @@ angular.module('wearscriptPlaygroundApp')
   .factory('Editor', function(
     $modal,$window,$rootScope,$log,$http,$routeParams,$timeout,$location,Socket,Gist,Profile,Playground, Storage
   ) {
-
     ace.config.set(
       "basePath",
       "bower_components/ace-builds/src-min-noconflict"
@@ -27,94 +26,68 @@ angular.module('wearscriptPlaygroundApp')
 
       service.editor = editor;
       service.session = editor.session;
-
-      function gist_list_cb(channel, gists) {
-        if (typeof gists == 'object') {
-          for (var i = 0; i < gists.length; i++) {
-            gists[i].url_playground = '#/gist/' + gists[i].id;
-          }
-          Gist.gists = gists;
-          Storage.set('gists',gists)
-          if(gists[0] && gists[0].user){
-            Profile.set("github_user", gists[0].user)
-          }
-        }
-      }
-
-      function gist_cb(channel, gist) {
-          service.dirty = false;
-          var content = ((gist.files[file] || []).content || '')
-          service.editor.getSession().setValue(content);
-          service.gist = gist;
-          service.status = "Loaded: #" + service.gist.id+ "/" + service.file
-      }
+      service.gistid = $routeParams.gistid || 'example';
+      service.file = $routeParams.file || 'glass.html';
 
       //service.editor.setReadOnly(false);
       if ( Profile.get("vim_mode") ){
         service.editor.setKeyboardHandler("ace/keyboard/vim");
       }
-        // TODO: This section needs to be reworked
-        if (  $routeParams.gistid
-           && (  $routeParams.gistid != service.gistid
-              || $routeParams.file != service.file
-              )
-           ) {
-            // Drops changes in this case
-            service.gistid = $routeParams.gistid;
-            var file = $routeParams.file || service.file || 'glass.html';
-            service.file = file;
-            $log.log('GIST:' + service.gistid + ' File: ' + file);
-            $rootScope.title = service.gistid + "/" + service.file + " | " + $rootScope.title
-            Socket.ws.publish_retry(
-              gist_cb.bind(this),
-              1000,
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
-              'gist',
-              'get',
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
-              service.gistid
-            );
 
-            Socket.ws.publish_retry(
-              gist_list_cb.bind(this),
-              1000,
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistList'),
-              'gist',
-              'list',
-              Socket.ws.channel(Socket.ws.groupDevice, 'gistList')
-            );
+      var gist = Gist.getLocal(service.gistid)
+      var content = false
+      if (  gist
+         && gist.files
+         && gist.files[service.file]
+         && gist.files[service.file].content
+      ){
+        var content = gist.files[service.file].content
+      }
 
+      if (!content && service.gistid == 'example'){
+        if ($window.GLASS_BODY == "{{.GlassBody}}" ){
+          $http.get('example')
+            .then(function(res){
+              Gist.setLocal('example','glass.html',res.data)
+              Gist.setLocal('example','manifest.json','{"name":null}')
+              service.session.setValue(res.data)
+            });
         } else {
-            if (service.content) {
-                // If it's a gist reset the route properly
-                service.session.setValue(service.content);
-                if (service.gistid && service.file) {
-                    $timeout(function() {
-                        $rootScope.$apply(function() {
-                            $location.path(
-                              "/gist/" + service.gistid + "/" + service.file
-                            );
-                        });
-                    });
-                }
-            } else {
+          Gist.setLocal('example','glass.html',$window.GLASS_BODY)
+          Gist.setLocal('example','manifest.json','{"name":null}')
+          service.session.setValue(gist.files[service.file].content)
+        }
+      } else if ( !content ) {
+        Socket.ws.publish_retry(
+          function gist_cb(channel, serverGist) {
+            var file = $routeParams.file || service.file || 'glass.html';
+            var content = ((serverGist.files[file] || []).content || '')
+            service.session.setValue(content);
+            Gist.refresh(serverGist)
+            service.status = "Loaded: #" + service.gistid+ "/" + service.file
+          }.bind(this),
+          1000,
+          Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
+          'gist',
+          'get',
+          Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
+          service.gistid
+        );
+      } else {
+        service.session.setValue(content)
+      }
 
-              if ($window.GLASS_BODY == "{{.GlassBody}}" ){
-                $http.get('example')
-                  .then(function(res){
-                    service.editor.getSession().setValue(res.data);
-                  });
-              } else {
-                service.editor.getSession().setValue(GLASS_BODY);
-              }
-              service.status = "Loaded: Example"
-              $rootScope.title = "Example | " + $rootScope.title
+        service.editor.getSession().on('change', function(e) {
+            if (service.gistid && service.file){
+              service.dirty = true;
+              Gist.setLocal(
+                service.gistid,
+                service.file,
+                service.editor.session.getValue()
+              )
             }
         }
-        service.editor.getSession().on('change', function(e) {
-            service.content = service.editor.session.getValue();
-            service.dirty = true;
-        });
+        );
         service.editor.commands.addCommand({
             name: "wake-screen",
             bindKey: {win: "Shift-Enter", mac: "Shift-Enter"},
@@ -124,29 +97,53 @@ angular.module('wearscriptPlaygroundApp')
                 'lambda',
                 'WS.wake();WS.activityCreate();'
               )
+              service.status = "Woke Glass Screen"
+              $rootScope.$apply()
             }
         });
         service.editor.commands.addCommand({
             name: "evaluate-editor",
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
+              var filesForGlass = {};
+              if (service.gistid){
+                var gist = Gist.getLocal(service.gistid);
+                angular.forEach(gist.files, function(file, fileName){
+                  filesForGlass[fileName] = file.content
+                })
+              } else {
+                filesForGlass = {
+                  'glass.html': service.editor.session.getValue()
+                }
+              }
+              Socket.ws.publish(
+                'glass',
+                'lambda',
+                'WS.wake();WS.activityCreate();'
+              )
               Socket.ws.publish(
                 'glass',
                 'script',
-                service.editor.session.getValue()
+                filesForGlass
               );
+              service.status = "Sent project to Glass"
+              $rootScope.$apply()
             }
         });
         service.editor.commands.addCommand({
             name: "save-editor",
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
             exec: function(editor) {
-              if ($routeParams.gistid && $routeParams.file) {
-                if (service.gist.user.id == Profile.github_user.id){
+              if ( $routeParams.gistid
+                 && $routeParams.gistid != 'example'
+                 && $routeParams.file
+                 )
+              {
+                var gist = Gist.getLocal($routeParams.gistid);
+                if (gist.user && gist.user.id == Profile.github_user.id){
                   Gist.modify(
-                    $routeParams.gistid,
-                    $routeParams.file,
-                    service.editor.session.getValue(),
+                    gist.id,
+                    gist.files,
                     function (x, modGist) {
                       Gist.refresh( modGist );
                       service.status = "Saved: #" + service.gistid+ "/" + service.file
@@ -156,18 +153,18 @@ angular.module('wearscriptPlaygroundApp')
                   Gist.fork(
                     $routeParams.gistid,
                     function (x, gist) {
-                      Gist.modify(
-                        gist.id,
-                        $routeParams.file,
-                        service.editor.session.getValue(),
-                        function (x, gist){
-                          service.status = "Forked: #" + gist.id+ "/" + service.file
-                          Gist.refresh( gist );
-                          service.gist = gist;
-                          $location.path("/gist/" + gist.id);
-                          $rootScope.$apply()
-                        }
-                      )
+                      if (gist.id){
+                        Gist.modify(
+                          gist.id,
+                          gist.files,
+                          function (x, gist){
+                            service.status = "Forked: #" + gist.id+ "/" + service.file
+                            Gist.refresh( gist );
+                            $location.path("/gist/" + gist.id);
+                            $rootScope.$apply()
+                          }
+                        )
+                      }
                     }
                   );
                 }
@@ -186,11 +183,11 @@ angular.module('wearscriptPlaygroundApp')
                     }
                   }
                 }).result.then(function(file){
+                  var files = Gist.getLocal(service.gistid).files
                   Gist.create(
                     !file.private,
                     "[wearscript] " + file.description,
-                    "glass.html",
-                    service.editor.session.getValue(),
+                    Gist.getLocal(service.gistid).files,
                     function (x, y) {
                       if (y && y.id) {
                         Gist.refresh( y )
@@ -211,7 +208,9 @@ angular.module('wearscriptPlaygroundApp')
               if (!line.length) {
                 line = service.editor.session.getLine(service.editor.selection.getCursor().row);
               }
-              Socket.ws.publish('glass','lambda',line);
+              Socket.ws.publish('glass','lambda',line)
+              service.status = "Executed Current Line"
+              $rootScope.$apply()
             }
         });
 

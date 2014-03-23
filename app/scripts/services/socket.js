@@ -8,7 +8,12 @@ angular.module('wearscriptPlaygroundApp')
       ws: {},
       deviceCount: 0,
       connected: false,
-      devices: [{name:"myo", connected:false}, {name:"glass", connected:false}, {name:"pebble", connected:false}, {name:"phone", connected:false}],
+      devices: [
+        //{ name:"myo", connected:false},
+        //{ name:"pebble", connected:false},
+        //{ name:"phone", connected:false},
+        { name:"glass", connected:false}
+      ]
     }
 
     function onopen(){
@@ -61,7 +66,7 @@ angular.module('wearscriptPlaygroundApp')
       service.ws.subscribe('urlopen', urlopen_cb);
     }
 
-    service.connect = function(url){
+    service.connect = function(url, callback){
 
       service.socket = new ReconnectingWebSocket(url)
       service.socket.onclose = function(){
@@ -76,7 +81,10 @@ angular.module('wearscriptPlaygroundApp')
         service.socket,
         "playground",
         Math.floor(Math.random() * 100000),
-        onopen
+        function(){
+          onopen()
+          callback()
+        }
       );
     }
 
