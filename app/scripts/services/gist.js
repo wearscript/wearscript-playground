@@ -71,12 +71,9 @@ angular.module('wearscriptPlaygroundApp')
         Socket.ws.publish('gist', 'modify', channel, id, undefined, files)
     }
 
-    service.create = function(secret, description, fileName, content, callback) {
-        $log.info('<< Gist','create',description,fileName,content)
+    service.create = function(secret, description, files, callback) {
+        $log.info('<< Gist','create',description,files)
         var channel = Socket.ws.channel(Socket.ws.groupDevice, 'gistCreate')
-        var files = {}
-        files['manifest.json'] = { content: '{"name":""}' }
-        files[fileName] = { content: content }
         Socket.ws.subscribe(channel, callback)
         Socket.ws.publish('gist', 'create', channel, secret, description, files)
     }

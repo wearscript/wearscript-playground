@@ -185,11 +185,11 @@ angular.module('wearscriptPlaygroundApp')
                     }
                   }
                 }).result.then(function(file){
+                  var files = Gist.getLocal(service.gistid).files
                   Gist.create(
                     !file.private,
                     "[wearscript] " + file.description,
-                    "glass.html",
-                    service.editor.session.getValue(),
+                    Gist.getLocal(service.gistid).files,
                     function (x, y) {
                       if (y && y.id) {
                         Gist.refresh( y )
