@@ -16,7 +16,9 @@
     "angular-hammer": "~1.0.3",
     "angular-ui-utils": "~0.1.1",
     "angular-sanitize": "~1.2.15",
-    "angular-intro.js": "~1.0.2"
+    "angular-intro.js": "~1.0.2",
+    "qrcode": "~1.0.1",
+    "angular-qr": "~0.1.4"
   },
   "devDependencies": {
     "less": "~1.7.0",
