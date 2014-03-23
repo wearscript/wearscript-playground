@@ -58,17 +58,22 @@ angular.module('wearscriptPlaygroundApp')
       if (!update){
         var gist = {'id':id,'files':{}}
         gist.files[file] = {'content':content}
-        service.gists.push(gist)  
+        service.gists.push(gist)
       }
     }
 
-    service.modify = function(id, fileName, content, callback) {
-        $log.info('<< Gist','modify',id,fileName,content)
+    service.modify = function(id, files, callback) {
+        $log.info('<< Gist','modify', id, files)
         var channel = Socket.ws.channel(Socket.ws.groupDevice, 'gistModify')
-        var files = {}
-        files[fileName] = {content: content}
         Socket.ws.subscribe(channel, callback)
-        Socket.ws.publish('gist', 'modify', channel, id, undefined, files)
+        angular.forEach(files, function(file){
+          angular.forEach(file, function(value, prop){
+            if(prop != "content"){
+              delete file[prop];
+            }
+          })
+        })
+        Socket.ws.publish('gist','modify',channel,id,undefined,files)
     }
 
     service.create = function(secret, description, files, callback) {

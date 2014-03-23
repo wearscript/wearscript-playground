@@ -112,7 +112,7 @@ angular.module('wearscriptPlaygroundApp')
                   filesForGlass[fileName] = file.content
                 })
               } else {
-                filesForGlass = { 
+                filesForGlass = {
                   'glass.html': service.editor.session.getValue()
                 }
               }
@@ -142,9 +142,8 @@ angular.module('wearscriptPlaygroundApp')
                 var gist = Gist.getLocal($routeParams.gistid);
                 if (gist.user && gist.user.id == Profile.github_user.id){
                   Gist.modify(
-                    $routeParams.gistid,
-                    $routeParams.file,
-                    service.editor.session.getValue(),
+                    gist.id,
+                    gist.files,
                     function (x, modGist) {
                       Gist.refresh( modGist );
                       service.status = "Saved: #" + service.gistid+ "/" + service.file
@@ -157,8 +156,7 @@ angular.module('wearscriptPlaygroundApp')
                       if (gist.id){
                         Gist.modify(
                           gist.id,
-                          $routeParams.file,
-                          service.editor.session.getValue(),
+                          gist.files,
                           function (x, gist){
                             service.status = "Forked: #" + gist.id+ "/" + service.file
                             Gist.refresh( gist );
