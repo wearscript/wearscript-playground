@@ -8,8 +8,12 @@ angular.module('wearscriptPlaygroundApp')
       // NOTE(brandyn): All of this cube code should eventually be moved to a library or something
       this.cubeMatrix = function (values) {
           var mat = this.remap_coordinate_system(this.getRotationMatrixFromVector(values), 1, 3);
-          mat = this.remap_coordinate_system(this.transpose_matrix(mat), 3, 1);
-          return {transform: 'matrix3d(' + mat.join(',') + ')',"transition-duration": '0s'};
+          $scope.cubeMatrix = this.remap_coordinate_system(this.transpose_matrix(mat), 3, 1).join(',')
+          $scope.cubeMatrixStyle = 
+            { 'transform': 'matrix3d(' + $scope.cubeMatrix + ')',
+              'transition-duration': '0s'
+            };
+          //console.log('cUBEMAT',$scope.cubeMatrix)
       }
 
       this.getRotationMatrixFromVector = function (rotationVector) {
@@ -141,7 +145,7 @@ angular.module('wearscriptPlaygroundApp')
                   value[1] = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');
                   $scope.sensors[channel].sensors[key] = value;
               }
-          console.log('applying: ' + JSON.stringify($scope.sensors));
+          //console.log('applying: ' + JSON.stringify($scope.sensors));
           $scope.$apply(); // HACK(brandyn): Not sure why we have to do this
       }.bind(this);
       ws.subscribe('sensors', this.sensors_cb);
