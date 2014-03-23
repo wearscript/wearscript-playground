@@ -6,7 +6,9 @@ angular.module('wearscriptPlaygroundApp', [
   'ui.ace',
   'angular-table',
   'ui.bootstrap',
+  'ui.utils',
   'ngLogging',
+  'angular-intro',
   'ui.utils',
   'ja.qr'
 ])
