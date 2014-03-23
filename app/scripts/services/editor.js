@@ -134,9 +134,13 @@ angular.module('wearscriptPlaygroundApp')
             name: "save-editor",
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
             exec: function(editor) {
-              if ($routeParams.gistid && $routeParams.file) {
+              if ( $routeParams.gistid
+                 && $routeParams.gistid != 'example'
+                 && $routeParams.file
+                 )
+              {
                 var gist = Gist.getLocal($routeParams.gistid);
-                if (gist.user.id == Profile.github_user.id){
+                if (gist.user && gist.user.id == Profile.github_user.id){
                   Gist.modify(
                     $routeParams.gistid,
                     $routeParams.file,
@@ -150,17 +154,19 @@ angular.module('wearscriptPlaygroundApp')
                   Gist.fork(
                     $routeParams.gistid,
                     function (x, gist) {
-                      Gist.modify(
-                        gist.id,
-                        $routeParams.file,
-                        service.editor.session.getValue(),
-                        function (x, gist){
-                          service.status = "Forked: #" + gist.id+ "/" + service.file
-                          Gist.refresh( gist );
-                          $location.path("/gist/" + gist.id);
-                          $rootScope.$apply()
-                        }
-                      )
+                      if (gist.id){
+                        Gist.modify(
+                          gist.id,
+                          $routeParams.file,
+                          service.editor.session.getValue(),
+                          function (x, gist){
+                            service.status = "Forked: #" + gist.id+ "/" + service.file
+                            Gist.refresh( gist );
+                            $location.path("/gist/" + gist.id);
+                            $rootScope.$apply()
+                          }
+                        )
+                      }
                     }
                   );
                 }
