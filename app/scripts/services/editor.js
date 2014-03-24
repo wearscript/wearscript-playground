@@ -34,7 +34,14 @@ angular.module('wearscriptPlaygroundApp')
         service.editor.setKeyboardHandler("ace/keyboard/vim");
       }
 
-      var gist = Gist.getLocal(service.gistid)
+      var gist = Gist.getLocal(service.gistid);
+      if (!gist && service.gistid === 'example') {
+          Gist.setLocal('example','glass.html',$window.GLASS_BODY)
+          Gist.setLocal('example','manifest.json','{"name":""}')
+          gist = Gist.getLocal(service.gistid);
+      }
+      console.log(service.gistid);
+      console.log(gist)
       var content = false
       if (  gist
          && gist.files
@@ -53,8 +60,6 @@ angular.module('wearscriptPlaygroundApp')
               service.session.setValue(res.data)
             });
         } else {
-          Gist.setLocal('example','glass.html',$window.GLASS_BODY)
-          Gist.setLocal('example','manifest.json','{"name":""}')
           service.session.setValue(gist.files[service.file].content)
         }
       } else if ( !content ) {
