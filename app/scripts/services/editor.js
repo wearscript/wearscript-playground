@@ -49,12 +49,12 @@ angular.module('wearscriptPlaygroundApp')
           $http.get('example')
             .then(function(res){
               Gist.setLocal('example','glass.html',res.data)
-              Gist.setLocal('example','manifest.json','{"name":null}')
+              Gist.setLocal('example','manifest.json','{"name":""}')
               service.session.setValue(res.data)
             });
         } else {
           Gist.setLocal('example','glass.html',$window.GLASS_BODY)
-          Gist.setLocal('example','manifest.json','{"name":null}')
+          Gist.setLocal('example','manifest.json','{"name":""}')
           service.session.setValue(gist.files[service.file].content)
         }
       } else if ( !content ) {
