@@ -1,8 +1,5 @@
-<div class="modal-container">
-  <div class="modal-header text-center">
-      <h3>File Manager</h3>
-  </div>
-  <div class="modal-body">
+
+  <div data-ng-controller="FileManagerCtrl"  class="modal-body">
     <div class="row">
       <div class="col-xs-12 col-md-6 text-center">
         <h3>Open an existing file</h3>
@@ -65,27 +62,3 @@
       </div>
     </div>
   </div>
-  <!--
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2 text-center">
-      <h3>Create a new Gist</h3>
-      <div class="input-group">
-        <input type="text" class="form-control" data-ng-model="gistName">
-        <span class="input-group-btn">
-          <button
-            class="btn btn-default"
-            type="button"
-            data-ng-click="newGist()"
-            data-ng-disabled="gistName.length == 0"
-          >
-            Create
-          </button>
-        </span>
-      </div>
-    </div>
-  </div>
-  -->
-  <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()">Close</button>
-  </div>
-</div>
