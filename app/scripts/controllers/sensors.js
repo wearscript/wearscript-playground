@@ -7,13 +7,16 @@ angular.module('wearscriptPlaygroundApp')
       
       // NOTE(brandyn): All of this cube code should eventually be moved to a library or something
       this.cubeMatrix = function (values) {
-          var mat = this.remap_coordinate_system(this.getRotationMatrixFromVector(values), 1, 3);
-          $scope.cubeMatrix = this.remap_coordinate_system(this.transpose_matrix(mat), 3, 1).join(',')
+
+        var mat = this.remap_coordinate_system(this.getRotationMatrixFromVector(values), 1, 3);
+        mat = this.remap_coordinate_system(this.transpose_matrix(mat), 3, 1);
+
+          $scope.cubeMatrix = 
           $scope.cubeMatrixStyle = 
-            { 'transform': 'matrix3d(' + $scope.cubeMatrix + ')',
+            { 'transform': 'matrix3d(' + mat.join(',') + ')',
+              '-webkit-transform': 'matrix3d(' + mat.join(',') + ')',
               'transition-duration': '0s'
             };
-          //console.log('cUBEMAT',$scope.cubeMatrix)
       }
 
       this.getRotationMatrixFromVector = function (rotationVector) {
@@ -138,7 +141,7 @@ angular.module('wearscriptPlaygroundApp')
                   var values = sensorValues[key];
                   var value = values[values.length - 1];
                   var d = new Date(0);
-                  if (key === 'MPL Orientation') {
+                  if (key === 'MPL Rotation Vector') {
                       $scope.sensors[channel].cubeMatrixStyle = this.cubeMatrix(value[0]);
                   }
                   d.setUTCSeconds(value[1]);
