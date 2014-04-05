@@ -1,0 +1,81 @@
+<!-- <div class="modal-container" ng-controller="ModalCtrl">
+  <div class="modal-header text-center">
+      <h3>Connections</h3>
+  </div>
+  <div data-ng-controller="ConnectedCtrl" class="modal-body">
+    <ul id="connectionList">
+      <li>Server: <i class="fa fa-check-circle pull-right" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i></li>
+      <li  data-ng-repeat="device in socket.devices" >{{ device.name}}: <i title="{{device.connected}}" class="fa fa-check-circle pull-right" data-ng-class="{success: device.connected, failed: !device.connected}"></i></li>
+    </ul>
+
+  </div>
+  <div class="modal-footer">
+  
+  </div>
+</div>
+ -->
+<div class="modal-container" ng-controller="ModalCtrl">
+  <!-- <div class="modal-header text-center">
+      <h3>Connections</h3>
+  </div> -->
+  <div data-ng-controller="ConnectedCtrl" class="modal-body">
+
+
+
+<tabset>
+    <tab >
+      <tab-heading>
+        <i class="fa fa-file-text"></i>
+      </tab-heading>
+      <div  data-ng-include src="'/views/modals/fileManager.html'">
+        
+      </div>
+    </tab>
+    <tab >
+      <tab-heading>
+        <i class="fa fa-keyboard-o "></i>
+      </tab-heading>
+
+      
+      <div  data-ng-include src="'/views/modals/shortcuts.html'">
+      
+      </div>
+    </tab>
+    <tab >
+      <tab-heading>
+        <i class="fa fa-rss"></i>
+      </tab-heading>
+      
+      <div  data-ng-include src="'views/modals/connectedmodal.html'">
+      
+      </div>
+    </tab>
+
+    
+
+     <tab>
+      <tab-heading>
+        <i class="fa fa-key "></i>
+      </tab-heading>
+      
+      <div  data-ng-include src="'views/modals/setup.html'">
+      
+      </div>
+    </tab>
+    
+    <tab>
+      <tab-heading>
+        <i class="fa fa-question-circle"></i>
+      </tab-heading>
+      
+      <div  data-ng-include src="'views/modals/helpModal.html'">
+      
+      </div>
+    </tab>
+  </tabset>
+
+</div>
+<!--   <div class="modal-footer">
+  
+  </div> -->
+</div>
