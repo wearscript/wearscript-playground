@@ -1,4 +1,7 @@
-
+<div class="modal-container" ng-controller="ModalCtrl">
+  <div class="modal-header text-center">
+      <h3>Connections</h3>
+  </div>
   <div data-ng-controller="ConnectedCtrl" class="modal-body">
     <ul id="connectionList">
       <li>Server: <i class="fa fa-check-circle pull-right" data-ng-class="{success: socket.connected, failed: !socket.connected}"></i></li>
@@ -6,4 +9,7 @@
     </ul>
 
   </div>
- 
+  <div class="modal-footer">
+  
+  </div>
+</div>

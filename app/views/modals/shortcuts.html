@@ -1,8 +1,11 @@
-
+<div class="modal-container" ng-controller="ModalCtrl">
+        <div class="modal-header text-center">
+            <h3>Shortcuts</h3>
+        </div>
         <div class="modal-body">
             <table class="table table-bordered table-condensed">
               <thead>
-                <tr data-ng-click="">
+                <tr>
                     <th> Description </th>
                     <th> Key Command </th>
                 </tr>
@@ -15,4 +18,25 @@
               </tbody>
             </table>
         </div>
-      
+        <!--div class="modal-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    </p>
+                </div>
+                <div class="col-xs-6">
+                     <ul>
+                        <li ng-repeat="item in items">
+                            <a ng-click="selected.item = item">{{ item }}</a>
+                        </li>
+                    </ul>
+                    Selected: <b>{{ selected.item }}</b>
+                </div>
+            </div>
+        </div-->
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+        </div>
+</div>

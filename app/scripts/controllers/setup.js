@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('SetupCtrl', function ($scope,Profile) {
+  .controller('SetupCtrl', function ($scope,$http,Profile, $modalInstance) {
     $scope.wsurl = '';
     $scope.adb = '';
     $scope.imageHeight = '0px'

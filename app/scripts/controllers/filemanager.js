@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wearscriptPlaygroundApp')
-  .controller('FileManagerCtrl', function ($scope, Gist, $routeParams, $location, Playground, Socket, Editor, Storage) {
+  .controller('FileManagerCtrl', function ($scope, Gist, $modalInstance, $routeParams, $location, Playground, Socket, Editor, Storage) {
     var ws = Socket.ws;
     var gists = Gist.gists
     var currentFile = $routeParams.file || '';
