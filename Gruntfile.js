@@ -48,7 +48,8 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'dist'
+      dist: 'server/dist',
+      port: 9000
     },
 
     // Watches files for changes and runs tasks based on the changed files
@@ -88,34 +89,34 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9888,
+        port: '<%= yeoman.port %>',
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0',
         livereload: 35729
 
       },
-      proxies: [
-        { context:
-            [ '/auth'
-            , '/ws'
-            , '/example'
-            , '/oauth2callback'
-            , '/user'
-            , '/oauth2callbackgh'
-            , '/authgh'
-            ]
-        , host: 'localhost'
-        , port: 4938
-        , https: false
-        , changeOrigin: false
-        , xforward: false
-        , timeout: 9999999999999999
-        , ws: true
-        }
-      ],
       livereload: {
+        proxies: [
+          { context:
+              [ '/auth'
+              , '/ws'
+              , '/example'
+              , '/oauth2callback'
+              , '/user'
+              , '/oauth2callbackgh'
+              , '/authgh'
+              ]
+          , host: 'localhost'
+          , port: 4938
+          , https: false
+          , changeOrigin: false
+          , xforward: false
+          , timeout: 9999999999999999
+          , ws: true
+          }
+        ],
         options:
-          { open: 'http://' + ipAddress + ':9888'
+          { open: 'http://' + ipAddress + ':<%= yeoman.port %>'
           , base:
             [ '.tmp'
             , '<%= yeoman.app %>'
@@ -134,9 +135,22 @@ module.exports = function (grunt) {
         }
       },
       dist: {
+        proxies: [
+          { context: [ '/' ]
+          , host: 'localhost'
+          , port: 4938
+          , https: false
+          , changeOrigin: false
+          , xforward: false
+          , timeout: 9999999999999999
+          , ws: true
+          }
+        ],
         options: {
-          base: '<%= yeoman.dist %>',
-          middleware: middleware
+          open: 'http://' + ipAddress + ':<%= yeoman.port %>',
+          middleware: function(connect,options){
+            return [require('grunt-connect-proxy/lib/utils').proxyRequest];
+          }
         }
       }
     },
@@ -401,7 +415,7 @@ module.exports = function (grunt) {
       scripts: {
         expand: true,
         cwd: '.tmp/concat/scripts',
-        dest: 'dist/scripts/',
+        dest: '<%= yeoman.dist %>/scripts/',
         src: '{,*/}*.js'
       },
       styles: {
@@ -468,7 +482,7 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'build',
         'exec:api-serve',
-        'configureProxies:server',
+        'configureProxies:dist',
         'connect:dist:keepalive'
       ]);
     }
@@ -480,7 +494,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'exec:api-serve',
       'autoprefixer',
-      'configureProxies:server',
+      'configureProxies:livereload',
       'connect:livereload',
       'string-replace:dev',
       'watch'
