@@ -425,17 +425,6 @@ module.exports = function (grunt) {
           '.tmp/index.html': '<%= yeoman.app %>/index.html',
         }
       },
-      dist: {
-        options: {
-          replacements: [{
-            pattern: '"{{.WSUrl}}"',
-            replacement: '"ws://" + location.host'
-          }]
-        },
-        files: {
-          '<%= yeoman.dist %>/index.html': '<%= yeoman.dist %>/index.html',
-        }
-      }
     },
 
 
@@ -462,7 +451,6 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'build',
         'exec:api-serve',
-        'string-replace:dist',
         'configureProxies:server',
         'connect:dist:keepalive'
       ]);
