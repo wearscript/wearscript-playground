@@ -53,6 +53,10 @@ module.exports = function (grunt) {
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
+      less: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
+        tasks: ['less:dev'],
+      },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
@@ -68,9 +72,11 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
+          '<%= yeoman.app %>/styles/{,*/}*.less',
           '<%= yeoman.app %>/{,*/}*.html',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+        ],
+        tasks: ['less']
       }
     },
 
@@ -82,7 +88,7 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: 9888,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0',
         livereload: 35729
@@ -109,7 +115,7 @@ module.exports = function (grunt) {
       ],
       livereload: {
         options:
-          { open: 'http://' + ipAddress + ':9000'
+          { open: 'http://' + ipAddress + ':9888'
           , base:
             [ '.tmp'
             , '<%= yeoman.app %>'
@@ -272,15 +278,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Swap (dev) blocks for (dist) blocks
-    targethtml: {
-      dist: {
-        files: {
-          'dist/index.html': 'dist/index.html',
-        }
-      }
-    },
-
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
     ngmin: {
@@ -303,6 +300,15 @@ module.exports = function (grunt) {
 
     // Compile less stylesheets
     less: {
+      dev: {
+        options: {
+          paths: ['<%= yeoman.app %>/styles'],
+          ieCompat: false
+        },
+        files: {
+          ".tmp/styles/main.css": "<%= yeoman.app %>/styles/main.less"
+        }
+      },
       dist: {
         options: {
           paths: ['<%= yeoman.app %>/styles'],
@@ -408,7 +414,7 @@ module.exports = function (grunt) {
 
 
     'string-replace': {
-      dist: {
+      dev: {
         options: {
           replacements: [{
             pattern: '"{{.WSUrl}}"',
@@ -416,9 +422,9 @@ module.exports = function (grunt) {
           }]
         },
         files: {
-          '<%= yeoman.dist %>/index.html': '<%= yeoman.dist %>/index.html',
+          '.tmp/index.html': '<%= yeoman.app %>/index.html',
         }
-      }
+      },
     },
 
 
@@ -444,7 +450,6 @@ module.exports = function (grunt) {
     if (target === 'dist') {
       return grunt.task.run([
         'build',
-        'string-replace:dist',
         'exec:api-serve',
         'configureProxies:server',
         'connect:dist:keepalive'
@@ -454,11 +459,13 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bower-install',
+      'less:dev',
       'concurrent:server',
       'exec:api-serve',
       'autoprefixer',
       'configureProxies:server',
       'connect:livereload',
+      'string-replace:dev',
       'watch'
     ]);
   });
@@ -480,13 +487,12 @@ module.exports = function (grunt) {
     'ngmin',
     'copy:dist',
     'cdnify',
-    'less',
+    'less:dist',
     'cssmin',
     'uglify:dist',
     'copy:scripts',
     //'rev',
     'usemin',
-    'targethtml',
     'htmlmin',
     //'exec:api-build'
   ]);

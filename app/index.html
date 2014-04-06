@@ -5,33 +5,11 @@
     <title ng-init="title='Wearscript Playground'" ng-bind="title"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
-    <!--(if target dev)><!-->
-    <link rel="stylesheet" href="bower_components/intro.js/introjs.css">
-    <link rel="stylesheet/less" type="text/css" href="styles/main.less">
-    <script>
-      var less = {
-        env:'development',
-        async:true,
-        fileAsync:false,
-        poll:1000,
-        dumpLineNumbers:"mediaQuery",
-        logLevel: 0
-      }
-    </script>
-    <script type="text/javascript" src="bower_components/less/dist/less-1.7.0.min.js"></script>
-    <script>
-      var port = (location.port != 80) ? ':' + location.port : '';
-      WSURL = 'ws://' + location.host;
-      GLASS_BODY = '{{.GlassBody}}';
-    </script>
-    <!--<!(endif)-->
-    <!--(if target dist)>
     <link rel="stylesheet" href="styles/main.css">
     <script>
       WSURL = "{{.WSUrl}}";
       GLASS_BODY = '{{.GlassBody}}';
     </script>
-    <!(endif)-->
   </head>
   <body
     data-ng-class="{'menu-open': profile.menu }"

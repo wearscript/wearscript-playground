@@ -86,7 +86,6 @@ angular.module('wearscriptPlaygroundApp', [
       });
     });
 
-    $window.HACK_WS = Socket.ws;
     $rootScope.aceLoaded = function( editor ) {
       Editor.init(editor)
     }

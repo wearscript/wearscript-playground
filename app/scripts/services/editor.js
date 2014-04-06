@@ -40,8 +40,6 @@ angular.module('wearscriptPlaygroundApp')
           Gist.setLocal('example','manifest.json','{"name":""}')
           gist = Gist.getLocal(service.gistid);
       }
-      console.log(service.gistid);
-      console.log(gist)
       var content = false
       if (  gist
          && gist.files
@@ -52,16 +50,7 @@ angular.module('wearscriptPlaygroundApp')
       }
 
       if (!content && service.gistid == 'example'){
-        if ($window.GLASS_BODY == "{{.GlassBody}}" ){
-          $http.get('example')
-            .then(function(res){
-              Gist.setLocal('example','glass.html',res.data)
-              Gist.setLocal('example','manifest.json','{"name":""}')
-              service.session.setValue(res.data)
-            });
-        } else {
-          service.session.setValue(gist.files[service.file].content)
-        }
+        service.session.setValue(gist.files[service.file].content)
       } else if ( !content ) {
         Socket.ws.publish_retry(
           function gist_cb(channel, serverGist) {
