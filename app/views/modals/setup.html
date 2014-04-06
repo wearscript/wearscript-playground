@@ -1,5 +1,8 @@
-
-  <div data-ng-controller="SetupCtrl" class="modal-body">
+<div class="modal-container">
+  <div class="modal-header text-center">
+      <h3>Device Setup</h3>
+  </div>
+  <div class="modal-body">
     <div class="row">
       <div class="col-xs-12 text-center">
         <h3>Auth with Google and Github
@@ -45,4 +48,7 @@
       </div>
     </div>
   </div>
-  
+  <div class="modal-footer" data-ng-controller="ModalCtrl">
+      <button class="btn btn-primary" ng-click="ok()">OK</button>
+  </div>
+</div>

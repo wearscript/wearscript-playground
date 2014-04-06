@@ -46,7 +46,7 @@ angular.module('wearscriptPlaygroundApp')
           settingsModal();
           break;
         case 'connected':
-          modalTemplate = "views/modals/generalModal.html"
+          modalTemplate = "views/modals/connectedmodal.html"
           break;
         default:
           modalTemplate = 'views/modals/help.html';
