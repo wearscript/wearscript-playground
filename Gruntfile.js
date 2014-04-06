@@ -437,11 +437,11 @@ module.exports = function (grunt) {
               }
             }
           ]
-        files: {
         },
+        files: {
           '.tmp/index.html': '<%= yeoman.app %>/index.html',
         }
-      },
+      }
     },
 
 
