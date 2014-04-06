@@ -79,12 +79,27 @@ module.exports = function (grunt) {
         tasks: ['less']
       }
     },
-
     exec: {
-        'api-build': 'cd server; go build && cd ..',
-        'api-serve': 'killall server; cd server; ./server &'
+      'api-build': 'cd server; go build && cd ..',
+      'api-serve': 'killall server; cd server; ./server &',
+      'webdriver-manager': './node_modules/protractor/bin/webdriver-manager update && cp node_modules/protractor/selenium/selenium-*.jar test/e2e/selenium.jar'
     },
-
+    protractor:
+      { options:
+        { keepAlive: true
+        , noColor: false
+        }
+      , chrome:
+        { options:
+          { configFile: "test/e2e/config/chrome.js"
+          }
+        }
+      , phantom:
+        { options:
+          { configFile: "test/e2e/config/phantomjs.js"
+          }
+        }
+      },
     // The actual grunt server settings
     connect: {
       options: {
@@ -470,12 +485,23 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('test', [
-    'clean:server',
-    'concurrent:test',
-    'autoprefixer',
-    'connect:test',
-  ]);
+  grunt.registerTask('test', function(target){
+    grunt.task.run(
+      [ 'clean:server'
+      , 'concurrent:test'
+      , 'autoprefixer'
+      , 'connect:test'
+      ]
+    )
+    if(target === 'e2e'){
+      grunt.task.run(
+        [ 'exec:webdriver-manager'
+        , 'protractor:chrome'
+        //, 'protractor:phantom'
+        ]
+      )
+    }
+  });
 
   grunt.registerTask('build', [
     'clean:dist',
