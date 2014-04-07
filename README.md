@@ -147,7 +147,7 @@ To run e2e testing
 grunt test:e2e
 ```
 
-If you run into errors please ensure you have gconf and chromedrive installed globally
+If you run into errors please ensure you have gconf and chromedriver installed globally
 ```bash
 sudo npm install -g chromedriver
 sudo apt-get install gconf
