@@ -89,6 +89,9 @@ module.exports = function (grunt) {
       { options:
         { keepAlive: true
         , noColor: false
+        , args:
+          { verbose: true
+          }
         }
       , chrome:
         { options:
@@ -162,7 +165,6 @@ module.exports = function (grunt) {
           }
         ],
         options: {
-          open: 'http://' + ipAddress + ':<%= yeoman.port %>',
           middleware: function(connect,options){
             return [require('grunt-connect-proxy/lib/utils').proxyRequest];
           }
@@ -451,7 +453,7 @@ module.exports = function (grunt) {
             },
             { pattern: "'{{.GlassBody}}'",
               replacement: function (match, p1, offset, string) {
-                var example = 
+                var example =
                   ('' + grunt.file.read('server/playground_glass.html'))
                     .replace(/\\/g, '\\\\')
                     .replace(/\t/g, '\\t')
@@ -480,7 +482,7 @@ module.exports = function (grunt) {
         'copy:styles'
       ],
       test: [
-        'copy:styles'
+        'copy:styles',
       ],
       dist: [
         'copy:styles',
@@ -489,13 +491,21 @@ module.exports = function (grunt) {
       ]
     },
 
+    shell:
+    { server:
+      { command: 'grunt serve:dist'
+      , options:
+        { async: true
+        }
+      }
+    }
+
   });
 
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
       return grunt.task.run([
-        'build',
         'exec:api-serve',
         'configureProxies:dist',
         'connect:dist:keepalive'
@@ -503,9 +513,6 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      'clean:server',
-      'bower-install',
-      'less:dev',
       'concurrent:server',
       'exec:api-serve',
       'autoprefixer',
@@ -519,6 +526,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', function(target){
     grunt.task.run(
       [ 'clean:server'
+      , 'build'
       , 'concurrent:test'
       , 'autoprefixer'
       , 'connect:test'
@@ -526,32 +534,30 @@ module.exports = function (grunt) {
     )
     if(target === 'e2e'){
       grunt.task.run(
-        [ 'exec:webdriver-manager'
+        [ 'shell:server'
+        , 'exec:webdriver-manager'
         , 'protractor:chrome'
-        //, 'protractor:phantom'
+        , 'shell:server:kill'
         ]
       )
     }
   });
 
   grunt.registerTask('build', [
-    'clean:dist',
+    'clean',
     'bower-install',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'ngmin',
-    'copy:dist',
+    'copy',
     'cdnify',
-    'less:dist',
+    'less',
     'cssmin',
     'uglify:dist',
-    'copy:scripts',
-    //'rev',
     'usemin',
     'htmlmin',
-    //'exec:api-build'
   ]);
 
   grunt.registerTask('default', [
