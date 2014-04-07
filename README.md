@@ -141,6 +141,17 @@ To run all current tests:
 ```bash
 grunt test
 ```
+
+To run e2e testing
+```bash
+grunt test:e2e
+```
+
+If you run into errors please ensure you have gconf and chromedrive installed globally
+```bash
+sudo npm install -g chromedriver
+sudo apt-get install gconf
+```
 ## Further Reading ##
 
 [AngularJS Docs](http://docs.angularjs.org/api)
