@@ -9,10 +9,15 @@ angular.module('wearscriptPlaygroundApp')
     })
     $scope.wear = function(gist){
       Gist.get(gist.id,function(channel,data){
+        var files = {};
+        for (var key in data.files) {
+            if (data.files.hasOwnProperty(key))
+                files[key] = data.files[key].content;
+        }
         Socket.ws.publish(
           'glass',
           'script',
-          data.files['glass.html'].content
+          files
         );
       })
     }

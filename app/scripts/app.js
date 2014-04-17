@@ -81,9 +81,6 @@ angular.module('wearscriptPlaygroundApp', [
 
     Socket.connect(window.WSURL + '/ws', function(){
       Gist.init()
-      $http.post('user/key/ws').success(function(wskey){
-        $rootScope.wskey = wskey;
-      });
     });
 
     $rootScope.aceLoaded = function( editor ) {

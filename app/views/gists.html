@@ -8,15 +8,16 @@
     <tr>
       <td>Description</td>
       <td>Last Updated</td>
-      <td colspan="2">Actions</td>
+      <td colspan="3">Actions</td>
     </tr>
   </thead>
   <tbody>
     <tr data-ng-repeat="gist in gists">
-      <td data-ng-bind="gist.description"></td>
+      <td><a href="{{gist.url_playground}}" ng-bind="gist.description"></td>
       <td data-ng-bind="gist.updated_at | date:'medium'"></td>
       <td><a href="{{gist.url_playground}}">Edit</a></td>
-      <td><a data-ng-click="wear(gist)"> Wear</a></td>
+      <td><a data-ng-click="wear(gist)">Wear</a></td>
+      <td><a href="{{gist.html_url}}">Gist</a></td>
     </tr>
   </tbody>
 </table>
