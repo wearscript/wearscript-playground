@@ -23,10 +23,10 @@
     </div>
     <div class="row">
       <div class="col-xs-4 col-xs-offset-4 text-center">
-        <button ng-click="qr=!qr" type="button" class="btn btn-primary btn-lrg"> Generate QR Code </button>
+        <button ng-click="qr()" type="button" class="btn btn-primary btn-lrg"> Generate QR Code </button>
       </div>
     </div>
-    <div class="row" ng-if="qr">
+    <div class="row" ng-if="qrshow">
       <div class="col-xs-12 text-center">
         <p>Run in WearScript then scan the QR code.</p>
 
