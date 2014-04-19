@@ -14,71 +14,122 @@ angular.module('wearscriptPlaygroundApp')
       dirty: false,
       content: '',
       gistid: undefined,
-      gist: undefined,
       file: undefined,
       forkonsave: false,
       session: false,
       menu: true,
       status: false
     }
-
+    service.update = function() {
+        $log.log('editor service updated');
+        if (Gist.activeGist && Gist.activeGist.id == $routeParams.gistid)
+            return;
+        if (!$routeParams.gistid || !$routeParams.file) {
+            $log.log('not updating as gistid/file is undefined in routeParams');
+            return;
+        }
+        if (service.session)
+            service.session.setValue('');
+        Gist.get($routeParams.gistid, function gist_cb(channel, serverGist) {
+            Gist.refresh(serverGist);
+            var file = $routeParams.file;
+            if (!serverGist.files[file])
+                serverGist.files[file] = {content: ''};
+            var content = serverGist.files[file].content;
+            service.session.setValue(content);
+            service.status = "Loaded: #" + $routeParams.gistid + "/" + $routeParams.file
+        }.bind(this));
+    }
+    service.saveCreate = function(editor) {
+        $modal.open({
+            templateUrl: 'views/modals/save-gist.html',
+            controller: function($scope,$modalInstance){
+                $scope.file = {}
+                $scope.ok = function(file){
+                    $modalInstance.close(file)
+                }
+                $scope.cancel = function(){
+                    $modalInstance.dismiss()
+                }
+            }
+        }).result.then(function(file){
+            $log.log(JSON.stringify(Gist.activeGist.files));
+            Gist.create(
+                !file.private,
+                "[wearscript] " + file.description,
+                Gist.activeGist.files,
+                function (x, y) {
+                    if (y && y.id) {
+                        Gist.refresh( y )
+                        $location.path("/gist/" + y.id);
+                    }
+                }
+            );
+        });
+    }
+    service.saveFork = function (editor) {
+        var gist = Gist.activeGist;
+        Gist.fork(
+            $routeParams.gistid,
+            function (x, gist) {
+                if (gist.id){
+                    Gist.modify(
+                        gist.id,
+                        gist.files,
+                        function (x, gist){
+                            service.status = "Forked: #" + gist.id+ "/" + $routeParams.file
+                            Gist.refresh( gist );
+                            $location.path("/gist/" + gist.id);
+                            $rootScope.$apply()
+                        }
+                    )
+                }
+            }
+        );
+    }
+    service.saveModify = function (editor) {
+        var gist = Gist.activeGist;
+        Gist.modify(
+            gist.id,
+            gist.files,
+            function (x, modGist) {
+                Gist.refresh( modGist );
+                service.status = "Saved: #" + $routeParams.gistid+ "/" + $routeParams.file
+            }
+        );
+    }
     service.init = function(editor){
-
+      $log.log('editor service constructed');
       service.editor = editor;
       service.session = editor.session;
-      service.gistid = $routeParams.gistid || 'example';
-      service.file = $routeParams.file || 'glass.html';
 
       //service.editor.setReadOnly(false);
       if ( Profile.get("vim_mode") ){
         service.editor.setKeyboardHandler("ace/keyboard/vim");
       }
 
-      var gist = Gist.getLocal(service.gistid);
-      if (!gist && service.gistid === 'example') {
-          Gist.setLocal('example','glass.html',$window.GLASS_BODY)
-          Gist.setLocal('example','manifest.json','{"name":""}')
-          gist = Gist.getLocal(service.gistid);
-      }
+      var gist = Gist.activeGist;
       var content = false
       if (  gist
          && gist.files
-         && gist.files[service.file]
-         && gist.files[service.file].content
+         && gist.files[$routeParams.file]
+         && gist.files[$routeParams.file].content
       ){
-        var content = gist.files[service.file].content
+        var content = gist.files[$routeParams.file].content
       }
 
-      if (!content && service.gistid == 'example'){
-        service.session.setValue(gist.files[service.file].content)
-      } else if ( !content ) {
-        Socket.ws.publish_retry(
-          function gist_cb(channel, serverGist) {
-            var file = $routeParams.file || service.file || 'glass.html';
-            var content = ((serverGist.files[file] || []).content || '')
-            service.session.setValue(content);
-            Gist.refresh(serverGist)
-            service.status = "Loaded: #" + service.gistid+ "/" + service.file
-          }.bind(this),
-          1000,
-          Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
-          'gist',
-          'get',
-          Socket.ws.channel(Socket.ws.groupDevice, 'gistGet'),
-          service.gistid
-        );
+      if ( !content ) {
+        service.update();
       } else {
         service.session.setValue(content)
       }
 
         service.editor.getSession().on('change', function(e) {
-            if (service.gistid && service.file){
-              service.dirty = true;
-              Gist.setLocal(
-                service.gistid,
-                service.file,
-                service.editor.session.getValue()
-              )
+            service.dirty = true;
+            $log.log('changed: ' + $routeParams.file);
+            $window.HACK_VALUE = service.editor.getValue();
+            if (Gist.activeGist && Gist.activeGist.files[$routeParams.file]) {
+                Gist.activeGist.files[$routeParams.file].content = service.editor.getValue();
             }
         }
         );
@@ -100,21 +151,11 @@ angular.module('wearscriptPlaygroundApp')
             bindKey: {win: "Ctrl-Enter", mac: "Command-Enter"},
             exec: function(editor) {
               var filesForGlass = {};
-              if (service.gistid){
-                var gist = Gist.getLocal(service.gistid);
+                var gist = Gist.activeGist;
+                // BUG: Sends old data
                 angular.forEach(gist.files, function(file, fileName){
                   filesForGlass[fileName] = file.content
                 })
-              } else {
-                filesForGlass = {
-                  'glass.html': service.editor.session.getValue()
-                }
-              }
-              Socket.ws.publish(
-                'glass',
-                'lambda',
-                'WS.wake();WS.activityCreate();'
-              )
               Socket.ws.publish(
                 'glass',
                 'script',
@@ -127,73 +168,27 @@ angular.module('wearscriptPlaygroundApp')
         service.editor.commands.addCommand({
             name: "save-editor",
             bindKey: {win: "Ctrl-S", mac: "Command-S"},
+            sender: 'editor|cli',
             exec: function(editor) {
-              if ( $routeParams.gistid
-                 && $routeParams.gistid != 'example'
-                 && $routeParams.file
-                 )
-              {
-                var gist = Gist.getLocal($routeParams.gistid);
-                if (gist.user && gist.user.id == Profile.github_user.id){
-                  Gist.modify(
-                    gist.id,
-                    gist.files,
-                    function (x, modGist) {
-                      Gist.refresh( modGist );
-                      service.status = "Saved: #" + service.gistid+ "/" + service.file
-                    }
-                  );
+                $log.log(JSON.stringify($routeParams));
+                var gist = Gist.activeGist;
+                $log.log(JSON.stringify(gist));
+                $log.log(JSON.stringify(Profile));
+                if (true || gist.user && gist.owner.id == Profile.github_user.id){
+                    service.saveModify(editor);
                 } else {
-                  Gist.fork(
-                    $routeParams.gistid,
-                    function (x, gist) {
-                      if (gist.id){
-                        Gist.modify(
-                          gist.id,
-                          gist.files,
-                          function (x, gist){
-                            service.status = "Forked: #" + gist.id+ "/" + service.file
-                            Gist.refresh( gist );
-                            $location.path("/gist/" + gist.id);
-                            $rootScope.$apply()
-                          }
-                        )
-                      }
-                    }
-                  );
+                    service.saveCreate(editor);
                 }
 
-              } else {
-
-                $modal.open({
-                  templateUrl: 'views/modals/save-gist.html',
-                  controller: function($scope,$modalInstance){
-                    $scope.file = {}
-                    $scope.ok = function(file){
-                      $modalInstance.close(file)
-                    }
-                    $scope.cancel = function(){
-                      $modalInstance.dismiss()
-                    }
-                  }
-                }).result.then(function(file){
-                  var files = Gist.getLocal(service.gistid).files
-                  Gist.create(
-                    !file.private,
-                    "[wearscript] " + file.description,
-                    Gist.getLocal(service.gistid).files,
-                    function (x, y) {
-                      if (y && y.id) {
-                        Gist.refresh( y )
-                        $location.path("/gist/" + y.id);
-                      }
-                    }
-                  );
-                })
-
-              }
             }
         });
+
+        service.editor.commands.addCommand({
+            name: "saveas-editor",
+            bindKey: {win: "Ctrl-Shift-S", mac: "Command-Shift-S"},
+            exec: service.saveCreate
+            });
+
         service.editor.commands.addCommand({
             name: "evaluate-region",
             bindKey: {win: "Alt-Enter", mac: "Alt-Enter"},

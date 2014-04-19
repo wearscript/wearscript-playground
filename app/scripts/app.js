@@ -18,10 +18,14 @@ angular.module('wearscriptPlaygroundApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/gist/:gistid', {
+      .when('/gist/', {
         redirectTo: function(routeParams) {
-            return '/gist/' + routeParams.gistid + '/glass.html';
+            return '/';
         }
+      })
+      .when('/gist/:gistid', {
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
       })
       .when('/gist/:gistid/:file', {
         templateUrl: 'views/main.html',

@@ -4,6 +4,7 @@ angular.module('wearscriptPlaygroundApp')
   .controller('SensorsCtrl', function ($scope,$window, Socket) {
       var ws = Socket.ws;
       $scope.sensors = {};
+      $scope.cubeShow = false;
       
       // NOTE(brandyn): All of this cube code should eventually be moved to a library or something
       this.cubeMatrix = function (values) {
@@ -143,6 +144,7 @@ angular.module('wearscriptPlaygroundApp')
                   var d = new Date(0);
                   if (key === 'MPL Rotation Vector') {
                       $scope.sensors[channel].cubeMatrixStyle = this.cubeMatrix(value[0]);
+                      $scope.cubeShow = true;
                   }
                   d.setUTCSeconds(value[1]);
                   value[1] = [d.getHours(), d.getMinutes(), d.getSeconds()].join(':');

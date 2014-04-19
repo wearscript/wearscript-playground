@@ -10,9 +10,8 @@ angular.module('wearscriptPlaygroundApp')
     $scope.newFileName = '';
     $scope.fileSelected = '';
 
-    var gistid = $routeParams.gistid || 'example'
-    $routeParams.gistid = gistid
-    var gist = Gist.getLocal(gistid)
+    var gistid = $routeParams.gistid;
+    var gist = Gist.activeGist;
     $scope.availableFiles = Object.keys(gist.files)
 
     $scope.openFile = function($event){
@@ -30,9 +29,10 @@ angular.module('wearscriptPlaygroundApp')
     $scope.newFile = function($event){
       var fileName = newFileForm.newFileName.value;
       if(typeof $event != "undefined") $event.preventDefault()
-      Gist.setLocal(Editor.gistid,fileName,' ')
+      if (!Gist.activeGist.files[fileName])
+          Gist.activeGist.files[fileName] = {content: ''};
       $modalInstance.dismiss('cancel')
-      $location.path('/gist/' + Editor.gistid + '/' + fileName)
+      $location.path('/gist/' + $routeParams.gistid + '/' + fileName)
     }
 
     $scope.newGist = function(){

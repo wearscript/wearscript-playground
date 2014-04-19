@@ -133,7 +133,7 @@ angular.module('wearscriptPlaygroundApp')
         },
         {
           element: '#file-manager',
-          intro: "Clicking this button will allow you to load gists and create new ones.",
+          intro: "Clicking this button will allow you to create or edit other files in this gist.",
           position: 'left'
         },
         {
@@ -143,12 +143,12 @@ angular.module('wearscriptPlaygroundApp')
         },
         {
           element: '#setup',
-          intro: "Setup your connection to WearScript and GitHub by clicking on the gears.",
+          intro: "Setup your devices with WearScript and auth with GitHub by clicking on the gears.",
           position: 'top'
         },
         {
           element: '#apidocs',
-          intro: "To find out more information about wearscript and an api reference click on the question mark.",
+          intro: "To find out more information about WearScript and for detailed docs click on the question mark.",
           position: 'top'
         },
         {
@@ -172,6 +172,11 @@ angular.module('wearscriptPlaygroundApp')
           position: 'right'
         },
         {
+          element: '#weariverse-tab',
+          intro: 'This is the Weariverse tab',
+          position: 'right'
+        },
+        {
           element: '#images-tab',
           intro: "When you wear a script that uses your devices camera, the imagery will be displayed in this tab.",
           position: 'right'
@@ -189,16 +194,6 @@ angular.module('wearscriptPlaygroundApp')
         {
           element: '#logging-tab',
           intro: 'View logs in the logging tab',
-          position: 'right'
-        },
-        {
-          element: '#annotation-tab',
-          intro: 'This is the Annotation tab',
-          position: 'right'
-        },
-        {
-          element: '#weariverse-tab',
-          intro: 'This is the Weariverse tab',
           position: 'right'
         }
       ]

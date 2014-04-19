@@ -7,7 +7,7 @@ angular.module('wearscriptPlaygroundApp')
     var profile = {
       authenticated: false,
       complete: false,
-      github_user: false,
+      github_user: {},
       google_user: false,
       glass_id: false,
       vim_mode: Storage.get('vim_mode') || false,

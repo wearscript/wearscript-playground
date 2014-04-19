@@ -1,36 +1,24 @@
-<table at-table list="nameList" class="table table-bordered table-condensed" ng-show="gists.length > 0">
-  <!-- the header will automatically be created according to the body definition. -->
+<table
+  at-table
+  list="nameList"
+  class="table table-bordered table-condensed"
+  ng-show="gists.length > 0"
+>
   <thead>
     <tr>
-      <td>Gist Description</td>
-      <td>Last Updated</td>
-      <td>Gist User</td>
+      <td>Description</td>
+      <td>Author</td>
+      <td colspan="3">Actions</td>
     </tr>
   </thead>
   <tbody>
     <tr data-ng-repeat="gist in gists">
-      <!-- for each item in list a cell will be rendered, containing the value in attribute. -->
-      <td>
-        <a
-          href="{{gist.url_playground}}"
-          ng-bind="gist.description"
-        >
-        </a>
-      </td>
-      <td
-        ng-bind="gist.updated_at | date:'medium'"
-      >
-      </td>
-      <td>
-        <a
-          href="{{gist.owner.html_url}}"
-          ng-bind="gist.owner.login"
-        >
-        </a>
-      </td>
+      <td><a href="{{gist.url_playground}}" ng-bind="gist.description"></td>
+      <td><a href="{{gist.owner.html_url}}" ng-bind="gist.owner.login">
+      <td><a href="{{gist.url_playground}}">Edit</a></td>
+      <td><a data-ng-click="wear(gist)">Wear</a></td>
+      <td><a href="{{gist.html_url}}">Gist</a></td>
     </tr>
   </tbody>
 </table>
-<div ng-show="gists.length < 1">
-Checking your github for Gists.
-</div>
+<div ng-show="gists.length == 0">Checking your Weariverse for Gists...</div>
