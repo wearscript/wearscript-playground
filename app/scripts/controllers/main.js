@@ -1,6 +1,11 @@
 'use strict';
 angular.module('wearscriptPlaygroundApp')
-  .controller('MainCtrl', function ($scope,Editor,$routeParams,$location,$timeout) {
+  .controller('MainCtrl', function ($scope,Editor,$routeParams,$location,$timeout,$log) {
+      // NOTE: If we are changing gists then clear the file state so we use the default procedure
+      if ($routeParams.gistid && $routeParams.gistid != Editor.gistid) {
+          $log.log('New gist, resetting defaults');
+          Editor.file = undefined;
+      }
       if (!$routeParams.gistid) {
           $timeout(function() {
               if (Editor.gistid)

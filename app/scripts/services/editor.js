@@ -126,8 +126,6 @@ angular.module('wearscriptPlaygroundApp')
 
         service.editor.getSession().on('change', function(e) {
             service.dirty = true;
-            $log.log('changed: ' + $routeParams.file);
-            $window.HACK_VALUE = service.editor.getValue();
             if (Gist.activeGist && Gist.activeGist.files[$routeParams.file]) {
                 Gist.activeGist.files[$routeParams.file].content = service.editor.getValue();
             }

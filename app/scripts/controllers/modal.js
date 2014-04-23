@@ -19,7 +19,11 @@ angular.module('wearscriptPlaygroundApp')
       },
       {
         description:'Save to Gist',
-        command:'Ctrl+S'
+        command:'Ctrl+S (Cmd+S for OSX)'
+      },
+      {
+        description:'Save to New Gist',
+        command:'Ctrl+Shift+S (Cmd+Shift+S for OSX)'
       }
     ];
 
