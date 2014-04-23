@@ -59,6 +59,13 @@ angular.module('wearscriptPlaygroundApp')
                 "[wearscript] " + file.description,
                 Gist.activeGist.files,
                 function (x, y) {
+                    if (typeof y === 'string') {
+                        $log.log('Got error from gist create: ' + y);
+                        // TODO(brandyn): 1. Check if we can tell that it's not this user's gist, 2. check if the user is authorized
+                        service.status = "Error: Unable to create gist.  1.) Are you authorized? or 2.) Is github down?.";
+                        $rootScope.$apply()
+                        return;
+                    }
                     if (y && y.id) {
                         Gist.refresh( y )
                         $location.path("/gist/" + y.id);
@@ -77,6 +84,13 @@ angular.module('wearscriptPlaygroundApp')
                         gist.id,
                         gist.files,
                         function (x, gist){
+                            if (typeof gist === 'string') {
+                                $log.log('Got error from fork: ' + gist);
+                                // TODO(brandyn): 1. Check if we can tell that it's not this user's gist, 2. check if the user is authorized
+                                service.status = "Error: Unable to fork gist.";
+                                $rootScope.$apply()
+                                return;
+                            }
                             service.status = "Forked: #" + gist.id+ "/" + $routeParams.file
                             Gist.refresh( gist );
                             $location.path("/gist/" + gist.id);
@@ -93,6 +107,13 @@ angular.module('wearscriptPlaygroundApp')
             gist.id,
             gist.files,
             function (x, modGist) {
+                if (typeof modGist === 'string') {
+                    $log.log('Got error from modify: ' + modGist);
+                    // TODO(brandyn): 1. Check if we can tell that it's not this user's gist, 2. check if the user is authorized
+                    service.status = "Error: Unable to write gist.  If this is someone else's gist use Ctrl+Shift+S to 'save as'.";
+                    $rootScope.$apply()
+                    return;
+                }
                 Gist.refresh( modGist );
                 service.status = "Saved: #" + $routeParams.gistid+ "/" + $routeParams.file
             }
