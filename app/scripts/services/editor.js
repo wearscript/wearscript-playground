@@ -67,6 +67,8 @@ angular.module('wearscriptPlaygroundApp')
                         return;
                     }
                     if (y && y.id) {
+                        service.status = "Created: #" + y.id;
+                        $rootScope.$apply()
                         Gist.refresh( y )
                         $location.path("/gist/" + y.id);
                     }
@@ -116,6 +118,7 @@ angular.module('wearscriptPlaygroundApp')
                 }
                 Gist.refresh( modGist );
                 service.status = "Saved: #" + $routeParams.gistid+ "/" + $routeParams.file
+                $rootScope.$apply();
             }
         );
     }
