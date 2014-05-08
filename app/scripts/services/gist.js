@@ -12,6 +12,11 @@ angular.module('wearscriptPlaygroundApp')
       var ws = Socket.ws;
       var channel = ws.channel(ws.groupDevice, 'gistList');
       ws.publish_retry(function(channel, gists){
+          if (typeof gists === 'string') {
+              service.status = 'Error: Unable to list gists, if the problem persists try to re-auth github (click the gears icon).';
+              $rootScope.$apply();
+              return;
+          }
         if(typeof gists == 'object'){
             for (var i = 0; i < gists.length; i++)
                 gists[i].url_playground = '#/gist/' + gists[i].id

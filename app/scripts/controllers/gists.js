@@ -14,8 +14,14 @@ angular.module('wearscriptPlaygroundApp')
             if (data.files.hasOwnProperty(key))
                 files[key] = data.files[key].content;
         }
+        // TODO(brandyn): Legacy
         Socket.ws.publish(
           'glass',
+          'script',
+          files
+        );
+        Socket.ws.publish(
+          'android',
           'script',
           files
         );

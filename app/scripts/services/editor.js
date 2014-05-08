@@ -18,7 +18,7 @@ angular.module('wearscriptPlaygroundApp')
       forkonsave: false,
       session: false,
       menu: true,
-      status: false
+      status: ''
     }
     service.update = function() {
         $log.log('editor service updated');
@@ -31,6 +31,11 @@ angular.module('wearscriptPlaygroundApp')
         if (service.session)
             service.session.setValue('');
         Gist.get($routeParams.gistid, function gist_cb(channel, serverGist) {
+            if (typeof serverGist === 'string') {
+                service.status = 'Error: Unable to get gist: #' + $routeParams.gistid + '. If the problem persists try to re-auth github (click the gears icon).';
+                $rootScope.$apply();
+                return;
+            }
             Gist.refresh(serverGist);
             var file = $routeParams.file;
             if (!serverGist.files[file])
@@ -38,6 +43,7 @@ angular.module('wearscriptPlaygroundApp')
             var content = serverGist.files[file].content;
             service.session.setValue(content);
             service.status = "Loaded: #" + $routeParams.gistid + "/" + $routeParams.file
+            $rootScope.$apply();
         }.bind(this));
     }
     service.saveCreate = function(editor) {
@@ -63,7 +69,7 @@ angular.module('wearscriptPlaygroundApp')
                         $log.log('Got error from gist create: ' + y);
                         // TODO(brandyn): 1. Check if we can tell that it's not this user's gist, 2. check if the user is authorized
                         service.status = "Error: Unable to create gist.  1.) Are you authorized? or 2.) Is github down?.";
-                        $rootScope.$apply()
+                        $rootScope.$apply();
                         return;
                     }
                     if (y && y.id) {
@@ -159,8 +165,14 @@ angular.module('wearscriptPlaygroundApp')
             name: "wake-screen",
             bindKey: {win: "Shift-Enter", mac: "Shift-Enter"},
             exec: function(editor) {
+              // NOTE(brandyn): Legacy
               Socket.ws.publish(
                 'glass',
+                'lambda',
+                'WS.wake();WS.activityCreate();'
+              )
+              Socket.ws.publish(
+                'android',
                 'lambda',
                 'WS.wake();WS.activityCreate();'
               )
@@ -180,6 +192,11 @@ angular.module('wearscriptPlaygroundApp')
                 })
               Socket.ws.publish(
                 'glass',
+                'script',
+                filesForGlass
+              );
+              Socket.ws.publish(
+                'android',
                 'script',
                 filesForGlass
               );
@@ -219,7 +236,9 @@ angular.module('wearscriptPlaygroundApp')
               if (!line.length) {
                 line = service.editor.session.getLine(service.editor.selection.getCursor().row);
               }
+              // NOTE(brandyn): Legacy
               Socket.ws.publish('glass','lambda',line)
+              Socket.ws.publish('android','lambda',line)
               service.status = "Executed Current Line"
               $rootScope.$apply()
             }

@@ -20,11 +20,5 @@ angular.module('wearscriptPlaygroundApp')
     service.createQR = function(WSUrl, success, error) {
         service.createKey("ws", function (secret) {success("https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=" + WSUrl + "/ws/" + secret + "&chld=H|4&choe=UTF-8")}, error)
     }
-    service.runScriptOnGlass = function(ws, script) {
-        ws.publish('glass', 'script', {'glass.html': script})
-    }
-    service.runLambdaOnGlass = function(ws, script) {
-        ws.publish('glass', 'lambda', script)
-    }
     return service
 })
