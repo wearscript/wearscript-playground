@@ -6,10 +6,11 @@ angular.module('wearscriptPlaygroundApp')
       $scope.images = {}; // [device] = imageb64
       this.canvas = document.querySelector('#canvas');
       this.context = this.canvas.getContext('2d');
-
+      this.pointCount = -1;
+      this.points = [];
+      this.response = '';
       this.initCanvas = function () {
-          this.context.fillStyle = '#FFFFFF'; // set canvas background color
-          this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);  // now fill the canvas        
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
           var tool = {};
           function ev_canvas (ev) {
@@ -44,6 +45,15 @@ angular.module('wearscriptPlaygroundApp')
 
           };
           tool.mousedown = function (ev) {
+              if (this.pointCount > 0) {
+                  this.points.push([ev._x, ev._y]);
+                  if (this.points.length == this.pointCount) {
+                      this.pointCount = -1;
+                      ws.publish(this.response, this.points);
+                      this.points = [];
+                      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                  }
+              }
               this.context.beginPath();
               this.context.arc(ev._x, ev._y, 50, 0, 2 * Math.PI);
               this.context.strokeStyle = '#0b61a4';
@@ -65,21 +75,24 @@ angular.module('wearscriptPlaygroundApp')
       }
       this.initCanvas();
 
-
-      this.image_cb = function (channel, time, imageData, numPoints, description) {
-          var image = new Image(); 
+      this.image_cb = function (channel, response, imageData, numPoints, description) {
+          this.pointCount = numPoints;
+          this.points = [];
+          this.response = response;
+          var image = new Image();
+          console.log(channel); 
           image.onload = function (image_id) {
               this.context.drawImage(image, 0, 0);
+              console.log('Height: ' + image.naturalHeight + ' Width: ' + image.naturalWidth);
           }.bind(this);
-          image.src = 'data:image/jpeg;base64,' + btoa(imageData);
+          image.src = 'data:image/jpeg;base64,' + imageData;
           console.log(image.src.length);
           document.querySelector('#canvas')
-          $scope.numPoints = numPoints;
           $scope.description = description;
           $scope.$apply(); // HACK(brandyn): Not sure why we have to do this
       }.bind(this);
 
-      ws.subscribe('image', this.image_cb);
+      ws.subscribe('annotationimagepoints', this.image_cb);
       $scope.$on('$destroy', function cleanup() {
           ws.unsubscribe('image');
       });
